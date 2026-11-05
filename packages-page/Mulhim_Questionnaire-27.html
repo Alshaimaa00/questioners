@@ -1529,15 +1529,19 @@ html[dir="rtl"] .mp-arr svg{transform:scaleX(-1)}
 .mp-pk.lt.wd .mp-pk-fig::before{background:radial-gradient(55% 45% at 50% 48%, color-mix(in srgb,var(--a1) 30%,transparent), transparent 72%)}
 .mp-pk-fig canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
 /* the text sits over the foot of the figure, on a soft wash of the card's own colour */
-.mp-pk-body{position:relative; z-index:1; flex:1; display:flex; flex-direction:column; gap:.5rem; margin-top:-2.6rem; padding:2.4rem 1.2rem 1.25rem;
+/* Nov 2026: the cards a little taller (about 55px on desktop), all of it breathing room - between the figure and the title,
+   between the title, "for whom", the description and the button, and below the button; the figure area itself is unchanged */
+.mp-pk-body{position:relative; z-index:1; flex:1; display:flex; flex-direction:column; gap:.72rem; margin-top:-1rem; padding:2.4rem 1.2rem 1.85rem;
   background:linear-gradient(180deg, transparent, color-mix(in srgb,var(--dp) 88%,transparent) 2.6rem, var(--dp))}
 .mp-pk-body h3{margin:0; font-family:var(--font-head); font-weight:800; font-size:1.12rem; line-height:1.35; color:var(--tx)}
 .mp-pk-for{margin:0; font-size:.86rem; line-height:1.5; color:var(--tx2)}
 .mp-pk-for b{color:var(--hi); font-weight:800}
 .mp-pk-desc{flex:1; margin:0; font-size:.88rem; line-height:1.75; color:var(--tx2)}
+/* phones: the same breathing room, in smaller steps */
+@media (max-width:600px){ .mp-pk-body{gap:.62rem; margin-top:-1.5rem; padding-bottom:1.6rem} .mp-pk-cta{margin-top:.85rem} }
 /* the cards' "View Details": full width, the Enterprise button's height, padding and arrow circle; its look
    (the white pill) is shared with the Enterprise button - see .mp-pk-cta, .mp-ent-cta:not(.alt) below */
-.mp-pk-cta{margin-top:.55rem; display:flex; align-items:center; justify-content:center; gap:.7rem; width:100%; min-height:3.2rem; padding:.55rem .55rem .55rem 1.3rem;
+.mp-pk-cta{margin-top:1.05rem; display:flex; align-items:center; justify-content:center; gap:.7rem; width:100%; min-height:3.2rem; padding:.55rem .55rem .55rem 1.3rem;
   border:0; cursor:pointer; font:inherit; font-weight:700; font-size:.95rem}
 html[dir="rtl"] .mp-pk-cta{padding:.55rem 1.3rem .55rem .55rem}
 .mp-pk-cta i{width:2.2rem; height:2.2rem; border-radius:50%; display:grid; place-items:center}
@@ -1962,7 +1966,25 @@ html[dir="rtl"] .mpd-hero{background:
 .chr-art img{object-fit:contain; user-select:none; -webkit-user-drag:none}
 .chr-art canvas{pointer-events:none}
 .chr-art.pt-live img{visibility:hidden}
-.mp-pk-fig .chr-art{top:51%; height:90%}
+/* the figures fill their area (larger than the area's height where their own empty margin allows), the lowest
+   dots just above the title, each sized so the pill in the top corner stays clear of the head; Athletes and Men
+   lean a few pixels away from the pill's corner (Arabic: the right; English: the left) */
+.mp-pk-fig .chr-art{transform:translate(calc(-50% + var(--sx, 0px)), -50%)}
+.mp-pk[data-id="athletes"] .mp-pk-fig .chr-art{height:92%; top:56.8%}
+.mp-pk[data-id="men"] .mp-pk-fig .chr-art{height:100.81%; top:49.9%}
+.mp-pk[data-id="women"] .mp-pk-fig .chr-art{height:100.81%; top:52.42%}
+/* Children: a little smaller and lower than the others, so the rope's full arc above her head (her headroom, drawn above the box)
+   stays inside the illustration area; her feet keep their place above the title */
+.mp-pk[data-id="children"] .mp-pk-fig .chr-art{height:90%; top:56.5%}
+html[dir="rtl"] .mp-pk[data-id="athletes"] .mp-pk-fig .chr-art{--sx:-12px}
+html:not([dir="rtl"]) .mp-pk[data-id="athletes"] .mp-pk-fig .chr-art{--sx:12px}
+html[dir="rtl"] .mp-pk[data-id="men"] .mp-pk-fig .chr-art{--sx:-12px}
+html[dir="rtl"] .mp-pk[data-id="children"] .mp-pk-fig .chr-art{--sx:-6px}
+html:not([dir="rtl"]) .mp-pk[data-id="women"] .mp-pk-fig .chr-art{--sx:8px}
+html:not([dir="rtl"]) .mp-pk[data-id="children"] .mp-pk-fig .chr-art{--sx:8px}
+/* the Enterprise card's pill, in the top start corner of each package card (over the figure's empty side) */
+.mp-pk .mp-pk-pill{position:absolute; z-index:2; top:.75rem; inset-inline-start:.75rem; pointer-events:none;
+  color:#fff; background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.3)}
 /* the still image (before the particles, and for reduced motion) in the card's package colour, as the particles are */
 .mp-pk[data-id="men"] .chr-art img{filter:hue-rotate(55deg) saturate(1.6)}
 .mp-pk[data-id="women"] .chr-art img{filter:hue-rotate(185deg) saturate(1.3)}
@@ -1970,6 +1992,7 @@ html[dir="rtl"] .mpd-hero{background:
 /* the package hero: the character in its column, with a soft light of its own colour behind it */
 .mpd-fig.chr-fig{position:relative; z-index:0}
 .chr-fig .chr-art{height:92%}
+.chr-fig .chr-art[data-chr="children"]{height:84%; top:55%}
 .chr-fig::before{content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
   background:radial-gradient(42% 46% at 50% 50%, color-mix(in srgb,var(--glow) 24%,transparent), transparent 72%)}
 /* "All packages" lives in the top bar, on the side opposite its tools */
@@ -2239,6 +2262,101 @@ html[dir="rtl"] .mpo-card::after{transform-origin:right}
 .ofx-list{align-self:start; padding-top:0}
 .ofx .mpo-h{margin-bottom:clamp(1rem,2.2vw,1.5rem)}
 .ofx-slot{grid-column:1/-1}
+/* the accordion: the number and topic on one row; the open item's hook and details unfold under its topic
+   (a smooth height change, no jump), the others stay compact */
+.ofx:not(.ofx-ent) .ofx-item{align-items:start}
+.ofx:not(.ofx-ent) .ofx-item .ofx-n{align-self:start}
+.ofx:not(.ofx-ent) .ofx-t{align-self:center; min-height:2.9rem; display:flex; align-items:center}
+/* the list's icons (from the removed benefits section): the approved artwork in its round frame; the open
+   item's icon is lit with a soft ring in the package colour */
+.ofx .ofx-ic{width:2.9rem; height:2.9rem; flex:none; align-self:start; border-radius:50%; opacity:.72;
+  transition:transform .4s var(--ease), box-shadow .4s ease, opacity .4s ease}
+.ofx-item.on .ofx-ic{opacity:1; transform:scale(1.08); box-shadow:0 0 0 3px color-mix(in srgb,var(--a2) 38%,transparent), 0 12px 26px -12px var(--a1)}
+/* wide screens: the section's heading, the list and the panel are pinned together under the top bar (just
+   below it, never under it) while the track scrolls by - so the heading stays above the five items while they
+   are read, and leaves with them. The panel gives up the heading's height so the whole block fits the screen. */
+.ofx-pin .ofx-pinbox{position:sticky; top:calc(var(--bar-h) + .75rem)}
+.ofx-pin .ofx-stage{position:static}
+.ofx-pin .ofx-vis{max-height:max(14rem, calc(100svh - var(--bar-h) - 24rem))}
+.ofx-pin .ofx-item{cursor:pointer}
+/* a little more air between the heading and the list / visual below it */
+.ofx-pin .mpo-h{margin-bottom:clamp(1.4rem,2.6vh,2rem)}
+/* the item collapsing above the reader (phones) changes at once, while the page is shifted to match */
+.ofx-snap .ofx-more{transition:none!important}
+/* reduced motion: every item open with its own visual; nothing depends on scrolling */
+.ofx-still .ofx-grid{grid-template-columns:1fr}
+.ofx-still .ofx-stage{display:none}
+.ofx-still .ofx-item{opacity:1; background:none; cursor:default}
+.ofx-still .ofx-more{grid-template-rows:1fr; opacity:1}
+.ofx-still .ofx-slot .ofx-layer{opacity:1; transform:none; margin-top:1rem}
+.ofx-more{grid-column:2; display:grid; grid-template-rows:0fr; opacity:0; transition:grid-template-rows .45s var(--ease), opacity .35s ease}
+.ofx-item.on .ofx-more{grid-template-rows:1fr; opacity:1}
+.ofx-more-in{min-height:0; overflow:hidden}
+.ofx-hook{margin:.45rem 0 .3rem; font-family:var(--font-head); font-weight:700; font-size:clamp(1rem,1.4vw,1.1rem); line-height:1.6; color:var(--at)}
+.ofx-det{margin:0 0 .2rem; font-size:.93rem; line-height:1.8; color:var(--ink-soft)}
+.ofx-item:focus-visible{outline-offset:3px}
+/* a card that combines several charts is a little wider */
+.ofx-glass:has(.vz-combo){width:min(88%,26rem)}
+/* ---- the sample charts added for the approved visuals (inside the glass cards) ---- */
+.vz-combo{display:grid; gap:.8rem}
+.vz-part + .vz-part{padding-top:.75rem; border-top:1px solid var(--line)}
+.vz-combo .rms{gap:.75rem}
+.of-glass .vz-combo .dial svg,.of-glass .vz-combo .gauge svg{max-width:7rem}
+.vz-combo .lc{max-height:6.2rem}
+.kpis{display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:.55rem}
+.kpi{padding:.55rem .7rem; border-radius:12px; background:rgba(255,255,255,.06); border:1px solid var(--line); cursor:default; transition:border-color .2s}
+.kpi:hover,.kpi:focus{border-color:var(--brand); outline:none}
+.kpi b{display:block; font-family:var(--font-head); font-size:1.35rem; line-height:1.2; color:var(--ink)}
+.kpi b small{font-size:.72rem; font-weight:600; margin-inline-start:.25rem; color:var(--muted)}
+.kpi span{font-size:.78rem; color:var(--ink-soft)}
+.kpi.hi b{color:var(--brand)}
+.hyp-q{display:flex; align-items:baseline; gap:.5rem; margin-bottom:.35rem}
+.hyp-q b{font-family:var(--font-head); font-size:1.45rem; color:var(--brand)} .hyp-q span{font-size:.8rem; color:var(--ink-soft)}
+.hyp-c{width:100%; height:auto; display:block; direction:ltr}
+.hy{fill:var(--brand); transition:opacity .2s, filter .2s; cursor:pointer}
+.hy.s0{opacity:.22} .hy.s1{opacity:.5} .hy.s2{opacity:.72} .hy.s3{opacity:1}
+.hy:hover,.hy:focus{opacity:1; filter:drop-shadow(0 0 4px var(--brand)); outline:none}
+.hyp-lg,.bm-lg{list-style:none; margin:.4rem 0 0; padding:0; display:flex; flex-wrap:wrap; gap:.25rem .8rem; font-size:.72rem; color:var(--ink-soft)}
+.hyp-lg li,.bm-lg li{display:flex; align-items:center; gap:.3rem}
+.hyp-lg i{width:.55rem; height:.55rem; border-radius:2px; background:var(--brand)}
+.hyp-lg i.s0{opacity:.22} .hyp-lg i.s1{opacity:.5} .hyp-lg i.s2{opacity:.72}
+.pyr{width:100%; max-width:15rem; display:block; margin:0 auto; direction:ltr; overflow:visible}
+.pyr-t{cursor:pointer; outline:none}
+.pyr-t path{fill:var(--brand); transition:filter .2s}
+.pyr-t text{fill:#06222A; font-size:8.5px; font-weight:700; text-anchor:middle; pointer-events:none}
+.pyr-t:hover path,.pyr-t:focus path{filter:drop-shadow(0 0 5px var(--brand))}
+.clock{display:flex; align-items:center; gap:1rem; justify-content:center; flex-wrap:wrap}
+.clock svg{width:7.6rem; flex:none; direction:ltr}
+.ck-t{fill:none; stroke:var(--ghost); stroke-width:9}
+.ck-s{fill:none; stroke:var(--brand); stroke-width:9; cursor:pointer; transition:stroke-width .2s, filter .2s}
+.ck-s:hover,.ck-s:focus{stroke-width:12; filter:drop-shadow(0 0 4px var(--brand)); outline:none}
+.ck-ticks line{stroke:var(--muted); stroke-width:1}
+.ck-h{fill:var(--ink-soft); font-size:7px; text-anchor:middle}
+.clock .dn-lg{gap:.35rem; font-size:.8rem}
+.hb-top{display:flex; justify-content:space-between; align-items:baseline; font-size:.82rem; color:var(--ink-soft); margin-bottom:.35rem}
+.hb-pc{font-family:var(--font-head); font-size:1.15rem; color:var(--brand)}
+.hb-bar{height:.55rem; border-radius:99px; background:var(--ghost); overflow:hidden}
+.hb-bar i{display:block; height:100%; width:var(--p); border-radius:inherit; background:var(--brand); box-shadow:0 0 10px var(--brand); transition:width .45s var(--ease, ease)}
+.hb-list{list-style:none; margin:.7rem 0 0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:.45rem .8rem; font-size:.85rem; color:var(--ink)}
+.hb-list label{position:relative; display:flex; align-items:center; gap:.45rem; cursor:pointer}
+.hb-list input{position:absolute; opacity:0; width:1px; height:1px}
+.hb-box{flex:none; width:1.15rem; height:1.15rem; border-radius:6px; border:1.5px solid var(--line); display:grid; place-items:center; transition:background .2s, border-color .2s}
+.hb-box svg{width:.75rem; height:.75rem; fill:none; stroke:#06222A; stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round; opacity:0}
+.hb-list input:checked + .hb-box{background:var(--brand); border-color:var(--brand)}
+.hb-list input:checked + .hb-box svg{opacity:1}
+.hb-list input:focus-visible + .hb-box{outline:2px solid var(--brand); outline-offset:2px}
+.bodymap{display:flex; align-items:center; gap:1.2rem; justify-content:center}
+.bodymap svg{width:10.5rem; height:10.5rem; flex:none; direction:ltr; overflow:visible}
+.bm-b line,.bm-b circle{fill:none; stroke:var(--brand); stroke-width:2.6; stroke-linecap:round; stroke-dasharray:0 4.2; opacity:.75}
+.bm-p{cursor:pointer; outline:none}
+.bm-p circle{fill:var(--brand)}
+.bm-p .bm-h{opacity:.25; transform-box:fill-box; transform-origin:center; animation:bmPulse 2.6s ease-in-out infinite; animation-delay:calc(var(--k)*.35s)}
+.bm-p.warn circle{fill:var(--warn)}
+.bm-p.sel .bm-h,.bm-p:focus .bm-h{opacity:.6; animation:none}
+.bm-lg{flex-direction:column}
+.bm-lg i{width:.6rem; height:.6rem; border-radius:50%; background:var(--brand)} .bm-lg li.warn i{background:var(--warn)}
+@keyframes bmPulse{50%{transform:scale(1.5); opacity:.08}}
+@media (prefers-reduced-motion:reduce){ .ofx-more,.hb-bar i{transition:none} .bm-p .bm-h{animation:none} }
 .ofx-stage{position:sticky; top:calc(var(--bar-h) + 1.5rem)}
 .ofx-panel{display:grid}
 .ofx-layer{grid-area:1/1; opacity:0; transform:translateY(10px) scale(.985); transition:opacity .45s ease, transform .5s var(--ease)}
@@ -2256,10 +2374,22 @@ html[dir="rtl"] .mpo-card::after{transform-origin:right}
   .ofx-grid{grid-template-columns:1fr}
   .ofx-stage{display:none}
   .ofx-list{gap:0; padding:0}
-  .ofx-item{opacity:1; min-height:0; cursor:default; padding:1.3rem 0; border-radius:0; background:none}
-  .ofx-item.on{background:none}
-  .ofx-item + .ofx-item{border-top:1px solid var(--line)}
+  /* Enterprise (as before): every item with its own panel, all shown */
+  .ofx-ent .ofx-item{opacity:1; min-height:0; cursor:default; padding:1.3rem 0; border-radius:0; background:none}
+  .ofx-ent .ofx-item.on{background:none}
+  .ofx-ent .ofx-item + .ofx-item{border-top:1px solid var(--line)}
+  /* phones and tablets: one open item at a time, chosen by scrolling; its hook, details and visual under its topic */
+  .ofx:not(.ofx-ent) .ofx-item{opacity:.8; min-height:0; padding:1.1rem .6rem; border-radius:16px}
+  .ofx:not(.ofx-ent) .ofx-item.on{opacity:1; background:color-mix(in srgb,var(--a2) 9%,transparent)}
+  .ofx:not(.ofx-ent) .ofx-item + .ofx-item{margin-top:.35rem}
+  .ofx-more{grid-column:1/-1}
+  .ofx-hook,.ofx-det{padding-inline-start:3.9rem}
   .ofx-slot .ofx-layer{opacity:1; transform:none; margin-top:1rem}
+}
+/* tablets: the visual lines up with the hook and details above it (same indent) and keeps a calm size,
+   instead of filling the whole width */
+@media (min-width:601px) and (max-width:900px){
+  .ofx:not(.ofx-ent) .ofx-slot .ofx-layer{margin-inline-start:3.9rem; max-width:34rem}
 }
 @media (max-width:600px){
   .ofx .ofx-vis{aspect-ratio:auto; border-radius:20px}
@@ -4103,7 +4233,7 @@ const PACKAGES = [
         ar:"تساعدك باقة النساء على فهم العوامل الجينية المرتبطة باستجابة جسمك للتغذية والرياضة والنوم والتوازن الهرموني، لتكوين صورة أوضح لاحتياجاتك اليومية."},
   discover:{en:["A better understanding of how your body handles fats and carbohydrates, and of your heart markers.", "Learn about the factors behind your sleep, stress and recovery.", "Understand your response to exercise and your muscular capacity.", "Gain insights into skin, hair and collagen health.", "Learn about your hormonal-health and healthy-aging markers."],
             ar:["فهم أفضل لطريقة تعامل جسمك مع الدهون والكربوهيدرات ومؤشرات القلب.", "التعرف على عوامل النوم، التوتر، والاستشفاء.", "فهم استجابتك للتمارين والقدرة العضلية.", "الحصول على رؤى لصحة البشرة والشعر والكولاجين.", "التعرّف على مؤشرات الصحة الهرمونية والشيخوخة الصحية."]},
-  receive:{en:["A summary of your metabolic and heart-health markers.", "Daily decisions, nutrition recommendations and lifestyle guidance.", "Insights to improve your sleep, stress management and physical fitness.", "Recommendations for skin care, hair and hormonal health."],
+  receive:{en:["A summary of your metabolic and heart-health markers.", "Daily decisions, nutrition recommendations and lifestyle guidance.", "Insights to improve your sleep, stress management and physical fitness.", "Recommendations for skin care, hair and hormonal health.", "Understanding your female hormonal balance and healthy-ageing markers, to apply plans that protect your radiance and your future health."],
            ar:["ملخص المؤشرات الأيضية وصحة القلب.", "قرارات يومية وتوصيات غذائية وإرشادات لنمط الحياة.", "رؤى لتحسين النوم، إدارة التوتر، واللياقة البدنية.", "توصيات العناية بالبشرة، الشعر، والصحة الهرمونية."]}},
 
  {id:"children",
@@ -4117,7 +4247,7 @@ const PACKAGES = [
         ar:"تساعدك باقة الأطفال على فهم مؤشرات جينية مرتبطة بالنوم والتغذية والنمو الجسدي، لتقديم معلومات عملية تدعم روتين طفلك اليومي."},
   discover:{en:["Understand markers of sleep, the body clock and the response to stress.", "Learn about metabolism and how the body handles fats and carbohydrates.", "Information about growth, physical development, bones and muscles.", "Understand the body's response to food components and how it absorbs nutrients.", "Build daily habits that suit your child's sleep, nutrition and activity."],
             ar:["فهم مؤشرات النوم، الساعة البيولوجية، والاستجابة للتوتر.", "التعرف على جوانب الأيض والتعامل مع الدهون والكربوهيدرات.", "معلومات حول النمو والتطور الجسدي والعظام والعضلات.", "فهم استجابة الجسم لمكونات غذائية وامتصاص العناصر.", "تكوين عادات يومية تناسب نوم وتغذية ونشاط الطفل."]},
-  receive:{en:["A summary of growth and development markers.", "Guidance on nutrition, meal routines and the digestive system.", "Recommendations to support sleep habits and the daily routine.", "Guidance on safe play and movement for your child's age."],
+  receive:{en:["A summary of growth and development markers.", "Guidance on nutrition, meal routines and the digestive system.", "Recommendations to support sleep habits and the daily routine.", "Guidance on safe play and movement for your child's age.", "Tools and guidance to track your child's daily development and build habits that suit their physical and mental growth."],
            ar:["ملخص حول مؤشرات النمو والتطور.", "إرشادات للتغذية وروتين الوجبات والجهاز الهضمي.", "توصيات لدعم عادات النوم والروتين اليومي.", "إرشادات للعب والحركة الآمنة حسب عمر الطفل."]}},
 
  {id:"enterprise",
@@ -4850,7 +4980,7 @@ function initDNA(root, hero, list){
 function initCardFigure(card, id, track){
   const fig = card.querySelector(".mp-pk-fig");
   /* the supplied character, as particles (see CHR_ART); the drawn figure below stays only as a fallback if it is missing */
-  if (CHR_ART[id] && fig.querySelector(".chr-art")){ card._dots = initArtParticles(fig.querySelector(".chr-art"), {...chrArtLook(id, true), cell:2, radius:40, push:1.8}); return; }
+  if (CHR_ART[id] && fig.querySelector(".chr-art")){ card._dots = initArtParticles(fig.querySelector(".chr-art"), {...chrArtLook(id, true), ...ART_CARD, ...DOT_CARD}); return; }
   card._dots = initParticles(fig, fig.querySelector(".pdots"), id, {meta:{...PKG_DOTMETA[id], dot:cardDot(id)}, shimmer:.25, clip:track, edge:cardDotEdge(id),
     fitFn(w, h, s0){
       /* a wide scene (Enterprise's group) by width, a single figure by height; centred in the area */
@@ -4986,6 +5116,8 @@ const PKG_UI = {
   next:    {en:"Next package", ar:"الباقة التالية"},
   brand:   {en:"Mulhim", ar:"مُلهم"},
   orgs:    {en:"FOR ORGANIZATIONS", ar:"للمؤسسات والمنظمات"},
+  /* the same pill on the four package cards */
+  forPkg:  {athletes:{en:"ATHLETES", ar:"للرياضيين"}, men:{en:"MEN", ar:"للرجال"}, women:{en:"WOMEN", ar:"للنساء"}, children:{en:"KIDS", ar:"للأطفال"}},
   details: {en:"View Details", ar:"اعرف التفاصيل"},
   order:   {en:"Order Package", ar:"اطلب الباقة"},
   save:    {en:"Save", ar:"وفّر"},
@@ -5284,6 +5416,7 @@ function drawPackages(el){
         <div class="mp-track">${PKG_IND().map((p, i) => `
           <article class="mp-pk rv ${pkLight(p.id) ? "lt" : ""} ${CARD_DOTS_WHITE ? "wd" : ""}" style="${pkStyle(p.id)};--d:${i*80}ms" data-id="${p.id}" tabindex="0" aria-labelledby="pk-t-${p.id}">
             <div class="mp-pk-fig" aria-hidden="true">${chrArtHTML(p.id)}</div>
+            ${PKG_UI.forPkg[p.id] ? `<span class="mp-pill mp-pk-pill">${pt(PKG_UI.forPkg[p.id])}</span>` : ""}
             <div class="mp-pk-body">
               <h3 id="pk-t-${p.id}">${pt(PKG_CARD[p.id].name)}</h3>
               <p class="mp-pk-for"><b>${pt(PKG_UI.forWhom)}</b> ${pt(PKG_CARD[p.id].for)}</p>
@@ -5325,7 +5458,7 @@ function drawPackages(el){
   /* the Enterprise card: its figure (the group of three); "View Details" opens its package (above),
      "Contact Us" opens the Enterprise request form */
   const ent = el.querySelector(".mp-ent");
-  initArtParticles(ent.querySelector(".ent-card-art"), {...ENT_ART_LOOK, cell:2.2, radius:48, push:1.9});
+  initArtParticles(ent.querySelector(".ent-card-art"), {...ENT_ART_LOOK, ...ART_CARD});
   el.querySelector("#mp-contact").onclick = contactEnterprise;
   /* "Order Package": that package's existing purchase request form (the same path as the package
      page's buy button: request form -> confirmation); its Back leads to the package page */
@@ -5665,6 +5798,67 @@ function vizHTML(sp){
         data-tip="${esc((ar ? "اللاعب " : "Player ") + nf(i + 1) + " — " + (ar ? "الجاهزية: " : "Readiness: ") + nf(v) + pc)}"></span>`).join("")}</div>
       <div class="lg"><span>${ar ? "جاهز" : "Ready"}</span><span class="m">${ar ? "راقب" : "Watch"}</span><span class="r">${ar ? "راحة" : "Rest"}</span></div>`;
   }
+  /* ---- several small charts in one card (the approved visuals that combine indicators) ---- */
+  if (sp.k === "combo") return `<div class="vz-combo">${sp.parts.map((q, j) => `<div class="vz-part vz-${q.k}" data-j="${j}">${vizHTML(q)}</div>`).join("")}</div>`;
+
+  /* ---- a few headline figures ---- */
+  if (sp.k === "kpis") return `<div class="kpis">${sp.items.map(it =>
+      `<div class="kpi ${it.hi ? "hi" : ""}"${tipA(it.tip)}><b>${it.v}${it.u ? `<small>${tlx(it.u)}</small>` : ""}</b><span>${tlx(it.lab)}</span></div>`).join("")}</div>`;
+
+  /* ---- sleep stages through the night (hypnogram): one column per 20 minutes, deeper = taller ---- */
+  if (sp.k === "hypno"){
+    const ST = [{ar:"يقظة", en:"Awake"}, {ar:"حركة العين السريعة", en:"REM"}, {ar:"نوم خفيف", en:"Light"}, {ar:"نوم عميق", en:"Deep"}];
+    const n = sp.seq.length, cw = 300/n;
+    const hh = i => { const m = sp.start*60 + i*20, h = Math.floor(m/60) % 24, mm = m % 60; return nf(h) + ":" + nf(String(mm).padStart(2, "0")); };
+    const cols = sp.seq.map((s, i) => `<rect class="hy s${s}" x="${(i*cw + .8).toFixed(1)}" y="${(64 - s*18 - 6).toFixed(1)}" width="${(cw - 1.6).toFixed(1)}" height="${(s*18 + 6).toFixed(1)}" rx="2"
+        tabindex="0" data-tip="${esc(hh(i) + " — " + tlx(ST[s]))}"/>`).join("");
+    return `<div class="hyp"><div class="hyp-q"><b>${nf(sp.q)}${ar ? "٪" : "%"}</b><span>${ar ? "جودة النوم" : "Sleep quality"}</span></div>
+      <svg viewBox="0 0 300 66" class="hyp-c" aria-hidden="false">${cols}</svg>
+      <div class="xl"><span>${hh(0)}</span><span>${hh(Math.floor(n/2))}</span><span>${hh(n - 1)}</span></div>
+      <ul class="hyp-lg">${[3, 2, 1, 0].map(s => `<li><i class="s${s}"></i>${tlx(ST[s])}</li>`).join("")}</ul></div>`;
+  }
+
+  /* ---- food pyramid: the widest tier is the biggest share ---- */
+  if (sp.k === "pyramid"){
+    const n = sp.tiers.length, H = 120, th = H/n;
+    const tiers = sp.tiers.map((t, i) => {
+      const y0 = H - (i + 1)*th, y1 = H - i*th, w0 = 30 + 140*(1 - (i + 1)/n), w1 = 30 + 140*(1 - i/n);
+      return `<g class="pyr-t" style="--k:${i}"${tipA(t.tip)}><path d="M${100 - w1} ${y1 - 1} L${100 + w1} ${y1 - 1} L${100 + w0} ${y0 + 1} L${100 - w0} ${y0 + 1} Z" style="opacity:${(1 - i*.18).toFixed(2)}"/>
+        <text x="100" y="${(y0 + th/2 + 4).toFixed(1)}">${tlx(t.lab)}</text></g>`;
+    }).join("");
+    return `<svg viewBox="0 0 200 122" class="pyr" aria-hidden="false">${tiers}</svg>`;
+  }
+
+  /* ---- the day's clock: 24 hours round a ring, each part of the day an arc ---- */
+  if (sp.k === "clock"){
+    const ang = h => -90 + h*15, R = 46;
+    const arcs = sp.segs.map((g, i) => { const b = g.b < g.a ? g.b + 24 : g.b;
+      return `<path class="ck-s" d="${arcPath(60, 60, R, ang(g.a) + .8, ang(b) - .8)}" style="opacity:${g.o || 1}"${tipA(g.tip)}/>`; }).join("");
+    const ticks = Array.from({length:24}, (_, h) => { const [x0, y0] = polar(60, 60, 55, ang(h)), [x1, y1] = polar(60, 60, h % 6 ? 57 : 59.5, ang(h));
+      return `<line x1="${x0.toFixed(1)}" y1="${y0.toFixed(1)}" x2="${x1.toFixed(1)}" y2="${y1.toFixed(1)}"/>`; }).join("");
+    const lab = h => { const [x, y] = polar(60, 60, 34, ang(h)); return `<text class="ck-h" x="${x.toFixed(1)}" y="${(y + 3).toFixed(1)}">${nf(h)}</text>`; };
+    return `<div class="clock"><svg viewBox="0 0 120 120" aria-hidden="false"><circle class="ck-t" cx="60" cy="60" r="${R}"/><g class="ck-ticks">${ticks}</g>${arcs}
+        ${[0, 6, 12, 18].map(lab).join("")}</svg>
+      <ul class="dn-lg">${sp.segs.map(g => `<li${tipA(g.tip)}><i style="opacity:${g.o || 1}"></i>${tlx(g.lab)}</li>`).join("")}</ul></div>`;
+  }
+
+  /* ---- daily habits: tick what was done, the progress bar follows ---- */
+  if (sp.k === "habits"){
+    const done = sp.items.filter(x => x.done).length, pcv = Math.round(done*100/sp.items.length);
+    return `<div class="habits"><div class="hb-top"><span>${ar ? "تقدّم اليوم" : "Today's progress"}</span><b class="hb-pc">${nf(pcv)}${ar ? "٪" : "%"}</b></div>
+      <div class="hb-bar"><i style="--p:${pcv}%"></i></div>
+      <ul class="hb-list">${sp.items.map((x, i) => `<li><label><input type="checkbox" ${x.done ? "checked" : ""} data-i="${i}"><span class="hb-box">${CHECK_SVG}</span>${tlx(x.lab)}</label></li>`).join("")}</ul></div>`;
+  }
+
+  /* ---- body map: a dotted figure with points of tendon and joint health ---- */
+  if (sp.k === "bodymap"){
+    const L = (x1, y1, x2, y2) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
+    const body = [L(50,22,50,58), L(50,26,36,30), L(36,30,31,46), L(31,46,29,58), L(50,26,64,30), L(64,30,69,46), L(69,46,71,58),
+      L(50,58,44,72), L(44,72,43,92), L(50,58,57,72), L(57,72,57,92), L(43,92,38,96), L(57,92,62,96)].join("");
+    const pts = sp.pts.map((q, i) => `<g class="bm-p ${q.warn ? "warn" : ""}" style="--k:${i}"${tipA(q.tip)}><circle class="bm-h" cx="${q.x}" cy="${q.y}" r="5.5"/><circle cx="${q.x}" cy="${q.y}" r="2.6"/></g>`).join("");
+    return `<div class="bodymap"><svg viewBox="0 0 100 100" aria-hidden="false"><g class="bm-b"><circle cx="50" cy="13" r="7"/>${body}</g>${pts}</svg>
+      <ul class="bm-lg"><li><i></i>${ar ? "جيد" : "Good"}</li><li class="warn"><i></i>${ar ? "يحتاج متابعة" : "Watch"}</li></ul></div>`;
+  }
   return "";
 }
 
@@ -5833,6 +6027,8 @@ const OFX_PICK = {
   women:   [["men",0],["women",1],["women",2],["women",3]],
   children:[["children",0],["children",1],["athletes",3],["children",3]]
 };
+/* the original sample cards, 5 per package, as first designed (the pool every list below takes from) */
+const OF_VIS_POOL = {...OF_VIS}, OF_SC_POOL = {...OF_SC}, OF_3D_POOL = {...OF_3D};
 (() => {
   const was = {vis:{...OF_VIS}, sc:{...OF_SC}, d3:{...OF_3D}};
   for (const [id, list] of Object.entries(OFX_PICK)){
@@ -5841,6 +6037,167 @@ const OFX_PICK = {
     OF_3D[id]  = list.map(([p, i]) => was.d3[p][i]);
   }
 })();
+/* "ماذا تقدم لك ملهم؟" - the approved content ("تعديلات الهوك.pdf", Nov 2026) for the four individual packages:
+   per item its topic (t), hook (hook) and details (det), word for word, and the visual it proposes - a dotted
+   scene (sc: the SVG version, d3: the WebGL one) and a sample card (vis). The cards are illustrative only
+   ("مثال توضيحي"): sample values, never results. The document is Arabic only, so the English pages keep the
+   earlier approved items (OF_VIS / OF_SC) until approved English wording exists. */
+const A1 = ar => ({en:ar, ar});
+/* the list's icons: the five approved icons of the removed "ماذا ستستفيد من الباقة؟" section (DISC_IC),
+   each set beside the topic it stands for - OFX_IC for the approved Arabic items, OFX_EN_IC for the
+   earlier English items */
+const OFX_IC = {
+  men:     ["heart","moon","dumbbell","dna","time"],
+  women:   ["heart","moon","active","sparkle","dna"],
+  children:["flame","moon","childruler","apple","checklist"],
+  athletes:["flame","moon","dumbbell","joint","calendar"]
+};
+const OFX_EN_IC = {
+  men:     ["heart","time","moon","dumbbell","dna"],
+  women:   ["heart","active","moon","sparkle","dna"],
+  children:["childruler","apple","moon","flame","checklist"],
+  athletes:["dumbbell","flame","moon","joint","calendar"]
+};
+const _BA = (ar, v, tip, txt) => ({en:ar, ar, v, tip:A1(tip), ...(txt ? {txt} : {})});
+const _SA = (w, o, ar, tip) => ({w, o, en:ar, ar, tip:A1(tip)});
+const OFX_AR = {
+ men:[
+  {t:"الأيض وصحة القلب", hook:"اعرف كيف يحرق جسمك الدهون وترفع طاقتك.",
+   det:"اعرف مؤشرات الأيض، والتعامل مع الكربوهيدرات والدهون وصحة القلب، مع خطة غذائية مخصصة لنمط حياتك.",
+   sc:"heart", d3:"heart",
+   vis:{h:A1("الأيض والطاقة"), k:"combo", cap:A1("مرّر على المنحنى والمؤشرات لتعرف معناها"), parts:[
+     {k:"line", pts:[34,48,72,61,55,70,42], xl:A1(["٦","٩","١٢","١٥","١٨","٢١","٢٤"]), vl:A1("سرعة الحرق")},
+     {k:"bars", rows:[_BA("مؤشرات صحة القلب",76,"ضغط الدم ونبض القلب والدهون في الدم"),_BA("نسبة الاستفادة من الكربوهيدرات",64,"مدى تحويل جسمك للكربوهيدرات إلى طاقة")]}]}},
+  {t:"النوم والاستشفاء", hook:"حسن جودة نومك واسترجع طاقتك أسرع.",
+   det:"افهم العوامل الجينية المرتبطة بجودة النوم والتعامل مع التوتر، مع نصائح وإرشادات عملية لاستشفاء أسرع وجاهزية يومية.",
+   sc:"sleep", d3:"sleep",
+   vis:{h:A1("جودة ومراحل النوم"), k:"combo", cap:A1("مرّر على مراحل النوم لتعرف كل مرحلة"), parts:[
+     {k:"hypno", q:84, seq:[0,2,2,3,3,3,2,1,2,3,3,2,1,1,2,2,3,2,1,1,2,1,0], start:22},
+     {k:"bars", rows:[_BA("مستوى التوتر",30,"توتر منخفض يساعد على نوم أعمق","منخفض"),_BA("الجاهزية اليومية للنشاط",82,"مدى استعداد جسمك لنشاط اليوم","٨٢٪")]}]}},
+  {t:"اللياقة والأداء البدني", hook:"ابنِ عضلاتك وزد قوتك بالتمرين المناسب لجيناتك.",
+   det:"اكتشف مؤشرات القوة العضلية والتحمل، مع توصيات تدريبية ولياقة موجهة لرفع أدائك وتفادي الإجهاد.",
+   sc:"muscle", d3:"muscle",
+   vis:{h:A1("القوة مقابل التحمل"), k:"combo", cap:A1("اختر عنصرًا ثم غيّر نسبته"), parts:[
+     {k:"segs", segs:[_SA(60,0,"القوة ٦٠٪","ميل جيني نحو تمارين القوة والقدرة"),_SA(40,.6,"التحمل ٤٠٪","قدرة على الأداء لفترات أطول")]},
+     {k:"chips", chips:[{en:"",ar:"تمارين المقاومة · الأنسب لك",tip:A1("أوزان ومقاومة بتكرارات أقل")},{en:"",ar:"تمارين التحمل · بقدر معتدل",tip:A1("كارديو مرتين في الأسبوع")}]}]}},
+  {t:"الصحة الهرمونية والحيوية", hook:"حافظ على توازن هرموناتك ونشاطك الدائم.",
+   det:"اعرف مستويات الطاقة والصحة الهرمونية والإنجابية مع إرشادات حصرية لدعم الحيوية والنشاط اليومي.",
+   sc:"rings", d3:"rings",
+   vis:{h:A1("مؤشر الحيوية والصحة الهرمونية"), k:"ring", v:78, lab:A1("الحيوية"), tip:A1("الطاقة والتوازن الهرموني معًا"), cap:A1("Vitality & Hormonal Health Index")}},
+  {t:"الشيخوخة الصحية", hook:"استثمر في صحتك وحافظ على شباب جسمك.",
+   det:"التعرف على المؤشرات الجينية المتعلقة بعمر الخلايا والشيخوخة الصحية لتطبيق عادات تحمي جسمك على المدى الطويل.",
+   sc:"helix", d3:"helix",
+   vis:{h:A1("العمر الحيوي"), k:"combo", cap:A1("Biological Age · مثال توضيحي"), parts:[
+     {k:"kpis", items:[{lab:A1("العمر الزمني"), v:"٤٠", u:A1("سنة"), tip:A1("عمرك بحسب تاريخ الميلاد")},{lab:A1("العمر الحيوي"), v:"٣٦", u:A1("سنة"), hi:1, tip:A1("عمر جسمك بحسب مؤشراته")}]},
+     {k:"bars", rows:[_BA("التجدد الخلوي",72,"قدرة الخلايا على التجدد"),_BA("حماية الخلايا",68,"الدفاع ضد الإجهاد التأكسدي")]}]}}],
+ women:[
+  {t:"الأيض وصحة القلب", hook:"افهمي حرق جسمك ووازني نظامك الغذائي بسهولة.",
+   det:"اعرفي كيف جسمك يتعامل مع الدهون والكربوهيدرات ومؤشرات صحة القلب، مع توجيهات غذائية مخصصة لجسدك.",
+   sc:"plate", d3:"plate",
+   vis:{h:A1("توازن الماكروز"), k:"combo", cap:A1("اختاري عنصرًا ثم غيّري نسبته"), parts:[
+     {k:"segs", segs:[_SA(55,0,"كربوهيدرات ٥٥٪","طاقة ثابتة ليومك"),_SA(45,.6,"دهون ٤٥٪","دعم للهرمونات والشبع")]},
+     {k:"bars", rows:[_BA("كفاءة حرق الدهون",70,"مدى استخدام جسمك للدهون كمصدر للطاقة"),_BA("استجابة سكر الدم",66,"توازن السكر بعد الوجبات")]}]}},
+  {t:"النوم والتوتر", hook:"استعيدي هدوءك وجدد طاقتك بنوم عميق.",
+   det:"تحديد استجابة جسمك للتوتر وجودة نومك، مع إرشادات يومية لتحسين الاستشفاء والراحة النفسية والجسدية.",
+   sc:"sleep", d3:"sleep",
+   vis:{h:A1("هدوء الأعصاب والنوم العميق"), k:"combo", cap:A1("مرّر على الأيام لتتبع استجابة جسمك للتوتر"), parts:[
+     {k:"gauge", v:72, lab:A1("مؤشر هدوء الأعصاب"), tip:A1("مدى هدوء جهازك العصبي")},
+     {k:"line", pts:[62,55,48,58,66,71,74], xl:A1(["س","ح","ن","ث","ر","خ","ج"]), vl:A1("الهدوء أمام التوتر")},
+     {k:"bars", rows:[_BA("توازن النوم العميق",78,"وقت كافٍ في النوم العميق لاستشفاء الجسم","٧٨٪")]}]}},
+  {t:"اللياقة والقوة البدنية", hook:"مارسي الرياضة التي تحقق لك أفضل النتائج.",
+   det:"معرفة مدى استجابتك لتمارين المقاومة أو الكارديو والقوة العضلية، مع برنامج لياقة مخصص لأهدافك.",
+   sc:"rings", d3:"rings",
+   vis:{h:A1("توزيع التمارين المثالي"), k:"segs", cap:A1("لشد الجسم وزيادة اللياقة · اختاري عنصرًا ثم غيّري نسبته"),
+     segs:[_SA(45,0,"مقاومة ٤٥٪","تشد الجسم وتبني القوة"),_SA(35,.75,"كارديو ٣٥٪","يرفع اللياقة والتحمل"),_SA(20,.5,"مرونة ٢٠٪","توازن وحماية للمفاصل")]}},
+  {t:"البشرة وشعر والكولاجين", hook:"ابني صحة بشرتك وشعرك من الداخل للخارج.",
+   det:"تحليلات جينية لصحة البشرة والشعر ومعدلات الكولاجين، مع توصيات مخصصة للعناية والوقاية.",
+   sc:"skin", d3:"skin",
+   vis:{h:A1("مؤشر البشرة والكولاجين"), k:"combo", cap:A1("Skin & Collagen Score · مثال توضيحي"), parts:[
+     {k:"ring", v:74, lab:A1("الكولاجين"), tip:A1("مستوى إنتاج الكولاجين")},
+     {k:"bars", rows:[_BA("المرونة",72,"قدرة البشرة على الشد والعودة"),_BA("النضارة",78,"إشراقة البشرة وترطيبها"),_BA("صحة الشعر",68,"قوة الشعر وكثافته")]}]}},
+  {t:"الصحة الهرمونية والشيخوخة الصحية", hook:"وازني هرموناتك واحتفظي بشبابك وحيويتك.",
+   det:"فهم التوازن الهرموني الأنثوي ومؤشرات الشيخوخة الصحية، لتطبيق خطط تحافظ على نضارتك وصحتك المستقبلية.",
+   sc:"planner", d3:"planner",
+   vis:{h:A1("التوازن الهرموني والوقاية المستقبلية"), k:"combo", cap:A1("إيقاع شهري نموذجي (يوم الدورة)"), parts:[
+     {k:"line", pts:[48,56,68,82,70,58,50], xl:A1(["١","٥","٩","١٤","١٩","٢٣","٢٨"]), vl:A1("التوازن الهرموني")},
+     {k:"chips", chips:[{en:"",ar:"صحة العظام · وقاية مبكرة",tip:A1("عادات تحمي كثافة العظام")},{en:"",ar:"نضارة البشرة · عادات داعمة",tip:A1("تغذية ونوم يدعمان البشرة")}]}]}}],
+ children:[
+  {t:"الأيض والتغذية الصحية", hook:"ابني نظاماً غذائياً يغذي جسم طفلك ويكبره بصحة.",
+   det:"فهم استجابة جسم الطفل للدهون والكربوهيدرات والعناصر الغذائية، مع إرشادات لروتين وجبات مريح للهضم.",
+   sc:"plate", d3:"plate",
+   vis:{h:A1("الهرم الغذائي المفضل لجيناته"), k:"combo", cap:A1("مرّر على طبقات الهرم لتعرف حصتها"), parts:[
+     {k:"pyramid", tiers:[{lab:A1("خضار وفواكه"), tip:A1("الحصة الأكبر: فيتامينات وألياف")},{lab:A1("حبوب كاملة"), tip:A1("طاقة ثابتة للعب والتعلم")},{lab:A1("بروتين وألبان"), tip:A1("للنمو وبناء العظام")},{lab:A1("دهون صحية"), tip:A1("كمية صغيرة لنمو الدماغ")}]},
+     {k:"bars", rows:[_BA("امتصاص العناصر",74,"مدى استفادة جسمه من غذائه")]}]}},
+  {t:"النوم والساعة البيولوجية", hook:"انتظم في نوم طفلك ووفّر له الراحة التي يحتاجها.",
+   det:"كشف طبيعة الساعة البيولوجية واستجابة طفلك للتوتر، مع توصيات لبناء روتين نوم هادئ ومستقر.",
+   sc:"sleep", d3:"sleep",
+   vis:{h:A1("الساعة البيولوجية لطفلك"), k:"clock", cap:A1("مرّر على أجزاء اليوم لتعرف مواعيدها"), segs:[
+     {a:20, b:6.5, lab:A1("نوم الليل"), tip:A1("من ٨:٠٠ مساءً إلى ٦:٣٠ صباحًا")},
+     {a:7.5, b:13, lab:A1("المدرسة"), tip:A1("من ٧:٣٠ صباحًا إلى ١:٠٠ ظهرًا"), o:.45},
+     {a:13.5, b:14.5, lab:A1("قيلولة وراحة"), tip:A1("من ١:٣٠ إلى ٢:٣٠ ظهرًا"), o:.8},
+     {a:16, b:18, lab:A1("لعب ونشاط"), tip:A1("من ٤:٠٠ إلى ٦:٠٠ مساءً"), o:.6},
+     {a:19, b:20, lab:A1("هدوء قبل النوم"), tip:A1("من ٧:٠٠ إلى ٨:٠٠ مساءً"), o:.3}]}},
+  {t:"النمو والتطور الجسدي", hook:"ادعم نمو عظام وعضلات طفلك بثقة.",
+   det:"تحليل مؤشرات نمو العظام والعضلات والتطور الحركي، مع توجيهات للعب والحركة الآمنة حسب عمره.",
+   sc:"growth", d3:"growth",
+   vis:{h:A1("معالم النمو الجسدي والحركي"), k:"combo", cap:A1("Growth & Motor Skills · مثال توضيحي"), parts:[
+     {k:"line", pts:[18,32,46,58,68,80], xl:A1(["٢","٤","٦","٨","١٠","١٢"]), vl:A1("النمو")},
+     {k:"chips", chips:[{en:"",ar:"الجري والقفز · تحقق",tip:A1("مهارة حركية مناسبة لعمره")},{en:"",ar:"التوازن على قدم واحدة · قيد التطور",warn:1,tip:A1("ألعاب توازن بسيطة تساعده")}]}]}},
+  {t:"امتصاص العناصر الغذائية", hook:"تأكد من حصول طفلك على جميع الفيتامينات والمعادن.",
+   det:"معرفة مدى امتصاص وقبول الجسم لمكونات غذائية معينة لدعم مناعته ونموه السليم.",
+   sc:"gut", d3:"gut",
+   vis:{h:A1("امتصاص الفيتامينات والمعادن"), k:"bars", cap:A1("مرّر على الشريط للتفاصيل"), rows:[
+     _BA("فيتامين د",58,"لعظام قوية ومناعة أفضل"),_BA("الحديد",66,"للطاقة والتركيز"),_BA("الكالسيوم",74,"لنمو العظام والأسنان"),_BA("الزنك",70,"للمناعة والنمو")]}},
+  {t:"متابعة التطور والروتين", hook:"تابع مراحل نمو طفلك بعادات يومية صحية.",
+   det:"أدوات وإرشادات لمتابعة تطور الطفل اليومي وتكوين عادات تناسب نموه الجسدي والعقلي.",
+   sc:"stairs", d3:"stairs",
+   vis:{h:A1("خطوات النمو والعادات اليومية"), k:"habits", cap:A1("اختر العادات التي أنجزها طفلك اليوم"), items:[
+     {lab:A1("نوم مبكر"), done:1},{lab:A1("فطور متوازن"), done:1},{lab:A1("ساعة لعب نشط")},{lab:A1("شرب الماء"), done:1},{lab:A1("قراءة قبل النوم")}]}}],
+ athletes:[
+  {t:"الطاقة والأيض والترطيب", hook:"زوّد جسمك بالوقود المثالي لتحقيق أفضل أداء.",
+   det:"فهم إنتاج الطاقة والأيض واحتياجات الترطيب والتغذية الرياضية، مع خطة غذائية ترفع كفاءتك في التمارين.",
+   sc:"drop2", d3:"drop",
+   vis:{h:A1("استهلاك الطاقة والترطيب"), k:"combo", cap:A1("مرّر على المنحنى لمعدل استهلاك الطاقة أثناء التمرين"), parts:[
+     {k:"line", pts:[30,52,68,78,74,64], xl:A1(["٠","١٥","٣٠","٤٥","٦٠","٧٥"]), vl:A1("استهلاك الطاقة")},
+     {k:"bars", rows:[_BA("قبل التمرين",50,"ترطيب قبل البدء بساعتين","٥٠٠ مل"),_BA("أثناء التمرين",75,"رشفات منتظمة كل ١٥ دقيقة","٧٥٠ مل/ساعة"),_BA("بعد التمرين",60,"تعويض ما فقده الجسم","٦٠٠ مل")]}]}},
+  {t:"النوم والجاهزية للمنافسة", hook:"سرّع تعافيك واصل إلى أعلى مستويات الجاهزية.",
+   det:"تحديد تأثير النوم وإدارة التوتر على التعافي بعد الجهد البدني، مع خطط جاهزية للمنافسات والتمارين الشاقة.",
+   sc:"sleep", d3:"sleep",
+   vis:{h:A1("مؤشر الجاهزية والتعافي"), k:"ring", v:82, lab:A1("الجاهزية"), tip:A1("النوم والتوتر والتعافي معًا"), cap:A1("Recovery & Readiness Score")}},
+  {t:"الأداء العضلي والقوة والتحمل", hook:"صمم تمارينك بناءً على تكوينك العضلي الجيني.",
+   det:"كشف مؤشرات القوة والتحمل وتكوين الألياف العضلية، مع برنامج تدريب مخصص لرفع الأداء البدني.",
+   sc:"muscle2", d3:"muscle",
+   vis:{h:A1("الألياف السريعة والبطيئة"), k:"segs", cap:A1("Power vs Endurance Ratio · اختر عنصرًا ثم غيّر نسبته"),
+     segs:[_SA(58,0,"ألياف سريعة ٥٨٪","للقوة والسرعة والانفجارية"),_SA(42,.6,"ألياف بطيئة ٤٢٪","للتحمل والجهد الطويل")]}},
+  {t:"صحة الأوتار والمفاصل والحماية", hook:"احمِ مفاصلك وأوتارك من الإصابات أثناء التدريب.",
+   det:"التعرف على العوامل الجينية الخاصة بمرونة وصحة الأوتار والأربطة والعظام، مع إرشادات للإحماء والوقاية.",
+   sc:"joint", d3:"joint",
+   vis:{h:A1("خريطة صحة الأوتار والمفاصل"), k:"bodymap", cap:A1("اختر نقطة على الجسم لتعرف حالتها وطريقة وقايتها"), pts:[
+     {x:36, y:30, lab:A1("الكتف"), tip:A1("الكتف: جيد · إحماء دائري قبل تمارين الدفع")},
+     {x:50, y:52, lab:A1("أسفل الظهر"), warn:1, tip:A1("أسفل الظهر: يحتاج متابعة · تقوية عضلات الجذع")},
+     {x:44, y:72, lab:A1("الركبة"), tip:A1("الركبة: جيد · تمارين ثبات وتوازن")},
+     {x:57, y:88, lab:A1("وتر أكيلس"), warn:1, tip:A1("وتر أكيلس: يحتاج متابعة · إطالة الساق قبل الجري")},
+     {x:43, y:93, lab:A1("الكاحل"), tip:A1("الكاحل: جيد · تمارين مرونة الكاحل")}]}},
+  {t:"متابعة الأداء والتطور", hook:"راقب تطورك واستمر في تحطيم أرقامك القياسية.",
+   det:"متابعة مستمرة لمؤشرات الأداء وتطور اللياقة مع تحسين الخطط لتناسب تغير مستواك الرياضي.",
+   sc:"ai", d3:"ai",
+   vis:{h:A1("لوحة تطور الأداء"), k:"combo", cap:A1("Analytics Dashboard · مرّر على الأسابيع للتفاصيل"), parts:[
+     {k:"kpis", items:[{lab:A1("القوة"), v:"+١٢٪", tip:A1("تحسن القوة خلال ٦ أسابيع")},{lab:A1("التحمل"), v:"+٨٪", tip:A1("تحسن التحمل خلال ٦ أسابيع")},{lab:A1("الجاهزية"), v:"٨٤٪", hi:1, tip:A1("جاهزيتك هذا الأسبوع")}]},
+     {k:"line", pts:[40,48,55,62,70,78], xl:A1(["١","٢","٣","٤","٥","٦"]), vl:A1("الأداء")}]}}]
+};
+/* the sample cards beside each topic are the ORIGINAL cards (OF_VIS_POOL, from before the hook edits), each on
+   the same topic as the approved item - [package of the card, its place in that package's original five] */
+const OFX_CARD = {
+  athletes:[["athletes",1],["athletes",3],["athletes",0],["athletes",2],["athletes",4]],
+  men:     [["men",0],["men",3],["men",2],["men",4],["women",4]],
+  women:   [["men",0],["men",3],["women",2],["women",3],["women",0]],
+  children:[["children",1],["athletes",3],["children",0],["women",1],["children",4]]
+};
+/* English (the earlier item list): Women and Children get their fifth item, with the original card and the
+   scene of the same topic */
+OF_VIS.women.push(OF_VIS_POOL.women[0]); OF_SC.women.push(OFX_AR.women[4].sc); OF_3D.women.push(OFX_AR.women[4].d3);
+OF_VIS.children.push(OF_VIS_POOL.children[4]); OF_SC.children.push(OFX_AR.children[4].sc); OF_3D.children.push(OFX_AR.children[4].d3);
+
 function ofScene(k){
   const M="#6FDDB4", T="#3FA0B0", W="#fff", A="#F2B84B", L="rgba(255,255,255,.14)";
   const defs=`<defs><linearGradient id="og1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9CF2D2"/><stop offset="1" stop-color="#2A9DA8"/></linearGradient><radialGradient id="og2"><stop offset="0" stop-color="#6FDDB4" stop-opacity=".55"/><stop offset="1" stop-color="#6FDDB4" stop-opacity="0"/></radialGradient><filter id="ogb" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter></defs>`;
@@ -6085,13 +6442,9 @@ function fitGlass(root){
   ON_LEAVE.push(() => ro.disconnect());
   apply();
 }
-/* "What we offer" (the layout of the earlier version): the numbered list beside one panel
-   that shows the active item's illustration and sample insight. On wide screens the panel
-   stays in view beside the list, and the item passing the middle of the screen becomes the
-   active one as the reader scrolls; hovering, focusing or clicking an item selects it too.
-   Only the active item's layer is displayed, so only its illustration animates. On phones
-   every item carries its own illustration under its text instead. */
-function initOfx(sec){
+/* Enterprise keeps the earlier behaviour of this section (hover / focus / click, and the item passing the middle of
+   the screen while scrolling); every item carries its own icon panel on phones */
+function initOfxLegacy(sec){
   if (!sec) return;
   const items = [...sec.querySelectorAll(".ofx-item")], layers = [...sec.querySelectorAll(".ofx-layer")];
   const panel = sec.querySelector(".ofx-panel"), narrow = matchMedia("(max-width: 900px)");
@@ -6138,6 +6491,119 @@ function initOfx(sec){
   ON_LEAVE.push(() => { io.disconnect(); narrow.removeEventListener("change", arrange); layers.forEach(l => clearTimeout(l._t)); });
   arrange();
 }
+/* "ماذا تقدم لك ملهم؟" - SCROLL-DRIVEN. One item is open at a time (its icon lit, its hook and details unfolded)
+   and the panel shows that item's own scene and sample card; which item it is follows the reader's ordinary
+   scrolling - no hover, no clicking needed, no autoplay, no scroll hijacking.
+   - Wide screens: the list and the panel are pinned together under the top bar (position:sticky) while the
+     section's track gives them five short scroll stages; the reader's progress through the track picks the
+     item. Each boundary has a small dead zone (HYS) so it cannot flicker back and forth.
+   - Phones and tablets (<= 900px): nothing is pinned. Each item carries its own visual, and the item whose
+     heading has passed a line ~40% down the screen is the open one. When an item above the reader collapses
+     (or one above opens, scrolling back up) the page is shifted by exactly that amount, so what the reader is
+     looking at never jumps; only changes below that point are animated.
+   - Clicking or focusing an item (keyboard) scrolls to its stage instead of overriding the scroll.
+   - Reduced motion: nothing depends on scrolling; every item is shown open with its own visual. */
+function initOfx(sec){
+  if (!sec) return;
+  const items = [...sec.querySelectorAll(".ofx-item")], layers = [...sec.querySelectorAll(".ofx-layer")];
+  const N = items.length, panel = sec.querySelector(".ofx-panel"), track = sec.querySelector(".ofx-track"), grid = sec.querySelector(".ofx-pinbox");
+  const narrow = matchMedia("(max-width: 900px)"), reduce = prefersReduced();
+  const HYS = .16;
+  let cur = 0, mode = null, raf = 0, stage = 300, pinTop = 80;
+  const barH = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--bar-h")) || 64;
+  const setLayer = (l, on) => {
+    clearTimeout(l._t);
+    if (on){
+      l.hidden = false; sec._fitGlass && sec._fitGlass(l.querySelector(".mpo-vis"));
+      requestAnimationFrame(() => requestAnimationFrame(() => l.classList.add("on")));
+    } else {
+      l.classList.remove("on");
+      l._t = setTimeout(() => { if (!l.classList.contains("on")) l.hidden = true; }, 480);
+    }
+  };
+  const mark = i => items.forEach((it, k) => { it.classList.toggle("on", k === i); it.setAttribute("aria-current", k === i ? "step" : "false"); });
+  const show = i => {
+    if (i === cur) return;
+    if (mode === "flow"){
+      /* keep what the reader sees still: measure the lower of the two items before and after the change */
+      const anchor = items[Math.max(cur, i)], above = items[Math.min(cur, i)];
+      const before = anchor.getBoundingClientRect().top;
+      above.classList.add("ofx-snap");
+      cur = i; mark(i);
+      layers.forEach((l, k) => { if (k === i){ clearTimeout(l._t); l.hidden = false; l.classList.add("on"); } else setLayer(l, false); });
+      const d = anchor.getBoundingClientRect().top - before;
+      if (Math.abs(d) > .5) window.scrollBy(0, d);
+      requestAnimationFrame(() => requestAnimationFrame(() => above.classList.remove("ofx-snap")));
+      return;
+    }
+    cur = i; mark(i);
+    layers.forEach((l, k) => setLayer(l, k === i));
+  };
+  /* the active item from the scroll position */
+  const update = () => {
+    raf = 0;
+    if (!sec.isConnected){ stop(); return; }
+    if (mode === "pin"){
+      const raw = Math.max(0, Math.min(N - 1, (pinTop - track.getBoundingClientRect().top)/stage));
+      if (raw > cur + .5 + HYS) show(Math.min(N - 1, Math.floor(raw + .5 - HYS)));
+      else if (raw < cur - .5 - HYS) show(Math.max(0, Math.ceil(raw - .5 + HYS)));
+    } else if (mode === "flow"){
+      const line = innerHeight*.4;
+      let k = 0; items.forEach((it, j) => { if (it.getBoundingClientRect().top <= line) k = j; });
+      /* one item at a time (each change keeps the view still), then look again on the next frame */
+      if (k > cur){ show(cur + 1); onScroll(); }
+      else if (k < cur && items[cur].getBoundingClientRect().top > line + 40){ show(cur - 1); onScroll(); }
+    }
+  };
+  const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+  /* the track's length: the pinned block plus one stage per further item */
+  const measure = () => {
+    if (mode !== "pin") { track.style.height = ""; return; }
+    pinTop = barH() + 12;
+    stage = Math.round(Math.max(240, Math.min(380, innerHeight*.38)));
+    /* plus half a stage after the last item, so the fifth visual is held as long as the others */
+    track.style.height = (grid.offsetHeight + (N - .5)*stage) + "px";
+  };
+  const arrange = () => {
+    if (!sec.isConnected){ stop(); return; }
+    const m = reduce ? "still" : narrow.matches ? "flow" : "pin";
+    if (m === mode) { measure(); return; }
+    mode = m;
+    sec.classList.toggle("ofx-pin", m === "pin"); sec.classList.toggle("ofx-flow", m === "flow"); sec.classList.toggle("ofx-still", m === "still");
+    layers.forEach((l, k) => {
+      clearTimeout(l._t);
+      (m === "pin" ? panel : items[k].querySelector(".ofx-slot")).appendChild(l);
+      const on = m === "still" || k === cur; l.hidden = !on; l.classList.toggle("on", on);
+    });
+    if (m === "still") items.forEach(it => { it.classList.add("on"); it.removeAttribute("aria-current"); });
+    else mark(cur);
+    layers.forEach(l => sec._fitGlass && sec._fitGlass(l.querySelector(".mpo-vis")));
+    measure(); onScroll();
+  };
+  /* click or keyboard: go to that item's place in the scroll (the scroll stays in charge) */
+  const goTo = i => {
+    if (mode === "pin"){
+      const y = scrollY + track.getBoundingClientRect().top - pinTop + (i + .25)*stage;
+      window.scrollTo({top:y, behavior:"smooth"});
+    } else if (mode === "flow"){
+      const y = scrollY + items[i].getBoundingClientRect().top - innerHeight*.4 + 2;
+      if (i !== cur) window.scrollTo({top:y, behavior:"smooth"});
+    }
+  };
+  items.forEach((it, i) => {
+    it.addEventListener("click", e => { if (e.target.closest(".ofx-slot")) return; goTo(i); });
+    it.addEventListener("keydown", e => { if (e.target === it && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); goTo(i); } });
+    it.addEventListener("focus", () => { if (it.matches(":focus-visible")) goTo(i); });
+  });
+  const ro = new ResizeObserver(() => { measure(); onScroll(); });
+  ro.observe(grid);
+  addEventListener("scroll", onScroll, {passive:true});
+  addEventListener("resize", arrange);
+  narrow.addEventListener("change", arrange);
+  function stop(){ cancelAnimationFrame(raf); ro.disconnect(); removeEventListener("scroll", onScroll); removeEventListener("resize", arrange); narrow.removeEventListener("change", arrange); layers.forEach(l => clearTimeout(l._t)); }
+  ON_LEAVE.push(stop);
+  arrange();
+}
 
 var OF3D_IO = null;      /* watches the package page's scenes until each has been created */
 /* clean-ups for the screen that is showing: observers and listeners that would otherwise keep a
@@ -6148,7 +6614,7 @@ var ON_LEAVE = [];
 /* the approved look of the Enterprise artwork's particles, shared by the homepage card and the Enterprise
    hero so they cannot drift apart: dots in the package figures' mint-white, brighter, with a soft glow;
    the faint haze left out; the same edge fade and idle motion. Only sizes differ per instance. */
-const ENT_ART_LOOK = {tint:[220, 253, 237], glowTint:[147, 216, 200], gain:1.35, glow:.15, minAlpha:.17, fade:.62, idle:.1};
+const ENT_ART_LOOK = {tint:[220, 253, 237], glowTint:[147, 216, 200], gain:1.35, glow:.15, minAlpha:.17, fade:.62, idle:.12, wave:.085};
 const ENT_ART = {src:"assets/enterprise/saudi-people-landmarks-", bg:[0, 40, 51],
   alt:{ar:"خمسة أشخاص ومعالم سعودية متداخلة مرسومة بنقاط تركوازية مضيئة", en:"Five people and Saudi landmarks drawn in glowing turquoise points"}};
 /* ---- the four package characters (Athletes, Men, Women, Children): the supplied artwork (assets/characters/,
@@ -6161,21 +6627,123 @@ const ENT_ART = {src:"assets/enterprise/saudi-people-landmarks-", bg:[0, 40, 51]
    anim: the moving parts (see initArtParticles: groups = a mask of the parts; piv = the ball's centre or the
    rope's hands line; r = the ball's radius; piv2 = the kicking knee and the back leg's knee - fractions of the artwork) */
 const CHR_GLOW = [147, 216, 200];
+/* a version stamp on the characters' images and masks, so an updated artwork is never served from a stale cache */
+const CHR_V = "20261105t";
 const CHR_ART = {
-  athletes:{ar:589/1000, glow:CHR_GLOW, anim:{mode:2, groups:"assets/characters/athletes-groups.png", piv:[.7295, .916], r:.056, piv2:[.4924, .815, .382, .65]}},
-  men:     {ar:573/1000, glow:CHR_GLOW},
-  women:   {ar:526/1000, glow:CHR_GLOW},
-  children:{ar:701/1000, glow:CHR_GLOW, anim:{mode:1, groups:"assets/characters/children-groups.png", piv:[0, .49]}}
+  /* sideroom: the room to his right (on the card's empty side) where the kicked ball flies before it fades */
+  /* Athletes (Nov 2026, the approved 30-frame storyboard): a side-view runner made from 30 key poses (assets/characters/athletes-run/,
+     rebuilt from the storyboard by source/athletes-run/: cleaned of its labels, registered on one ground line and head position,
+     re-toned) - see initArtParticles, o.poses. ar: width/height of a pose; img: the still (reduced motion); sideroom: where the
+     kicked ball flies */
+  athletes:{ar:156/144, glow:CHR_GLOW, img:"athletes-run/still.webp", sideroom:.45,
+    poses:{dir:"assets/characters/athletes-run/", n:30, cols:6, tw:312, th:288, ch:144, T:2.4, ball:{r:14, contact:22, path:[[111.5,117.0],[108.0,117.0],[103.0,117.0],[109.0,117.0],[94.0,120.0],[107.3,116.5],[108.3,117.6],[83.8,117.6],[71.5,118.6],[98.1,118.6],[102.0,120.0],[104.0,121.0],[101.0,120.0],[98.0,120.0],[98.0,121.0],[99.2,121.5],[96.1,121.5],[83.7,120.5],[85.7,120.5],[110.5,120.5],[115.7,120.5],[116.7,117.4],[117.7,124.6],[162.1,96.8],[212.7,65.8]]}}},
+  /* Men: the image approved on 4 Nov (source/men-v3-supplied.webp), cut out of its blue backdrop (men-v3-cutout.py).
+     All four figures are then drawn in the Enterprise artwork's dot language by source/stipple.py */
+  /* still: Men is a still particle illustration (Nov 2026) - no motion of any kind, see initArtParticles o.still */
+  men:     {ar:550/1000, glow:CHR_GLOW, still:true, anim:{mode:4, piv:[0, 0]}},
+  /* Women: the supplied artwork (mulhim_women_animated_hair.html), cut out of its backdrop; its hair moves as in
+     the supplied animation (mode 3). crop: where the cut-out sits in the supplied 1086 x 1448 image */
+  /* Women (Nov 2026, the approved 40-frame storyboard "Raise Hand & Hair Movement"): 40 key poses (assets/characters/women-pose/,
+     rebuilt from the storyboard by source/women-pose/ - cleaned, every frame registered on her torso, and her torso, waist and hips
+     LOCKED to one shared shape in all 40 (only the arm's sweep and the head and hair come from each frame), re-toned to her approved
+     dot finish), played slowly (5.6 s) with a soft exchange between poses (x: .14) */
+  women:   {ar:112/162, glow:CHR_GLOW, img:"women-pose/still.webp",
+    poses:{dir:"assets/characters/women-pose/", n:40, cols:8, tw:224, th:324, ch:162, T:5.6, x:.14, add:true}},
+  /* headroom: the room above her head that the rope sweeps through at the top of its turn */
+  children:{ar:701/1000, glow:CHR_GLOW, headroom:.1, anim:{mode:1, groups:"assets/characters/children-groups.png?v=20261104", piv:[0, .49], grow:{1:4}}}
 };
+/* THE CHARACTERS' SKELETONS (Nov 2026, articulated motion). The artwork is one still image made into particles, so to make
+   a figure really move it is rigged like an animated character: a few bones (torso, head, upper arm, forearm, thigh,
+   shin ...) laid on the drawn joints; every particle is bound to the bone it belongs to (the nearest bone within that
+   bone's reach, the rest to the body), and near a joint it blends between the two bones, so elbows, knees and the neck
+   bend instead of tearing. Each frame pose(t) gives every bone an angle (and the body a lift), the bones' transforms are
+   chained parent to child, and the GPU moves each particle with its bones. Positions are fractions of the artwork
+   (x of its width, y of its height); r (reach) and z (the joint's blend zone) are fractions of its height. One rhythm for
+   all four: a 3.7 s phrase (half the shared 7.4 s breath) - the runner's cycle, the woman's and the man's head, two rope turns.
+   grp: parts that move as one piece (the ball). rope: the skipping rope's two ends, carried by the hands. */
+const sm = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a)/(b - a))); return t*t*(3 - 2*t); };
+/* the Children rope's angle through one turn (0 under the feet, 180 over the head), read from the approved 12-frame reference:
+   one key per frame (every 1/12 of the turn), joined smoothly (a periodic Catmull-Rom curve) - slow low around the feet, a quick
+   sweep over the head */
+const ROPE_KEYS = [0, 15, 42, 70, 86, 122, 180, 238, 268, 300, 330, 350];
+const ropeAngle = u => { const n = ROPE_KEYS.length, x = u*n, i = Math.floor(x) % n, f = x - Math.floor(x);
+  const k = j => ROPE_KEYS[(j % n + n) % n] + 360*Math.floor(j/n);
+  const p0 = k(i - 1), p1 = k(i), p2 = k(i + 1), p3 = k(i + 2);
+  const d = .5*(2*p1 + (p2 - p0)*f + (2*p0 - 5*p1 + 4*p2 - p3)*f*f + (3*p1 - p0 - 3*p2 + p3)*f*f*f);
+  return d*Math.PI/180; };
+/* the Athletes ball through the 30 storyboard frames (f: 0..30, in frames): it follows the storyboard's own path, smoothed, up to the
+   contact (frame 23 - the moment his foot meets it), exactly where the storyboard draws it in each frame (the poses were cut
+   around it there), rolling as it goes; then it flies off along the storyboard's next two points and
+   on (its sideways travel shortened to the card's width, falling a little), spinning, with a short trail, fading as it
+   leaves the illustration; from frame 27 a new ball gathers from
+   scattered dots at the start of the path, whole again as the loop begins. Returns its centre (pose units), spin, light, gathering */
+const posesBall = (B, f, n) => { const P = B.path, C = B.contact, r = B.r;
+  const cr = (i, t) => { const q = j => P[Math.max(0, Math.min(C, j))], p0 = q(i - 1), p1 = q(i), p2 = q(i + 1), p3 = q(i + 2);
+    return [0, 1].map(c => .5*(2*p1[c] + (p2[c] - p0[c])*t + (2*p0[c] - 5*p1[c] + 4*p2[c] - p3[c])*t*t + (3*p1[c] - p0[c] - 3*p2[c] + p3[c])*t*t*t)); };
+  let x, y, a = 1, g = 1;
+  if (f <= C){ const i = Math.floor(f), t = f - i; [x, y] = cr(i, t); }
+  else { const q = f - C, v1 = [P[C + 1][0] - P[C][0], P[C + 1][1] - P[C][1]], v2 = [P[C + 2][0] - P[C + 1][0], P[C + 2][1] - P[C + 1][1]];
+    x = P[C][0] + (v1[0]*q + (v2[0] - v1[0])*q*q*.5)*.6; y = P[C][1] + (v1[1]*q + (v2[1] - v1[1])*q*q*.5)*.8 + 3*q*q;
+    a = 1 - sm(1.3, 2.6, q); }
+  if (f >= n - 3.4){ g = sm(n - 3.4, n - .2, f); a = 1; [x, y] = P[0]; }
+  else if (f > C + 2.6){ a = 0; }
+  return {x, y, a, g, spin:(x - P[0][0])/r}; };
+const CHR_RIG = {
+  /* Men: a calm, confident presence - his weight shifts from one side to the other (the upper body sways on the waist,
+     the shoulder rolling with it, the arm hanging from it), his head lifts and turns a little against the sway */
+  men:{bones:[
+    {j:[.55,.98], e:[.55,.9], r:0, p:-1},             /* 0 the base */
+    {j:[.55,.66], e:[.58,.36], r:.36, z:.12, p:0},    /* 1 upper body and shoulders */
+    {j:[.3,.42], e:[.24,.78], r:.13, z:.06, p:1},     /* 2 the arm, from the shoulder */
+    {j:[.58,.31], e:[.63,.08], r:.2, z:.035, p:1}],   /* 3 neck and head */
+    pose(t){ const w = 2*Math.PI*t/3.7, l = .5 - .5*Math.cos(w);
+      return {tx:.005*Math.sin(w), a:[0, -.05*Math.sin(w) - .035, .07*Math.sin(w + .6), -.15*l + .04*Math.sin(w)]}; }},
+  /* Women: no skeleton - her motion is local, in the shader (mode 3): the hair map (women-hair.png) is a soft area that also covers
+     her shoulder and the top of her arm, so turning it as bones carried part of her shoulder and arm onto her chest (fixed 5 Nov) */
+  /* Children: skipping rope - the rope turns all the way round her, two turns per phrase: under her feet at the top of her
+     hop, up behind her and high over her head while she lands (the body dips, the legs straighten), and
+     down in front again as she springs; the rope's ends stay in her hands, her wrists turning it */
+  children:{rope:{l:[.07,.49, 4], r:[.945,.52, 6], top:1.3}, bones:[
+    {j:[.5,.55], e:[.5,.5], r:0, p:-1},               /* 0 the body */
+    {j:[.5,.52], e:[.52,.22], r:.16, z:.05, p:0},     /* 1 torso */
+    {j:[.5,.2], e:[.52,.05], r:.13, z:.03, p:1},      /* 2 head */
+    {j:[.38,.27], e:[.25,.37], r:.05, z:.03, p:1},    /* 3 left upper arm */
+    {j:[.25,.37], e:[.08,.47], r:.06, z:.03, p:3},    /* 4 left forearm, hand and the rope's handle */
+    {j:[.66,.26], e:[.74,.37], r:.05, z:.03, p:1},    /* 5 right upper arm */
+    {j:[.74,.37], e:[.93,.49], r:.06, z:.03, p:5},    /* 6 right forearm, hand and the rope's handle */
+    {j:[.52,.56], e:[.5,.67], r:.1, z:.04, p:0},      /* 7 thighs */
+    {j:[.49,.67], e:[.42,.86], r:.11, z:.035, p:7},   /* 8 shins and feet */
+    {j:[.4,.09], e:[.2,.16], r:.1, z:.05, p:2}],      /* 9 the ponytail */
+    /* the approved 12-frame reference: one turn every 1.85 s, the rope lingering low around her feet and sweeping quickly
+       over the top (its angle: ropeAngle, keyed on the reference's frames) - under the feet at 0 s, rising behind (.31-.46 s), level
+       with the hands (.62 s), over the head at the top of its turn (.92 s), down in front (1.08-1.23 s), at her knees (1.38 s)
+       and under the feet again (1.54-1.85 s). air: 1 at the top of the hop (the rope under her feet), 0 as she lands (the rope
+       overhead) - she tucks her knees and feet up as it passes beneath, lands with straight legs and a soft bend, and her
+       ponytail lifts as she drops and settles as she rises */
+    pose(t){ const u = t/1.85 % 1, th = ropeAngle(u), c = Math.cos(th), sn = Math.sin(th);
+      const air = Math.pow(.5 + .5*c, .6), land = 1 - air, pl = .5 - .5*Math.cos(th - .7);
+      return {ty:.04 - .065*air, rope:c, a:[0, .04*land, .05*land, .1*sn, .14*Math.sin(th + .5), -.1*sn, -.14*Math.sin(th + .5),
+        .1*air - .12*land, .2*air - .4*land, .2*pl - .06]}; }}};
 /* the same look as ENT_ART_LOOK; the faint glow trails around the figures are kept (a lower floor), no edge fade */
-const CHR_ART_LOOK = {alpha:true, gain:1.3, glow:.14, minAlpha:.08, fade:2, idle:.1};
+const CHR_ART_LOOK = {alpha:true, dots:true, gain:1.5, glow:.3, minAlpha:.08, fade:2, idle:.12};
+/* one particle language for all five figures (the Enterprise artwork is the reference): the same brightness, glow,
+   particle size, pointer response, drift, twinkle and travelling light. CHR_LEVEL evens out the light: Athletes and
+   Children are drawn with denser, fuller strokes than the others, so they are dimmed to the same overall glow */
+const CHR_LEVEL = {athletes:1.2, men:1.2, women:1.15, children:.72};
+const ART_CARD = {cell:2.2, radius:48, push:1.9}, ART_HERO = {cell:2.7, radius:66, push:2.2};
+/* the characters' round dots sit a little further apart than the Enterprise patches, so each reads as a dot */
+const DOT_CARD = {cell:2, dotSize:1.15, dotLift:.62, glow:.42, gain:1.8}, DOT_HERO = {cell:3.3, dotSize:1, dotLift:.45, glow:.26, gain:1.3};
 /* the cards keep each package's own colour (dots and glow); inside the package pages the figures are in Mulhim's mint */
 const CHR_CARD_TINT = {athletes:[[220, 253, 237], [147, 216, 200]], men:[[165, 216, 255], [118, 184, 255]],
   women:[[255, 214, 231], [255, 150, 196]], children:[[255, 236, 170], [255, 206, 96]]};
+/* on the cards the dots are a light, almost white version of the package colour (so they shine on the coloured card,
+   as the Enterprise dots do), and the glow around them carries the package colour itself */
+const chrLight = c => c.map(v => Math.round(v + (255 - v)*.3));
 const chrArtLook = (id, card) => ({...CHR_ART_LOOK, glowTint:card ? CHR_CARD_TINT[id][1] : CHR_ART[id].glow,
-  tint:card ? CHR_CARD_TINT[id][0] : null, anim:CHR_ART[id].anim, wave:.07});
-const chrArtHTML = id => `<div class="chr-art" style="--ar:${CHR_ART[id].ar}">
-  <img src="assets/characters/${id}.webp" width="${Math.round(CHR_ART[id].ar*1000)}" height="1000" alt="" decoding="async" draggable="false">
+  tint:card ? chrLight(CHR_CARD_TINT[id][0]) : null, anim:CHR_ART[id].anim, still:!!CHR_ART[id].still, rig:CHR_RIG[id], poses:CHR_ART[id].poses ? {...CHR_ART[id].poses, v:CHR_V} : null, headroom:CHR_ART[id].headroom || 0, sideroom:card ? CHR_ART[id].sideroom || 0 : 0,   /* the ball's flight room: on the card only (in the package hero it would cross the text) */
+  wave:.085, level:CHR_LEVEL[id], tone:CHR_ART[id].poses ? null : `assets/characters/${id}-tone.webp?v=${CHR_V}`});
+const chrArtHTML = id => `<div class="chr-art" data-chr="${id}" style="--ar:${CHR_ART[id].ar}">
+  <img src="assets/characters/${CHR_ART[id].img || id + ".webp"}?v=${CHR_V}" width="${Math.round(CHR_ART[id].ar*1000)}" height="1000" alt="" decoding="async" draggable="false">
   <canvas class="ent-art-cv" aria-hidden="true"></canvas></div>`;
 /* THE ARTWORK AS PARTICLES - shared by the Enterprise hero and the Enterprise card on the homepage.
    The supplied artwork is a raster image (its dots are baked in), so it is cut into real particles:
@@ -6194,43 +6762,117 @@ function initArtParticles(wrap, o = {}){
   if (!img || !cv || prefersReduced()) return null;
   const gl = cv.getContext("webgl", {alpha:true, premultipliedAlpha:true, antialias:false, depth:false, stencil:false});
   if (!gl) return null;
-  const CELL = o.cell || 3, R = o.radius || 64, PUSH = o.push || 2.2, AMP = o.idle ?? .2, FADE = o.fade ?? .62, MIN_A = o.minAlpha ?? .07, BG = ENT_ART.bg;
+  const DOT_K = o.dotGain || 1.5;
+  const CELL = o.cell || 3, R = o.radius || 64, PUSH = o.push || 2.2, AMP = o.still ? 0 : o.idle ?? .2, FADE = o.fade ?? .62, MIN_A = o.minAlpha ?? .07, BG = ENT_ART.bg;
   /* o.tint (an [r,g,b]): the dots in one colour (each keeps its own brightness from the artwork), as the
      package figures' dots; o.gain: brighter dots; o.glow: a soft light around every dot (additive) */
   const TINT = o.tint || null, GAIN = o.gain || 1, GLOW = o.glow || 0;
   /* o.alpha: the artwork is a cut-out with real transparency (the package characters, already in their
      package colour), so a dot's light is the image's own alpha and colour; o.glowTint: the glow's colour */
-  const ALPHA = !!o.alpha, GTINT = o.glowTint || TINT || [255, 255, 255], ANIM = o.anim || null, WAVE = o.wave || 0;
+  /* o.headroom: room above the artwork (a fraction of its height) where moving parts may go - the canvas reaches that far above
+     the image's box; everything is still placed in the image's own coordinates */
+  const HR = o.headroom || 0, RR = o.sideroom || 0;
+  if (HR){ cv.style.top = -HR*100 + "%"; cv.style.height = (1 + HR)*100 + "%"; }
+  /* o.sideroom: the same, to the right of the artwork (a fraction of its width) - where the kicked ball flies */
+  if (RR){ cv.style.width = (1 + RR)*100 + "%"; cv.style.left = "0"; cv.style.right = "auto"; }   /* to the right in both directions of text */
+  const DOTS = !!o.dots, ALPHA = !!o.alpha, GTINT = o.glowTint || TINT || [255, 255, 255], ANIM = o.anim || null, WAVE = o.still ? 0 : o.wave || 0, RIG = o.still ? null : o.rig || null;
+  /* o.still (Men, Nov 2026): a still particle illustration - the dots drawn once, exactly as the artwork (no skeleton, drift, twinkle,
+     breath, sparkle or travelling light: the time is held at 0, where all of those rest), redrawn only when the size changes; the
+     pointer does not scatter it */
+  const STILL = !!o.still;
+  let RB = null; const BM = new Float32Array(48), BT = new Float32Array(24);
+  /* o.poses: a figure made of KEY POSES (the Athletes runner, from the approved 30-frame storyboard) - each pose is its own set of
+     round dots, sampled from that pose's tone image (one tile of poses.webp) at the current dot size; each dot also carries where
+     its part of the body goes in the next pose and where it came from in the previous one (flow-next.png, flow-prev.png: the
+     measured motion between the storyboard frames, 4 steps per pose-height unit around 128). Between two poses the outgoing dots
+     travel along their motion toward the next pose and the incoming dots arrive along theirs, the two sets exchanging in a brief
+     moment halfway (no long cross-fade, so no double limbs); the ball is a piece of its own, following the storyboard's path */
+  const POSE = o.poses || null; let pimg = null, fnimg = null, fpimg = null, bimg = null, KS = [], KC = [], NB0 = 0, NBALL = 0;
+  const ld = u => { const m = new Image(); m.decoding = "async"; m.src = u; return m; };
+  if (POSE){ const v = "?v=" + (POSE.v || ""); pimg = ld(POSE.dir + "poses.webp" + v); fnimg = ld(POSE.dir + "flow-next.png" + v);
+    fpimg = ld(POSE.dir + "flow-prev.png" + v); if (POSE.ball) bimg = ld(POSE.dir + "ball.webp" + v); }
   let gimg = null;
   if (ANIM && ANIM.groups){ gimg = new Image(); gimg.decoding = "async"; gimg.src = ANIM.groups; }
+  /* o.tone (with o.dots): the figure's shading, sharpened, that sets each round dot's size and light */
+  let timg = null;
+  if (o.tone && !POSE){ timg = new Image(); timg.decoding = "async"; timg.src = o.tone; }
   /* o.anim (the package characters): each particle belongs to a part of the artwork (a_grp, from a mask:
      0 the figure, 1 a rope, 2 a ball, 3 the kicking shin and foot, 4 the other leg) that moves on its own -
      mode 1 skipping: the rope swings over and under while the girl lifts and tucks her legs as it passes
      beneath; mode 2 a shot: the shin winds back from the knee and strikes, the ball shoots forward spinning
      and rolls back, the back leg follows through (Meeting 3, round 3: all of it gentle - a small rope sway and
      bounce, a light tap of the ball). o.wave: a soft band of light travelling slowly up the figure */
-  const VS = `attribute vec2 a_base,a_off,a_uv; attribute vec3 a_misc; attribute float a_grp; uniform vec2 u_res; uniform float u_t,u_dpr,u_amp,u_cell,u_size,u_mode,u_wave; uniform vec3 u_piv; uniform vec4 u_piv2; varying vec2 v_uv; varying float v_a,v_m,v_g;
+  const VS = `attribute vec2 a_base,a_off,a_uv; attribute vec3 a_misc,a_rig; attribute float a_grp; uniform vec4 u_bm[12],u_rp,u_rp0,u_bl,u_bl2; uniform vec2 u_bt[12],u_bc; uniform float u_bf,u_pm,u_ps,u_pa,u_bsp,u_bga; uniform vec2 u_bp,u_bc0; attribute vec2 a_fl; uniform float u_rig,u_rc,u_rtop,u_top,u_ch,u_cw; uniform vec2 u_res; uniform float u_t,u_dpr,u_amp,u_cell,u_size,u_mode,u_wave,u_dots,u_dsz; uniform vec3 u_piv; uniform vec4 u_piv2,u_crop; varying vec2 v_uv; varying float v_a,v_m,v_g,v_i;
     vec2 rot(vec2 p, vec2 c, float a){ vec2 d=p-c; float co=cos(a), sn=sin(a); return c+vec2(d.x*co-d.y*sn,d.x*sn+d.y*co); }
     bool part(float k){ return abs(a_grp-k)<.5; }
+    vec2 xf(int i, vec2 p){ vec4 m=u_bm[i]; return vec2(m.x*p.x+m.z*p.y, m.y*p.x+m.w*p.y)+u_bt[i]; }
     void main(){ float ph=a_misc.x; vec2 idle=vec2(sin(u_t*.9+ph*6.283),cos(u_t*.75+ph*4.1))*u_amp;
-      vec2 b=a_base; float vis=1.;
-      if (u_mode>.5 && u_mode<1.5){ float q=u_t*1.7, c=.5+.5*cos(q), jy=u_res.y*.007*c*c;
-        b.y-=jy;
-        if (part(4.)) b.y-=u_res.y*.004*c*c;
-        if (part(1.)){ float hy=u_piv.y-jy; b.y=hy+(b.y-hy)*(.9+.1*cos(q)); } }
-      if (u_mode>1.5){ float u=fract(u_t/3.4), R=u_piv.z, sw=sin(6.2832*u);
-        float bx=R*.32*max(0.,-sin(6.2832*(u-.1)));
-        if (part(2.)) b=rot(b,u_piv.xy,bx/R)+vec2(bx,0.);
-        if (part(3.)) b=rot(b,u_piv2.xy,.085*sw);
-        if (part(4.)) b=rot(b,u_piv2.zw,-.035*max(0.,-sw)); }
-      vec2 p=b+a_off+idle; gl_Position=vec4(p.x/u_res.x*2.-1.,1.-p.y/u_res.y*2.,0.,1.);
-      gl_PointSize=u_cell*u_dpr*u_size*(1.-min(length(a_off)*.006,.3));
+      vec2 b=a_base; float vis=1.; vec2 pn=a_base/u_res;
+      /* the articulated motion (o.rig, CHR_RIG): each particle moves with its bone, blended with the parent bone near the
+         joint (a_rig: the two bones and the blend). Children's rope (part 1) is carried by the hands instead: each of its
+         particles keeps its place along the rope (s, between the two ends) and its drop from the line between the hands,
+         and that drop turns with the rope (u_rc, the cosine of its angle: 1 under the feet, -1 over the head, where it
+         reaches u_rtop of its length and narrows a little, a rope swung overhead); seen edge-on it softens a little */
+      if (u_rig>.5){
+        if (u_mode>.5 && u_mode<1.5 && part(1.)){ vec2 L0=u_rp0.xy, R0=u_rp0.zw, ch=R0-L0; float s=clamp(dot(a_base-L0,ch)/dot(ch,ch),0.,1.);
+          vec2 o=a_base-mix(L0,R0,s), mid=(u_rp.xy+u_rp.zw)*.5; float up=max(0.,-u_rc), dp=clamp(o.y/(u_res.y*.47),0.,1.);
+          b=mix(u_rp.xy,u_rp.zw,s)+vec2(o.x,o.y*(u_rc>0. ? u_rc : u_rc*u_rtop));
+          b.x=mid.x+(b.x-mid.x)*(1.-.06*up*smoothstep(.12,1.,dp))*(1.-.05*smoothstep(0.,u_res.y*.07,o.y));
+          vis*=mix(1.,.6+.4*smoothstep(0.,.5,abs(u_rc)),smoothstep(0.,u_res.y*.07,o.y)); }
+        /* the Athletes ball (part 2): its own piece - at rest by his foot until the kick, then flying off spinning and
+           fading (u_bl: offset, spin, light); a few of its dots follow its path a moment behind, fainter (u_bl2, the
+           same a moment earlier: a short trail); after the kick a new ball gathers from scattered dots (u_bf: 0..1) */
+        else if (u_mode>1.5 && u_mode<2.5 && part(2.)){ float tr=step(.64,fract(ph*13.)); vec4 S=mix(u_bl,u_bl2,tr);
+          float ga=ph*41., gr=u_res.y*.11*(1.-u_bf)*(.35+.65*fract(ph*7.3));
+          b=rot(a_base,u_bc,S.z)+S.xy+vec2(cos(ga),sin(ga))*gr;
+          vis*=S.w*mix(1.,.42,tr)*u_bf; }
+        else b=mix(xf(int(a_rig.x+.5),a_base),xf(int(a_rig.y+.5),a_base),a_rig.z); }
+      /* Women (mode 3, no skeleton): everything local and smooth, her shoulders, arms, chest and waist untouched -
+         - the hair's own slow waves, as in the supplied animation ("mulhim_women_animated_hair.html": two slow travelling waves
+           in the original image's coordinates; a_grp = the hair map's weight);
+         - the head: once per 3.7 s she lifts her chin a little (about 5 degrees about the neck) and lowers it; the turn fades out
+           smoothly from the jaw to the neck (pn.y .28 -> .42), so the head and all the hair above her shoulders move as one and
+           nothing below the neckline moves;
+         - the hair's flow: a moment after the lift, the hair beside her neck and above her shoulder drifts outward and a little up,
+           then settles - only hair (the hair map), only above the shoulder line (fading out by pn.y .48), so the locks resting on
+           her shoulder and her shoulder itself stay where they are drawn */
+      if (u_mode>2.5 && u_mode<3.5){ float wg=a_grp, tt=u_t*.75; vec2 pf=u_crop.xy+(a_base/u_res)*u_crop.zw;
+        float wv1=sin(tt*1.08-pf.y*13.+pf.x*3.5), wv2=sin(tt*.67-pf.y*8.+.4);
+        b+=vec2(wg*(.0064*wv1+.0032*wv2)*u_res.x/u_crop.z, wg*(.0035*sin(tt-pf.y*10.+.6)+.0008)*u_res.y/u_crop.w);
+        float hT=u_t*1.698, lf=.5-.5*cos(hT), hw=smoothstep(.42,.28,pn.y);
+        b=rot(b,u_res*vec2(.44,.36),.085*lf*hw); b.y-=u_res.y*.006*lf*hw;
+        float fl=.5-.5*cos(hT-.7), tw=wg*smoothstep(.14,.32,pn.y)*smoothstep(.48,.38,pn.y)*smoothstep(.5,.62,pn.x);
+        b+=tw*fl*vec2(u_res.x*.035,-u_res.y*.012); }
+      /* o.poses: a dot of a key pose, carried along its part's motion (u_ps of the way) and faded in or out (u_pa); or (u_pm 2) a dot
+         of the ball, turned by its spin about its centre and carried to where the ball is (u_bp), gathering from scattered dots
+         after the kick (u_bga) */
+      if (u_pm>.5 && u_pm<1.5){ b=a_base+a_fl*u_ps; vis*=u_pa; }
+      else if (u_pm>1.5){ float ga=ph*41., gr=u_res.y*.12*(1.-u_bga)*(.35+.65*fract(ph*7.3));
+        b=rot(a_base,u_bc0,u_bsp)-u_bc0+u_bp+vec2(cos(ga),sin(ga))*gr; vis*=u_pa*u_bga; }
+      /* the package characters come alive (o.dots), all four alike - a slow breath, a soft organic sparkle and
+         one travelling light: hl, a light passing through the dot (brighter, a touch larger) */
+      float hl=0.;
+      if (u_dots>.5){
+        vec2 bc=u_res*vec2(.5,.6); b=bc+(b-bc)*(1.+.0045*sin(u_t*.85));            /* breathing, ~7 s */
+        hl+=.7*pow(max(0.,sin(u_t*.45+ph*61.)),28.);                                 /* now and then a dot flares softly */
+        /* one light for all four: every 8 s a soft light sweeps diagonally across the figure, finding the face,
+           the hair and the body's contours, then fades - the same for every package (one Mulhim spirit) */
+        { float sx=fract(u_t/8.)*1.8-.4, d=pn.x*.9+pn.y*.45-sx; hl+=.6*exp(-d*d/.0045); }
+        vis*=1.+hl; }
+      vec2 p=b+a_off+idle; gl_Position=vec4(p.x/u_cw*2.-1.,1.-(p.y+u_top)/u_ch*2.,0.,1.);
+      gl_PointSize=u_cell*u_dpr*u_size*(1.-min(length(a_off)*.006,.3))*(u_dots>.5 ? (.4+.8*sqrt(a_misc.z))*u_dsz*(1.+.2*min(hl,1.)) : 1.);
       float wv=1.+u_wave*sin((a_base.y+a_base.x*.5)/u_res.y*7.+u_t*1.3);
-      v_uv=a_uv; v_a=a_misc.y*(.88+.12*sin(u_t*1.6+ph*12.))*vis*wv; v_m=min(length(a_off)*.3,1.); v_g=a_misc.z*a_misc.y*vis*wv;}`;
-  const FS = `precision highp float; uniform sampler2D u_tex; uniform vec2 u_cuv; uniform vec3 u_bg,u_tint,u_gtint; uniform float u_mono,u_gain,u_pass,u_glow,u_al; varying vec2 v_uv; varying float v_a,v_m,v_g;
+      v_uv=a_uv; v_a=a_misc.y*(.88+.12*sin(u_t*1.6+ph*12.))*vis*wv; v_m=min(length(a_off)*.3,1.); v_g=a_misc.z*a_misc.y*vis*wv; v_i=a_misc.z*(.84+.32*fract(ph*7.31));}`;
+  const FS = `precision highp float; uniform sampler2D u_tex; uniform vec2 u_cuv; uniform vec3 u_bg,u_tint,u_gtint; uniform float u_mono,u_gain,u_pass,u_glow,u_al,u_lvl,u_dots,u_dlift; varying vec2 v_uv; varying float v_a,v_m,v_g,v_i;
     void main(){
       /* the glow pass: a soft round light around the dot, in the dots' colour */
       if (u_pass>.5){ float r=length(gl_PointCoord-.5); float g=exp(-r*r*14.)*v_g*v_a*u_glow; gl_FragColor=vec4(u_gtint*g,g); return; }
+      /* o.dots (the package characters): every particle is ONE round luminous dot - its size and light are the
+         artwork's light around it, its core a little whiter - the dotted look of the Enterprise artwork and the DNA */
+      if (u_dots>.5){ float r=length(gl_PointCoord-.5); float I=clamp(v_i*u_gain,0.,1.);
+        float a=smoothstep(.5,.16,r)*(u_dlift+(1.-u_dlift)*I)*v_a*u_lvl*(1.+.4*v_m);
+        vec3 col=mix(u_tint,vec3(1.),.42*smoothstep(.32,0.,r)*I);
+        gl_FragColor=vec4(col*a,a); return; }
       vec4 tx=texture2D(u_tex,v_uv+(gl_PointCoord-.5)*u_cuv); vec3 c=tx.rgb*255.;
       float a=clamp(max(max((c.r-u_bg.r)/(255.-u_bg.r),(c.g-u_bg.g)/(255.-u_bg.g)),(c.b-u_bg.b)/(255.-u_bg.b)),0.,1.);
       vec3 col=clamp((c-u_bg*(1.-a))/max(a,.002),0.,255.)/255.;
@@ -6239,6 +6881,8 @@ function initArtParticles(wrap, o = {}){
       float lum=dot(col,vec3(.3,.59,.11)); col=mix(col,u_tint*(.62+.38*smoothstep(.25,.85,lum)),u_mono);
       /* brighter dots, but only real dot light (above a small floor), so the faint edges of a patch never show as a tile */
       if (u_gain>1.){ a=clamp((a-.07)/.93*u_gain,0.,1.); }
+      /* o.level: an overall light level, so denser artworks shine no brighter than the others */
+      a*=u_lvl;
       /* at rest a square (the patches tile into the artwork); once pushed away it rounds into a soft dot */
       float rd=smoothstep(.5,.28,length(gl_PointCoord-.5)); float aa=a*v_a*mix(1.,rd,v_m); gl_FragColor=vec4(col*aa,aa);}`;
   const sh = (t, src) => { const x = gl.createShader(t); gl.shaderSource(x, src); gl.compileShader(x); return x; };
@@ -6246,10 +6890,10 @@ function initArtParticles(wrap, o = {}){
   if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return null;
   gl.useProgram(prog);
   const loc = n => gl.getAttribLocation(prog, n), uni = n => gl.getUniformLocation(prog, n);
-  const A = {base:loc("a_base"), off:loc("a_off"), uv:loc("a_uv"), misc:loc("a_misc"), grp:loc("a_grp")};
+  const A = {base:loc("a_base"), off:loc("a_off"), uv:loc("a_uv"), misc:loc("a_misc"), grp:loc("a_grp"), rig:loc("a_rig"), fl:loc("a_fl")};
   const U = {res:uni("u_res"), t:uni("u_t"), dpr:uni("u_dpr"), amp:uni("u_amp"), cell:uni("u_cell"), cuv:uni("u_cuv"), bg:uni("u_bg"), tex:uni("u_tex"),
-    tint:uni("u_tint"), gtint:uni("u_gtint"), al:uni("u_al"), mono:uni("u_mono"), gain:uni("u_gain"), pass:uni("u_pass"), glow:uni("u_glow"), size:uni("u_size"), mode:uni("u_mode"), wave:uni("u_wave"), piv:uni("u_piv"), piv2:uni("u_piv2")};
-  const bufs = {base:gl.createBuffer(), off:gl.createBuffer(), uv:gl.createBuffer(), misc:gl.createBuffer(), grp:gl.createBuffer()};
+    tint:uni("u_tint"), gtint:uni("u_gtint"), al:uni("u_al"), mono:uni("u_mono"), gain:uni("u_gain"), lvl:uni("u_lvl"), dots:uni("u_dots"), dsz:uni("u_dsz"), dlift:uni("u_dlift"), pass:uni("u_pass"), glow:uni("u_glow"), size:uni("u_size"), mode:uni("u_mode"), wave:uni("u_wave"), piv:uni("u_piv"), piv2:uni("u_piv2"), crop:uni("u_crop"), bm:uni("u_bm[0]"), bt:uni("u_bt[0]"), bl:uni("u_bl"), bl2:uni("u_bl2"), bc:uni("u_bc"), bf:uni("u_bf"), rig:uni("u_rig"), rp:uni("u_rp"), rp0:uni("u_rp0"), pm:uni("u_pm"), ps:uni("u_ps"), pa:uni("u_pa"), bsp:uni("u_bsp"), bga:uni("u_bga"), bp:uni("u_bp"), bc0:uni("u_bc0"), rc:uni("u_rc"), rtop:uni("u_rtop"), top:uni("u_top"), ch:uni("u_ch"), cw:uni("u_cw")};
+  const bufs = {base:gl.createBuffer(), off:gl.createBuffer(), uv:gl.createBuffer(), misc:gl.createBuffer(), grp:gl.createBuffer(), rig:gl.createBuffer(), fn:gl.createBuffer(), fp:gl.createBuffer()};
   gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); gl.clearColor(0, 0, 0, 0);
   let tex = null, N = 0, w = 0, h = 0, dpr = 1, cell = CELL, base, off, vel, rnd, act, actList = [], grid = null, gw = 0, gh = 0, dirty = false;
   let raf = 0, vis = true, alive = true, t0 = performance.now(), hover = null, last = null, builtFor = "";
@@ -6265,7 +6909,8 @@ function initArtParticles(wrap, o = {}){
     gl.uniform1i(U.tex, 0); gl.uniform3f(U.bg, BG[0], BG[1], BG[2]);
     const tn = TINT || [255, 255, 255]; gl.uniform3f(U.tint, tn[0]/255, tn[1]/255, tn[2]/255);
     gl.uniform3f(U.gtint, GTINT[0]/255, GTINT[1]/255, GTINT[2]/255); gl.uniform1f(U.al, ALPHA ? 1 : 0);
-    gl.uniform1f(U.mono, TINT ? 1 : 0); gl.uniform1f(U.gain, GAIN); gl.uniform1f(U.glow, GLOW);
+    gl.uniform1f(U.mono, TINT ? 1 : 0); gl.uniform1f(U.dots, DOTS ? 1 : 0); gl.uniform1f(U.dsz, o.dotSize || 1); gl.uniform1f(U.dlift, o.dotLift ?? .4); if (DOTS && !TINT) gl.uniform3f(U.tint, 220/255, 253/255, 237/255);
+    gl.uniform1f(U.gain, GAIN); gl.uniform1f(U.lvl, o.level ?? 1); gl.uniform1f(U.glow, GLOW);
   };
   /* the patches, for the current size: a whole number of device pixels each, so they tile exactly */
   const build = () => {
@@ -6274,11 +6919,46 @@ function initArtParticles(wrap, o = {}){
     const c = document.createElement("canvas"); c.width = cols*K; c.height = rows*K;
     const x = c.getContext("2d", {willReadFrequently:true}); x.drawImage(img, 0, 0, w/cell*K, h/cell*K);
     const px = x.getImageData(0, 0, cols*K, rows*K).data, cw = cols*K;
+    let tp = null;
+    if (DOTS && timg && timg.complete && timg.naturalWidth){ const tc = document.createElement("canvas"); tc.width = cols; tc.height = rows;
+      const tx = tc.getContext("2d", {willReadFrequently:true}); tx.imageSmoothingQuality = "high"; tx.drawImage(timg, 0, 0, cols, rows); tp = tx.getImageData(0, 0, cols, rows).data; }
     let gp = null;
     if (gimg && gimg.complete && gimg.naturalWidth){ const gc = document.createElement("canvas"); gc.width = cols; gc.height = rows;
-      const gx = gc.getContext("2d", {willReadFrequently:true}); gx.imageSmoothingEnabled = false; gx.drawImage(gimg, 0, 0, cols, rows); gp = gx.getImageData(0, 0, cols, rows).data; }
-    const B = [], UV = [], M = [], G = [];
-    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++){
+      const gx = gc.getContext("2d", {willReadFrequently:true}); gx.imageSmoothingEnabled = false; gx.drawImage(gimg, 0, 0, cols, rows); gp = gx.getImageData(0, 0, cols, rows).data;
+      /* anim.grow {group: cells}: a part's region widened by a few cells, so the soft light drawn around it (outside the mask)
+         moves with it and never stays behind as a ghost (the skipping rope) */
+      if (ANIM.grow) for (const [gk, rad] of Object.entries(ANIM.grow)){ const v = +gk*40, src = gp.slice();
+        for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++){ const q = (j*cols + i)*4; if (src[q]) continue;
+          search: for (let dj = -rad; dj <= rad; dj++) for (let di = -rad; di <= rad; di++){ const y = j + dj, x = i + di;
+            if (x < 0 || y < 0 || x >= cols || y >= rows || di*di + dj*dj > rad*rad) continue;
+            if (src[(y*cols + x)*4] === v){ gp[q] = v; break search; } } } } }
+    const B = [], UV = [], M = [], G = [], FN = [], FP = [];
+    /* o.poses: every key pose's dots, one after another (KS: where each pose's dots start, KC: how many), then the ball's */
+    if (POSE){ const tc = document.createElement("canvas"); tc.width = cols; tc.height = rows; const tx = tc.getContext("2d", {willReadFrequently:true});
+      tx.imageSmoothingQuality = "high";
+      const fc = document.createElement("canvas"); fc.width = cols; fc.height = rows; const fx = fc.getContext("2d", {willReadFrequently:true});
+      const fw = POSE.tw/2, fh = POSE.th/2, U2P = h/POSE.ch;                 /* the flow tiles: one px per pose unit */
+      const tile = (im, k, tw, th, ctx) => { ctx.clearRect(0, 0, cols, rows); const c = k % POSE.cols, r = k/POSE.cols | 0;
+        ctx.drawImage(im, c*tw, r*th, tw, th, 0, 0, w/cell, h/cell); return ctx.getImageData(0, 0, cols, rows).data; };
+      KS = []; KC = [];
+      for (let k = 0; k < POSE.n; k++){ const tp = tile(pimg, k, POSE.tw, POSE.th, tx), fn = tile(fnimg, k, fw, fh, fx), fp = tile(fpimg, k, fw, fh, fx);
+        KS.push(B.length/2);
+        for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++){ const q = (j*cols + i)*4, I = tp[q]/255; if (I < .07) continue;
+          /* a dot's small offset and twinkle are fixed per grid cell, the same in every pose: where two poses are alike (Women's locked
+             torso) their dots are the very same dots, so the exchange between poses is invisible there - nothing pops or blinks */
+          const hs = k2 => { const v = Math.sin(i*127.1 + j*311.7 + k2*74.7)*43758.5453; return v - Math.floor(v); };
+          const cx = (i + .5)*cell, cy = (j + .5)*cell, jx = (hs(1) - .5)*.5*cell, jy = (hs(2) - .5)*.5*cell;
+          B.push(cx + jx, cy + jy); UV.push(cx/w, cy/h); M.push(hs(3), 1, I); G.push(0);
+          FN.push((fn[q] - 128)/4*U2P, (fn[q + 1] - 128)/4*U2P); FP.push((fp[q] - 128)/4*U2P, (fp[q + 1] - 128)/4*U2P); }
+        KC.push(B.length/2 - KS[k]); }
+      /* the ball (Athletes only): its own dots, around its resting place (the first point of its path) */
+      NB0 = B.length/2; if (POSE.ball){ const br = POSE.ball.r*U2P, bn = Math.max(4, Math.ceil(2*br/cell)), p0 = POSE.ball.path[0];
+      const bc = document.createElement("canvas"); bc.width = bc.height = bn; const bx = bc.getContext("2d", {willReadFrequently:true});
+      bx.imageSmoothingQuality = "high"; bx.drawImage(bimg, 0, 0, bn, bn); const bp = bx.getImageData(0, 0, bn, bn).data;
+      for (let j = 0; j < bn; j++) for (let i = 0; i < bn; i++){ const I = bp[(j*bn + i)*4]/255; if (I < .07) continue;
+        B.push(p0[0]*U2P + (i + .5 - bn/2)*cell, p0[1]*U2P + (j + .5 - bn/2)*cell); UV.push(0, 0); M.push(Math.random(), 1, I); G.push(0); FN.push(0, 0); FP.push(0, 0); }
+      } NBALL = B.length/2 - NB0; }
+    else for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++){
       /* a patch becomes a particle only if there is artwork in it */
       let amax = 0, asum = 0;
       for (let dj = 0; dj < K; dj++) for (let di = 0; di < K; di++){
@@ -6286,12 +6966,32 @@ function initArtParticles(wrap, o = {}){
         const a = ALPHA ? px[q + 3]/255 : Math.max((px[q] - BG[0])/(255 - BG[0]), (px[q + 1] - BG[1])/(255 - BG[1]), (px[q + 2] - BG[2])/(255 - BG[2]));
         if (a > amax) amax = a; if (a > 0) asum += a;
       }
-      if (amax < MIN_A) continue;
+      if (amax < MIN_A && !tp) continue;
       const cx = (i + .5)*cell, cy = (j + .5)*cell, ex = (cx/w - .5)*2, ey = (cy/h - .5)*2, dd = Math.sqrt(ex*ex + ey*ey);
       const v = dd <= FADE ? 1 : Math.max(0, 1 - (dd - FADE)/(1 - FADE)), vf = v*v*(3 - 2*v);
       if (vf < .02) continue;
-      B.push(cx, cy); UV.push(cx/w, cy/h); M.push(Math.random(), vf, Math.min(1, asum/(K*K)*1.6)); G.push(gp ? Math.round(gp[(j*cols + i)*4]/40) : 0);
+      if (DOTS){
+        const I = tp ? tp[(j*cols + i)*4]/255 : Math.min(1, asum/(K*K)*DOT_K); if (I < .07) continue;
+        const jx = (Math.random() - .5)*.5*cell, jy = (Math.random() - .5)*.5*cell;
+        B.push(cx + jx, cy + jy); UV.push(cx/w, cy/h); M.push(Math.random(), vf, I);
+      } else {
+      B.push(cx, cy); UV.push(cx/w, cy/h); M.push(Math.random(), vf, Math.min(1, asum/(K*K)*1.6)); } G.push(gp ? (ANIM.weight ? gp[(j*cols + i)*4 + 1]/255 : Math.round(gp[(j*cols + i)*4]/40)) : 0);
     }
+    /* the skeleton (o.rig): the bones in pixels, and each particle's two bones and blend (see CHR_RIG) */
+    let RG = null;
+    if (RIG){ RB = RIG.bones.map(b => ({jx:b.j[0]*w, jy:b.j[1]*h, ex:b.e[0]*w, ey:b.e[1]*h, r:b.r*h, z:(b.z || .03)*h, p:b.p, hair:!!b.hair}));
+      RG = new Float32Array(B.length/2*3);
+      for (let i = 0, n = B.length/2; i < n; i++){ const x = B[i*2], y = B[i*2 + 1], g = ANIM && !ANIM.weight ? G[i] : -1;
+        if (RIG.grp && RIG.grp[g] !== undefined){ RG[i*3] = RG[i*3 + 1] = RIG.grp[g]; continue; }
+        let best = -1, bd = 1e9, bt = 0;
+        const hw = ANIM && ANIM.weight ? G[i] : 1;   /* the hair map's weight (Women): hair bones take only the hair */
+        for (let k = 0; k < RB.length; k++){ const q = RB[k]; if (!q.r || (q.hair && hw < .2)) continue;
+          const vx = q.ex - q.jx, vy = q.ey - q.jy, L = Math.hypot(vx, vy) || 1, t = ((x - q.jx)*vx + (y - q.jy)*vy)/L, tc = Math.max(0, Math.min(L, t));
+          const d = Math.hypot(x - q.jx - vx/L*tc, y - q.jy - vy/L*tc);
+          if (d < q.r && d < bd){ bd = d; best = k; bt = t; } }
+        if (best < 0) continue;
+        const q = RB[best]; if (q.p < 0){ RG[i*3] = RG[i*3 + 1] = best; continue; }
+        RG[i*3] = q.p; RG[i*3 + 1] = best; const e = Math.min(1, Math.max(0, (bt + q.z)/(2*q.z))); RG[i*3 + 2] = e*e*(3 - 2*e)*(q.hair ? Math.min(1, hw*1.6) : 1); } }
     N = B.length/2; base = new Float32Array(B); off = new Float32Array(N*2); vel = new Float32Array(N*2);
     rnd = new Float32Array(N); for (let i = 0; i < N; i++) rnd[i] = Math.random(); act = new Uint8Array(N); actList = [];
     gw = Math.ceil(w/R) + 1; gh = Math.ceil(h/R) + 1; const cnt = new Uint32Array(gw*gh + 1), cellOf = new Uint32Array(N);
@@ -6304,13 +7004,18 @@ function initArtParticles(wrap, o = {}){
     put(bufs.base, base, "base"); put(bufs.off, off, "off"); put(bufs.uv, new Float32Array(UV), "uv"); put(bufs.misc, new Float32Array(M), "misc");
     if (A.grp >= 0){ gl.bindBuffer(gl.ARRAY_BUFFER, bufs.grp); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(G), gl.STATIC_DRAW);
       gl.enableVertexAttribArray(A.grp); gl.vertexAttribPointer(A.grp, 1, gl.FLOAT, false, 0, 0); }
+    if (A.rig >= 0){ gl.bindBuffer(gl.ARRAY_BUFFER, bufs.rig); gl.bufferData(gl.ARRAY_BUFFER, RG || new Float32Array(N*3), gl.STATIC_DRAW);
+      gl.enableVertexAttribArray(A.rig); gl.vertexAttribPointer(A.rig, 3, gl.FLOAT, false, 0, 0); }
+    if (A.fl >= 0){ gl.bindBuffer(gl.ARRAY_BUFFER, bufs.fp); gl.bufferData(gl.ARRAY_BUFFER, POSE ? new Float32Array(FP) : new Float32Array(N*2), gl.STATIC_DRAW);
+      gl.bindBuffer(gl.ARRAY_BUFFER, bufs.fn); gl.bufferData(gl.ARRAY_BUFFER, POSE ? new Float32Array(FN) : new Float32Array(N*2), gl.STATIC_DRAW);
+      gl.enableVertexAttribArray(A.fl); gl.vertexAttribPointer(A.fl, 2, gl.FLOAT, false, 0, 0); }
     gl.uniform2f(U.cuv, cell/w, cell/h);
     builtFor = w.toFixed(1) + "x" + h.toFixed(1) + "@" + dpr; wrap.classList.add("pt-live");
   };
   const size = () => {
     const r = wrap.getBoundingClientRect(); if (!r.width || !r.height) return;
     dpr = Math.min(devicePixelRatio || 1, 2); w = r.width; h = r.height;
-    cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr); gl.viewport(0, 0, cv.width, cv.height);
+    cv.width = Math.round(w*(1 + RR)*dpr); cv.height = Math.round(h*(1 + HR)*dpr); gl.viewport(0, 0, cv.width, cv.height);
     if (!tex) texture();
     if (builtFor !== w.toFixed(1) + "x" + h.toFixed(1) + "@" + dpr) build();
   };
@@ -6358,22 +7063,64 @@ function initArtParticles(wrap, o = {}){
       }
       if (dirty){ gl.bindBuffer(gl.ARRAY_BUFFER, bufs.off); gl.bufferSubData(gl.ARRAY_BUFFER, 0, off); dirty = actList.length > 0; }
       gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.uniform2f(U.res, w, h); gl.uniform1f(U.t, (now - t0)/1000); gl.uniform1f(U.dpr, dpr); gl.uniform1f(U.amp, AMP); gl.uniform1f(U.cell, cell);
+      gl.uniform1f(U.top, HR*h); gl.uniform1f(U.ch, h*(1 + HR)); gl.uniform1f(U.cw, w*(1 + RR));
+      gl.uniform2f(U.res, w, h); gl.uniform1f(U.t, STILL ? 0 : (now - t0)/1000); gl.uniform1f(U.dpr, dpr); gl.uniform1f(U.amp, AMP); gl.uniform1f(U.cell, cell);
       gl.uniform1f(U.mode, ANIM ? ANIM.mode : 0); gl.uniform1f(U.wave, WAVE);
       if (ANIM){ gl.uniform3f(U.piv, (ANIM.piv[0] || 0)*w, ANIM.piv[1]*h, (ANIM.r || 0)*h);
-        const q = ANIM.piv2 || [0, 0, 0, 0]; gl.uniform4f(U.piv2, q[0]*w, q[1]*h, q[2]*w, q[3]*h); }
-      gl.uniform1f(U.pass, 0); gl.uniform1f(U.size, 1); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-      gl.drawArrays(gl.POINTS, 0, N);
-      if (GLOW){ gl.uniform1f(U.pass, 1); gl.uniform1f(U.size, 3.2); gl.blendFunc(gl.ONE, gl.ONE); gl.drawArrays(gl.POINTS, 0, N); }
+        const q = ANIM.piv2 || [0, 0, 0, 0]; gl.uniform4f(U.piv2, q[0]*w, q[1]*h, q[2]*w, q[3]*h);
+        const c = ANIM.crop || [0, 0, 1, 1]; gl.uniform4f(U.crop, c[0], c[1], c[2], c[3]); }
+      /* the pose of the moment: each bone turned about its joint, chained parent to child (rotation c,s + translation) */
+      gl.uniform1f(U.rig, RB ? 1 : 0);
+      if (RB){ const P = RIG.pose((now - t0)/1000, RB, w, h), a = P.a, d = P.d || {}, K = P.k || {};
+        /* each bone: turned about its joint by its angle and, for a limb drawn foreshortened (pointing away from us), stretched
+           along its own length as it turns into view (P.k); then carried by its parent (a full 2-D affine transform) */
+        for (let i = 0; i < RB.length; i++){ const q = RB[i], an = a[i] || 0, co = Math.cos(an), si = Math.sin(an), st = (K[i] || 1) - 1;
+          const dx = q.ex - q.jx, dy = q.ey - q.jy, dl = Math.hypot(dx, dy) || 1, ux = dx/dl, uy = dy/dl;
+          const s00 = 1 + st*ux*ux, s01 = st*ux*uy, s11 = 1 + st*uy*uy;
+          let m0 = co*s00 - si*s01, m1 = si*s00 + co*s01, m2 = co*s01 - si*s11, m3 = si*s01 + co*s11;
+          let tx = q.jx - (m0*q.jx + m2*q.jy), ty = q.jy - (m1*q.jx + m3*q.jy);
+          if (d[i]){ tx += d[i][0]*w; ty += d[i][1]*h; }
+          if (i === 0){ tx += (P.tx || 0)*w; ty += (P.ty || 0)*h; }
+          if (q.p >= 0){ const pm = q.p*4, pt = q.p*2, p0 = BM[pm], p1 = BM[pm + 1], p2 = BM[pm + 2], p3 = BM[pm + 3];
+            const n0 = p0*m0 + p2*m1, n1 = p1*m0 + p3*m1, n2 = p0*m2 + p2*m3, n3 = p1*m2 + p3*m3;
+            const ntx = p0*tx + p2*ty + BT[pt], nty = p1*tx + p3*ty + BT[pt + 1];
+            m0 = n0; m1 = n1; m2 = n2; m3 = n3; tx = ntx; ty = nty; }
+          BM[i*4] = m0; BM[i*4 + 1] = m1; BM[i*4 + 2] = m2; BM[i*4 + 3] = m3; BT[i*2] = tx; BT[i*2 + 1] = ty; }
+        gl.uniform4fv(U.bm, BM); gl.uniform2fv(U.bt, BT);
+        if (P.ball){ const B = P.ball; gl.uniform2f(U.bc, B.c[0]*w, B.c[1]*h); gl.uniform1f(U.bf, B.f);
+          gl.uniform4f(U.bl, B.s[0]*w, B.s[1]*h, B.s[2], B.s[3]); gl.uniform4f(U.bl2, B.l[0]*w, B.l[1]*h, B.l[2], B.l[3]); }
+        if (RIG.rope){ const R = RIG.rope, at = (e, i) => { const x = e[0]*w, y = e[1]*h; return [BM[i*4]*x + BM[i*4 + 2]*y + BT[i*2], BM[i*4 + 1]*x + BM[i*4 + 3]*y + BT[i*2 + 1]]; };
+          const l = at(R.l, R.l[2]), r = at(R.r, R.r[2]);
+          gl.uniform4f(U.rp, l[0], l[1], r[0], r[1]); gl.uniform4f(U.rp0, R.l[0]*w, R.l[1]*h, R.r[0]*w, R.r[1]*h); gl.uniform1f(U.rc, P.rope); gl.uniform1f(U.rtop, R.top); } }
+      /* o.poses: the two key poses around this moment (a, b) and how far between them (s); the exchange of the two dot sets
+         happens in the middle 16% of the step; then the ball's place, spin and light (posesBall) */
+      let draws = [[0, N, null]];
+      if (POSE){ const tt = (now - t0)/1000, f = (tt/POSE.T % 1)*POSE.n, a = Math.floor(f) % POSE.n, bk = (a + 1) % POSE.n, st = f - Math.floor(f);
+        const wB = sm(.5 - (POSE.x || .08), .5 + (POSE.x || .08), st), Bl = POSE.ball ? posesBall(POSE.ball, f, POSE.n) : {x:0, y:0, a:0, g:1, spin:0}, U2P = h/POSE.ch;
+        if (POSE.ball){ gl.uniform2f(U.bp, Bl.x*U2P, Bl.y*U2P); gl.uniform2f(U.bc0, POSE.ball.path[0][0]*U2P, POSE.ball.path[0][1]*U2P); }
+        gl.uniform1f(U.bsp, Bl.spin); gl.uniform1f(U.bga, Bl.g);
+        draws = [[KS[a], KC[a], bufs.fn, 1, st, 1 - wB], [KS[bk], KC[bk], bufs.fp, 1, 1 - st, wB], [NB0, NBALL, bufs.fn, 2, 0, Bl.a, Bl]];
+        if (POSE.ball && f > POSE.ball.contact && Bl.a > .01) for (const [dl, k] of [[.3, .38], [.6, .16]]){ const T2 = posesBall(POSE.ball, Math.max(POSE.ball.contact, f - dl), POSE.n);
+          draws.push([NB0, NBALL, bufs.fn, 2, 0, T2.a*k, T2]); }
+        draws = draws.filter(d => d[1] && d[5] > .001); }
+      const pass = (g) => { for (const d of draws){ if (d[6]){ const U2P = h/POSE.ch; gl.uniform2f(U.bp, d[6].x*U2P, d[6].y*U2P); gl.uniform1f(U.bsp, d[6].spin); }
+        if (d[2]){ gl.bindBuffer(gl.ARRAY_BUFFER, d[2]); gl.vertexAttribPointer(A.fl, 2, gl.FLOAT, false, 0, 0);
+          gl.uniform1f(U.pm, d[3]); gl.uniform1f(U.ps, d[4]); gl.uniform1f(U.pa, d[5]); } else gl.uniform1f(U.pm, 0);
+        gl.drawArrays(gl.POINTS, d[0], d[1]); } };
+      /* o.poses.add (Women): the two poses' dots are ADDED while they exchange (weights 1-w and w sum to one), so where they are the
+         same dots - her still torso - the light stays exactly constant; layered over each other they would dim for a moment at every
+         exchange (a pulse every 0.14 s) */
+      gl.uniform1f(U.pass, 0); gl.uniform1f(U.size, 1); if (POSE && POSE.add) gl.blendFunc(gl.ONE, gl.ONE); else gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); pass();
+      if (GLOW){ gl.uniform1f(U.pass, 1); gl.uniform1f(U.size, DOTS ? 4 : 3.2); gl.blendFunc(gl.ONE, gl.ONE); pass(); }
     }
-    if (vis && !document.hidden) raf = requestAnimationFrame(frame);
+    if (vis && !document.hidden && !STILL) raf = requestAnimationFrame(frame);
   };
   const go = () => { if (alive && !raf && vis && !document.hidden) raf = requestAnimationFrame(frame); };
   const pos = e => { const r = wrap.getBoundingClientRect(); return [(e.clientX - r.left)*w/r.width, (e.clientY - r.top)*h/r.height]; };
   /* mouse / pen: the particles part around the pointer and close again behind it; touch: a tap (or a
      drag) parts them where the finger is, then they settle - scrolling stays with the page */
-  wrap.addEventListener("pointermove", e => { const p = pos(e); ptrs.push([p[0], p[1], 1]); if (e.pointerType === "mouse" || e.pointerType === "pen") hover = p; go(); }, {passive:true, ...sig});
-  wrap.addEventListener("pointerdown", e => { const p = pos(e); last = null; ptrs.push([p[0], p[1], e.pointerType === "touch" ? 2.4 : 1.4]); go(); }, {passive:true, ...sig});
+  if (!STILL) wrap.addEventListener("pointermove", e => { const p = pos(e); ptrs.push([p[0], p[1], 1]); if (e.pointerType === "mouse" || e.pointerType === "pen") hover = p; go(); }, {passive:true, ...sig});
+  if (!STILL) wrap.addEventListener("pointerdown", e => { const p = pos(e); last = null; ptrs.push([p[0], p[1], e.pointerType === "touch" ? 2.4 : 1.4]); go(); }, {passive:true, ...sig});
   const leave = () => { hover = null; last = null; };
   wrap.addEventListener("pointerleave", leave, sig); wrap.addEventListener("pointercancel", leave, sig);
   document.addEventListener("visibilitychange", go, sig);
@@ -6385,7 +7132,7 @@ function initArtParticles(wrap, o = {}){
   }
   ON_LEAVE.push(stop);
   const start = () => { if (!alive) return; ro.observe(wrap); io.observe(wrap); size(); go(); };
-  const ready = () => Promise.all([img, gimg].filter(Boolean).map(m => m.complete && m.naturalWidth ? 0 : new Promise(r => { m.addEventListener("load", r, {once:true, ...sig}); m.addEventListener("error", r, {once:true, ...sig}); })));
+  const ready = () => Promise.all([img, gimg, timg, pimg, fnimg, fpimg, bimg].filter(Boolean).map(m => m.complete && m.naturalWidth ? 0 : new Promise(r => { m.addEventListener("load", r, {once:true, ...sig}); m.addEventListener("error", r, {once:true, ...sig}); })));
   ready().then(start);
   /* kept on the element so it can be inspected (and stopped) from outside */
   return wrap._pt = {stop, get count(){ return N; }, get active(){ return actList.length; }, get running(){ return alive && !!raf; }};
@@ -6400,6 +7147,12 @@ function drawPackage(el){
   const gift = PKG_TEXT.gift[ar ? "ar" : "en"];
   const two = n => nf(String(n).padStart(2, "0"));
 
+  /* "ماذا تقدم لك ملهم؟": the approved items (OFX_AR) in Arabic; the earlier approved items in English */
+  const ofxAr = ar && OFX_AR[p.id];
+  const ofxList = ofxAr ? ofxAr : pt(p.receive).map(t => ({t}));
+  const ofxVis = ofxAr ? OFX_CARD[p.id].map(([q, i]) => OF_VIS_POOL[q][i]) : (OF_VIS[p.id] || []), ofxSc = ofxAr ? ofxAr.map(x => x.sc) : (OF_SC[p.id] || []);
+  const ofx3d = ofxAr ? ofxAr.map(x => x.d3) : (OF_3D[p.id] || []);
+  const ofxIc = (ofxAr ? OFX_IC[p.id] : OFX_EN_IC[p.id]) || [];
   el.innerHTML = `
     <div class="mpd" data-pk="${p.id}" style="${brandStyle()}">
       <section class="mpd-hero">
@@ -6435,25 +7188,29 @@ function drawPackage(el){
         <div><b>${pt(ent ? PKG_TEXT.goal : PKG_TEXT.about)}</b><p>${pt(p.goal)}</p></div>
       </section>
 
-      <section class="mpd-sec" aria-labelledby="mpd-disc-h">
-        <h2 class="mpd-h2 rv" id="mpd-disc-h">${pt(ent ? PKG_TEXT.discover : PKG_TEXT.benefits)}</h2>
+      ${ent ? `<section class="mpd-sec" aria-labelledby="mpd-disc-h">
+        <h2 class="mpd-h2 rv" id="mpd-disc-h">${pt(PKG_TEXT.discover)}</h2>
         <ol class="mpd-disc">${pt(p.discover).map((x, i) => `
           <li class="rv" style="--d:${i*70}ms"><span class="mpd-ic">${pkIcon((DISC_IC[p.id] || [])[i])}</span><span class="mpd-n">${two(i + 1)}</span><p>${x}</p></li>`).join("")}
         </ol>
-      </section>
+      </section>` : ""}
 
-      <section class="ofx" id="mpd-inc" aria-labelledby="ofx-h">
+      <section class="ofx ofx-pk-${p.id}${ent ? " ofx-ent" : ""}" id="mpd-inc" aria-labelledby="ofx-h">
+        <div class="ofx-track"><div class="ofx-pinbox">
         <h2 class="mpd-h2 mpo-h rv" id="ofx-h">${ent ? pt(PKG_TEXT.receive) : (ar ? "ماذا <em>تقدم لك</em> ملهم؟" : "What does <em>Mulhim</em> offer you?")}</h2>
         <div class="ofx-grid">
-          <ol class="ofx-list">${pt(p.receive).map((x, i) => `
-            <li class="ofx-item${i === 0 ? " on" : ""}" data-i="${i}" tabindex="0">
-              <span class="ofx-n" aria-hidden="true">${nf(i + 1)}</span>
-              <div class="ofx-t"><h3>${x}</h3></div>
-              <div class="ofx-slot"></div>
+          <ol class="ofx-list">${ofxList.map((x, i) => `
+            <li class="ofx-item${i === 0 ? " on" : ""}" data-i="${i}" tabindex="0" aria-current="${i === 0 ? "step" : "false"}" aria-label="${nf(i + 1)}. ${esc(x.t)}">
+              ${ofxIc[i] ? `<span class="ofx-ic mpd-ic" aria-hidden="true">${pkIcon(ofxIc[i])}</span>` : `<span class="ofx-n" aria-hidden="true">${nf(i + 1)}</span>`}
+              <div class="ofx-t"><h3>${x.t}</h3></div>
+              ${ent ? `<div class="ofx-slot"></div>` : `<div class="ofx-more" id="ofx-m${i}"><div class="ofx-more-in">
+                ${x.hook ? `<p class="ofx-hook">${x.hook}</p><p class="ofx-det">${x.det}</p>` : ""}
+                <div class="ofx-slot"></div>
+              </div></div>`}
             </li>`).join("")}
           </ol>
-          <div class="ofx-stage"><div class="ofx-panel">${pt(p.receive).map((x, i) => {
-            const v = (OF_VIS[p.id] || [])[i], k = (OF_SC[p.id] || [])[i];
+          <div class="ofx-stage"><div class="ofx-panel">${ofxList.map((x, i) => {
+            const v = ofxVis[i], k = ofxSc[i];
             return `
             <div class="ofx-layer${i === 0 ? " on" : ""}" data-i="${i}">
               <div class="mpo-vis ofx-vis">
@@ -6467,7 +7224,7 @@ function drawPackage(el){
               </div>` : ""}
             </div>`; }).join("")}
           </div></div>
-        </div>
+        </div></div></div>
       </section>
 
       ${ent ? "" : drawSteps()}
@@ -6502,8 +7259,8 @@ function drawPackage(el){
 
   /* the animated character: same engine as the cards, bigger, with dust and glowing links */
   const hero = el.querySelector(".mpd-hero");
-  if (ent) initArtParticles(hero.querySelector(".ent-art-in"), {...ENT_ART_LOOK, cell:2.7, radius:66, push:2.2});
-  else if (CHR_ART[p.id]) initArtParticles(hero.querySelector(".chr-art"), {...chrArtLook(p.id), cell:2.5, radius:60, push:2.1});
+  if (ent) initArtParticles(hero.querySelector(".ent-art-in"), {...ENT_ART_LOOK, ...ART_HERO});
+  else if (CHR_ART[p.id]) initArtParticles(hero.querySelector(".chr-art"), {...chrArtLook(p.id), ...ART_HERO, ...DOT_HERO});
   else initParticles(hero, hero.querySelector(".mpd-cv"), p.id, {meta:brandMeta(p.id),
     fitEl:hero.querySelector(".mpd-fig"), fitW:ent ? .96 : .82, fitH:ent ? .78 : .9,
     density:ent ? 1.3 : 1.8, gMax:1.6, dust:70, links:ent ? 70 : 54, linkDist:ent ? 12 : 11, shimmer:.45, tap:true});
@@ -6537,14 +7294,14 @@ function drawPackage(el){
 
   fitScenes(el);
   fitGlass(el);
-  initOfx(el.querySelector(".ofx"));
+  (ent ? initOfxLegacy : initOfx)(el.querySelector(".ofx"));
   if (!ent){
     /* 3D versions of the scenes, where one exists (the SVG stays underneath as the fallback).
        They are created once the section comes within about a screen of view, one per frame,
        so opening a package or switching language never waits for them. Inside a package
        every scene uses the brand colours (hue 0, the colours they are authored in). */
     if (window.mountOf3D){
-      const k3 = OF_3D[p.id] || [], hue = 0, queue = [], scs = [...el.querySelectorAll(".ofx .scn")];
+      const k3 = ofx3d, hue = 0, queue = [], scs = [...el.querySelectorAll(".ofx .scn")];
       let qRaf = 0;
       const pump = () => {
         qRaf = 0; const sc = queue.shift();
@@ -6567,7 +7324,7 @@ function drawPackage(el){
       ["mouseleave","blur"].forEach(ev => t.addEventListener(ev, () => say(t, false)));
     });
     /* the sample charts of "What does Mulhim offer you?" can be tried out (see enhanceOfferViz) */
-    enhanceOfferViz(el, p.id);
+    enhanceOfferViz(el, ofxVis);
   }
   setBars({hidePrev:true, hideNext:true});
 }
@@ -6669,7 +7426,7 @@ function drawSiteNav(type){
    Every card has a Reset button once something has been changed. Native range inputs give keyboard,
    touch and screen-reader support; reduced motion: the charts follow without easing.
    --------------------------------------------------------------------------- */
-function enhanceOfferViz(root, pid){
+function enhanceOfferViz(root, visList){
   const ar = S.lang === "ar", pc = ar ? "٪" : "%";
   const T = {bars:{en:"Choose a row, then drag its bar to try a value", ar:"اختر صفًا ثم اسحب شريطه لتجربة قيمة"},
              dial:{en:"Drag the slider to try a value", ar:"اسحب المؤشر لتجربة قيمة"},
@@ -6678,17 +7435,20 @@ function enhanceOfferViz(root, pid){
   const pctTxt = v => nf(v) + pc;
   const strip = t => t.replace(/\s*[0-9\u0660-\u0669]+\s*[%\u066A]\s*$/, "").trim();   /* "Carbs 55%" -> "Carbs" */
   root.querySelectorAll(".ofx-layer").forEach(layer => {
-    const sp = (OF_VIS[pid] || [])[+layer.dataset.i], card = layer.querySelector(".ofx-glass");
-    if (!sp || !card) return;
-    const viz = card.querySelector(".viz"), ro = card.querySelector(".ro");
+    const spAll = (visList || [])[+layer.dataset.i], card = layer.querySelector(".ofx-glass");
+    if (!spAll || !card) return;
+    const vizAll = card.querySelector(".viz"), ro = card.querySelector(".ro");
     const say = t => { ro.textContent = t; ro.classList.add("live"); };
-    const live = () => { viz.classList.add("vz-live"); rb.hidden = false; };
-    const hint = k => { const h = document.createElement("p"); h.className = "vz-hint"; h.textContent = pt(T[k]); viz.after(h); };
+    const live = () => { vizAll.classList.add("vz-live"); rb.hidden = false; };
     const rb = document.createElement("button");
     rb.type = "button"; rb.className = "vz-reset"; rb.hidden = true;
     rb.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5v4h4"/></svg>' + pt(T.reset);
+    const undos = [];
+    rb.onclick = () => { undos.forEach(u => u()); rb.hidden = true; vizAll.classList.remove("vz-live"); ro.textContent = ro.dataset.def; ro.classList.remove("live"); };
+    /* each chart of the card (a combined card has several) is made adjustable on its own; one hint per card */
+    const run = (sp, viz) => {
     let undo = () => {};
-    rb.onclick = () => { undo(); rb.hidden = true; viz.classList.remove("vz-live"); ro.textContent = ro.dataset.def; ro.classList.remove("live"); };
+    const hint = k => { if (card.querySelector(".vz-hint")) return; const h = document.createElement("p"); h.className = "vz-hint"; h.textContent = pt(T[k]); viz.after(h); };
 
     /* ---- bars: a range control over each bar ---- */
     if (sp.k === "bars"){
@@ -6777,7 +7537,26 @@ function enhanceOfferViz(root, pid){
       draw();
       hint("segs");
     }
-    if (viz.classList.length && card.querySelector(".vz-hint")) card.appendChild(rb);
+
+    /* ---- habits: ticking a habit moves the day's progress bar ---- */
+    if (sp.k === "habits"){
+      const box = viz.querySelector(".habits"), cbs = [...box.querySelectorAll("input")], bar = box.querySelector(".hb-bar i"), pcEl = box.querySelector(".hb-pc");
+      const upd = () => { const v = Math.round(cbs.filter(c => c.checked).length*100/cbs.length); bar.style.setProperty("--p", v + "%"); pcEl.textContent = pctTxt(v); return v; };
+      cbs.forEach((c, i) => c.addEventListener("change", () => {
+        const v = upd(); say(`${tlx(sp.items[i].lab)}: ${c.checked ? (ar ? "تم" : "Done") : (ar ? "لم يتم بعد" : "Not yet")} — ${pctTxt(v)}`); live(); }));
+      undo = () => { cbs.forEach((c, i) => { c.checked = !!sp.items[i].done; }); upd(); };
+    }
+
+    /* ---- body map: the chosen point stays marked ---- */
+    if (sp.k === "bodymap"){
+      const pts = [...viz.querySelectorAll(".bm-p")];
+      pts.forEach(g => ["click","focus","mouseenter"].forEach(ev => g.addEventListener(ev, () => pts.forEach(x => x.classList.toggle("sel", x === g)))));
+    }
+    undos.push(() => undo());
+    };
+    if (spAll.k === "combo") spAll.parts.forEach((q, j) => { const part = vizAll.querySelector(`.vz-part[data-j="${j}"]`); if (part) run(q, part); });
+    else run(spAll, vizAll);
+    if (card.querySelector(".vz-hint")) card.appendChild(rb);
   });
 }
 
