@@ -168,7 +168,7 @@ const CONFIG = {
      Amounts are in Saudi riyals. The original price is shown struck through beside the current one.
      To price one package differently, add it to PRICING_BY_PACKAGE,
        e.g. { enterprise:{original:9000, final:7000} } */
-  PRICING: {original:5000, final:3500},
+  PRICING: {original:5000, final:3499},   /* 9 Nov 2026: every package at 3,499 (meeting feedback) */
   PRICING_BY_PACKAGE: {},
 
   /* --- Purchase request: screen preview (TEMPORARY) -----------------------------
@@ -188,7 +188,7 @@ const CONFIG = {
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 /* =============================================================================
@@ -1783,43 +1783,50 @@ html[dir="rtl"] .mh-cta{background:linear-gradient(240deg,#12323C 0%,#2E5868 60%
 #mh-cta-contact svg{width:1.45rem; height:1.45rem; stroke-width:2}
 .mh-cta-btn svg{width:1.05rem; height:1.05rem; fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round}
 
-/* ---------- footer: as on the published Mulhim website (mulhimd.com) ----------
-   light background #FAFCFD under a hairline #E2E8F0, Mulhim teal #1C5966 for the brand and headings,
-   #5B8289 for text and links (teal on hover); brand block + three link groups (1.4 : 1 : 1 : 1),
-   then a divider, the copyright line and the App Store badge */
-.mf{--mf-bg:#FAFCFD; --mf-fg:#1C5966; --mf-mute:#5B8289; --mf-line:#E2E8F0;
-  margin-inline:calc(50% - 50vw); margin-bottom:calc(-1*(var(--bar-h) + 3rem)); padding:clamp(4rem,6vw,5rem) calc(50vw - 50%);
-  background:var(--mf-bg); border-top:1px solid var(--mf-line); color:var(--mf-fg); font-size:.875rem}
-html[data-theme="dark"] .mf{--mf-bg:var(--page); --mf-fg:#A9D3DA; --mf-mute:#8FB0B6; --mf-line:var(--line)}
-.mf-grid{display:grid; grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr)); gap:3rem 2rem}
-.mf-brand{display:flex; flex-direction:column; gap:1rem}
-.mf-logo{display:inline-flex; align-items:center; gap:.625rem; width:fit-content; color:var(--mf-fg); text-decoration:none}
+/* ---------- 8 Nov 2026: the footer = the main Mulhim website's footer (v0-mulhim components/marketing/footer.tsx, as deployed on
+   mulhimd.com), its design and its content. From the original: the max-w-7xl column with px-6; a border-t above the grid and
+   pt-16 / sm:pt-20, pb-16 / sm:pb-20; the grid 2 columns -> sm 4 -> lg 1.4fr 1fr 1fr 1fr (gap-x-8 gap-y-12); the brand (logo h-8 and
+   "Mulhim Delta" text-2xl semibold tracking-tight; the tagline text-sm muted; the social icons h-5, gap-4, muted -> foreground);
+   headings text-sm semibold; links text-sm muted, space-y-2; then a full-width strip (border-t, bg-background, px-6 py-8) with the
+   copyright and the App Store badge (rounded-lg bg-foreground px-4 py-2, text-background). Colours: the site's tokens. */
+.mf{--mf-bg:#fbfcfd; --mf-fg:#1c5966; --mf-mute:#4c737a; --mf-line:#e2e8f0;
+  margin-inline:calc(50% - 50vw); margin-bottom:calc(-1*(var(--bar-h) + 3rem)); padding:0; color:var(--mf-fg); border:0;
+  background:radial-gradient(120% 80% at 50% 10%, #ffffff 0%, #f1f4f6 55%, #d9dfe5 100%);   /* the site's bg-stage, behind its footer */
+  font-family:'Inter',ui-sans-serif,system-ui,sans-serif; font-size:.875rem; line-height:1.25rem}
+html[lang="ar"] .mf{font-family:'IBM Plex Sans Arabic','Inter',system-ui,sans-serif}
+html[lang="ar"] .mf [lang="en"]{font-family:'Geist','Inter',system-ui,sans-serif}
+html[data-theme="dark"] .mf{--mf-bg:#020e0e; --mf-fg:#e8f1ef; --mf-mute:#83938f; --mf-line:#1d2c2d; background:var(--mf-bg)}
+.mf-in{max-width:80rem; margin:0 auto; padding:0 1.5rem 4rem}
+.mf-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:3rem 2rem; border-top:1px solid var(--mf-line); padding-top:4rem}
+.mf-brand{grid-column:1 / -1; display:flex; flex-direction:column; gap:1rem}
+.mf-logo{display:flex; align-items:center; gap:.625rem; width:fit-content; color:var(--mf-fg); text-decoration:none}
 .mf-logo img{height:2rem; width:auto; object-fit:contain}
-html[data-theme="dark"] .mf-logo img{filter:brightness(0) invert(1) opacity(.85)}
-.mf-logo span{font-size:1.5rem; font-weight:600; letter-spacing:-.025em; font-family:Inter,var(--font-body),system-ui,sans-serif}
+html[data-theme="dark"] .mf-logo img{filter:brightness(0) invert(1) opacity(.92)}
+.mf-logo span{font-size:1.5rem; line-height:2rem; font-weight:600; letter-spacing:-.025em}
 .mf-brand p{margin:0; color:var(--mf-mute)}
-.mf-social{display:flex; align-items:center; gap:0; margin-inline:-.55rem}
-.mf-social a{display:inline-grid; padding:.55rem; border-radius:10px; color:var(--mf-mute); transition:color .2s}
+.mf-social{display:flex; align-items:center; gap:1rem}
+.mf-social a{display:inline-flex; color:var(--mf-mute); transition:color .15s}
 .mf-social a:hover,.mf-social a:focus-visible{color:var(--mf-fg)}
 .mf-social svg{width:1.25rem; height:1.25rem; fill:currentColor}
 .mf-col{display:flex; flex-direction:column; gap:1rem}
-.mf-col h4{margin:0; font-size:.875rem; font-weight:600; color:var(--mf-fg)}
-.mf-col ul{list-style:none; margin:0; padding:0; display:grid; gap:.5rem}
-.mf-col a{color:var(--mf-mute); text-decoration:none; transition:color .2s}
+.mf-col h4{margin:0; font-size:.875rem; line-height:1.25rem; font-weight:600; color:var(--mf-fg)}
+.mf-col ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.5rem; color:var(--mf-mute)}
+.mf-col a{color:inherit; text-decoration:none; transition:color .15s}
 .mf-col a:hover,.mf-col a:focus-visible{color:var(--mf-fg)}
 .mf a:focus-visible{outline:2px solid var(--mf-fg); outline-offset:3px; border-radius:4px}
-.mf-bottom{display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-top:3rem; padding-top:2rem; border-top:1px solid var(--mf-line)}
+.mf-bottom{border-top:1px solid var(--mf-line); background:var(--mf-bg); padding:2rem 1.5rem}
+.mf-bottom-in{max-width:80rem; margin:0 auto; display:flex; flex-direction:column; align-items:center; justify-content:space-between; gap:1rem}
 .mf-bottom p{margin:0; color:var(--mf-mute)}
 .mf-store{display:inline-flex; align-items:center; gap:.625rem; padding:.5rem 1rem; border-radius:.5rem; text-decoration:none;
-  color:var(--mf-bg); background:var(--mf-fg); transition:opacity .2s}
+  color:var(--mf-bg); background:var(--mf-fg); transition:opacity .15s}
 .mf-store:hover{opacity:.85}
 .mf-store svg{width:1.5rem; height:1.5rem; flex:none; fill:currentColor}
-.mf-store span{display:flex; flex-direction:column; text-align:left; line-height:1.15}
-.mf-store small{font-size:.66rem}
-.mf-store b{font-size:1rem; font-weight:600}
-@media (max-width:1023px){ .mf-grid{grid-template-columns:repeat(4,minmax(0,1fr))} .mf-brand{grid-column:1 / -1} }
-@media (max-width:639px){ .mf-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
-@media (max-width:767px){ .mf-bottom{flex-direction:column; text-align:center} }
+.mf-store span{display:flex; flex-direction:column; text-align:start; line-height:1.25}
+.mf-store small{font-size:10px}
+.mf-store b{font-size:.875rem; font-weight:600}
+@media (min-width:640px){ .mf-in{padding-bottom:5rem} .mf-grid{grid-template-columns:repeat(4,minmax(0,1fr)); padding-top:5rem} }
+@media (min-width:768px){ .mf-bottom-in{flex-direction:row} }
+@media (min-width:1024px){ .mf-grid{grid-template-columns:1.4fr 1fr 1fr 1fr} .mf-brand{grid-column:auto} }
 
 /* ---------- interactive sample charts in the package pages' glass cards (enhanceOfferViz) ---------- */
 .mpo-glass .rm-t{position:relative}
@@ -1888,6 +1895,78 @@ body.mp-top #sitenav .sn-links > li > .sn-btn:hover,body.mp-top #sitenav .sn-btn
 .sn-mlist{list-style:none; margin:0 0 .6rem; padding:0; display:grid; gap:.15rem}
 .sn-mrow{display:grid; gap:.3rem; padding-top:.6rem; border-top:1px solid var(--line)}
 .sn-mrow .sn-btn{width:100%; justify-content:flex-start}
+/* ---------- 8 Nov 2026: the header in the main Mulhim website's design (v0-mulhim components/marketing/navbar.tsx, as deployed on
+   mulhimd.com) - with OUR header content (Packages, Compare packages, Contact us, language, theme; their order, links and behaviour
+   unchanged). From the original: an 88px band (py-5 around the 48px logo), the max-w-7xl column with px-6, a frosted bg-card/60 +
+   backdrop-blur-sm and a border-border/40 hairline; the logo image h-12 nudged down 4px; nav labels text-xs, uppercase,
+   tracking 0.14em, text-muted-foreground -> foreground on hover, gap-7; the language pill and the theme circle (h-9, rounded-full,
+   border-border/50); the primary pill last (bg-primary, px-5 py-2, text-sm font-medium - there "Get Started", here our "Contact us").
+   Colours are the site's own tokens (light / .dark); type Geist (English) and IBM Plex Sans Arabic (Arabic), as on the site. */
+/* the site's pages (Bioinformatics included) wear its "homepage-source-theme": these are its values (light; dark below) */
+body:has(#sitenav:not([hidden])){--bar-h:5.5rem;
+  --mz-bg:#fbfcfd; --mz-fg:#1c5966; --mz-card:#ffffff; --mz-muted:#4c737a; --mz-border:#e2e8f0; --mz-primary:#1c5966; --mz-primary-fg:#fbfcfd; --mz-accent:#6d9aa1;
+  --mz-font:'Inter',ui-sans-serif,system-ui,sans-serif}
+html[data-theme="dark"] body:has(#sitenav:not([hidden])){--mz-bg:#020e0e; --mz-fg:#e8f1ef; --mz-card:#061415; --mz-muted:#83938f; --mz-border:#1d2c2d; --mz-primary:#8ccfb1; --mz-primary-fg:#020e0e; --mz-accent:#145154}
+html[lang="ar"] body:has(#sitenav:not([hidden])){--mz-font:'IBM Plex Sans Arabic','Inter',system-ui,sans-serif}
+body:has(#sitenav:not([hidden])) #topbar{height:var(--bar-h); gap:1.75rem; padding-inline:max(1.5rem, calc((100vw - 80rem)/2 + 1.5rem));
+  background:color-mix(in srgb,var(--mz-card) 60%,var(--mz-bg)); -webkit-backdrop-filter:none; backdrop-filter:none;   /* the site's bg-card/60 over its page background (its bar sits in the page flow, so that is the colour you see); ours is fixed over the page, so that colour is painted solid */
+  border-bottom:1px solid color-mix(in srgb,var(--mz-border) 40%,transparent); font-family:var(--mz-font)}
+body:has(#sitenav:not([hidden])) #sitenav{flex:1; min-width:0}
+body:has(#sitenav:not([hidden])) .sn-logo{margin-inline-end:auto; transform:translateY(.25rem)}
+body:has(#sitenav:not([hidden])) .sn-logo i{height:3rem; aspect-ratio:799/520; -webkit-mask:none; mask:none; background:url(assets/brand/mulhim-logo.png) center/contain no-repeat}
+html[data-theme="dark"] body:has(#sitenav:not([hidden])) .sn-logo i{filter:brightness(0) invert(1) opacity(.92)}
+body:has(#sitenav:not([hidden])) .sn-logo span{display:none}
+body:has(#sitenav:not([hidden])) .sn-links{gap:1.75rem}
+body:has(#sitenav:not([hidden])) .sn-links > li:has(> a.sn-btn){display:none}      /* "Contact us" is the primary pill, last */
+#sitenav .sn-links > li > .sn-btn{height:auto; padding:0; border:0; border-radius:0; background:none; color:var(--mz-muted); font-family:var(--mz-font);
+  font-size:.75rem; font-weight:400; letter-spacing:.14em; text-transform:uppercase; transition:color .15s}
+html[lang="ar"] #sitenav .sn-links > li > .sn-btn{letter-spacing:0; text-transform:none; font-size:.8125rem; font-weight:500}
+#sitenav .sn-links > li > .sn-btn:hover,#sitenav .sn-links > li > .sn-btn[aria-expanded="true"]{background:none; color:var(--mz-fg)}
+#sitenav .sn-links .sn-ch{width:.875rem; height:.875rem}
+body:has(#sitenav:not([hidden])) .toolset{gap:1.75rem}
+html[dir="rtl"] body:has(#sitenav:not([hidden])) .toolset{flex-direction:row-reverse}
+/* the same bar everywhere, also at the top of the packages list (the older see-through bar over the dark hero is not used) */
+body.mp-top:has(#sitenav:not([hidden])) #topbar{background:color-mix(in srgb,var(--mz-card) 60%,var(--mz-bg)); border-bottom-color:color-mix(in srgb,var(--mz-border) 40%,transparent)}
+body.mp-top:has(#sitenav:not([hidden])) .sn-logo{color:inherit}
+body.mp-top:has(#sitenav:not([hidden])) #sitenav .sn-links > li > .sn-btn{color:var(--mz-muted)}
+body.mp-top:has(#sitenav:not([hidden])) #sitenav .sn-links > li > .sn-btn:is(:hover,[aria-expanded="true"]){color:var(--mz-fg)}
+/* the language pill and the theme circle (h-9, rounded-full, border-border/50, muted -> foreground, border accent/50 on hover) */
+body:has(#sitenav:not([hidden])) #topbar #btn-lang,body:has(#sitenav:not([hidden])) #topbar #btn-theme{height:2.25rem; border:1px solid color-mix(in srgb,var(--mz-border) 50%,transparent);
+  border-radius:999px; background:none; color:var(--mz-muted); transition:color .15s, border-color .15s}
+body:has(#sitenav:not([hidden])) #topbar #btn-lang{width:auto; display:inline-flex; align-items:center; gap:.375rem; padding:0 .75rem;
+  font-family:var(--mz-font); font-size:.75rem; letter-spacing:.14em; text-transform:uppercase}
+body:has(#sitenav:not([hidden])) #btn-lang::after{content:"en"}
+html[lang="ar"] body:has(#sitenav:not([hidden])) #btn-lang::after{content:"ar"}
+html[lang="ar"] body:has(#sitenav:not([hidden])) #topbar #btn-lang{letter-spacing:0; font-size:.8125rem; font-weight:500}
+body:has(#sitenav:not([hidden])) #topbar #btn-theme{width:2.25rem}
+body:has(#sitenav:not([hidden])) #topbar :is(#btn-lang,#btn-theme) svg{width:1rem; height:1rem; stroke-width:2}
+body:has(#sitenav:not([hidden])) #topbar :is(#btn-lang,#btn-theme):hover{color:var(--mz-fg); border-color:color-mix(in srgb,var(--mz-accent) 50%,transparent)}
+/* the primary pill (the site's "Get Started"): our "Contact us" */
+.sn-cta{display:none}
+body:has(#sitenav:not([hidden])) .sn-cta{display:inline-flex; align-items:center; gap:.4rem; padding:.5rem 1.25rem; border-radius:999px; white-space:nowrap;
+  background:var(--mz-primary); color:var(--mz-primary-fg); font-family:var(--mz-font); font-size:.875rem; line-height:1.25rem; font-weight:500; text-decoration:none;
+  transition:transform .15s}
+body:has(#sitenav:not([hidden])) .sn-cta:hover{transform:scale(1.03)}
+body:has(#sitenav:not([hidden])) .sn-cta:focus-visible{outline:2px solid var(--mz-primary); outline-offset:3px}
+.sn-cta .sn-ext{width:.8rem; height:.8rem; opacity:.85}
+/* the menu button on narrow screens: the site's bare 24px icon (-m-2 p-2) */
+body:has(#sitenav:not([hidden])) #topbar #btn-nav{width:auto; height:auto; padding:.5rem; margin:-.5rem; border:0; background:none; color:var(--mz-fg)}
+body:has(#sitenav:not([hidden])) #topbar #btn-nav svg{width:1.5rem; height:1.5rem; stroke-width:2}
+body:has(#sitenav:not([hidden])) #topbar #btn-nav{order:9; margin-inline-start:0}   /* last, at the bar's end, as on the site */
+/* the menu (the site's mobile drawer): border-t, bg-background, px-4 py-6, items text-xs uppercase tracking 0.14em, rounded-lg py-2 */
+body:has(#sitenav:not([hidden])) #sitenav-mob{background:var(--mz-bg); border-top:1px solid var(--mz-border); border-bottom:1px solid var(--mz-border); box-shadow:none;
+  padding:1.5rem max(1rem,env(safe-area-inset-left)); font-family:var(--mz-font)}
+body:has(#sitenav:not([hidden])) #sitenav-mob :is(.sn-mh,.sn-item,.sn-btn){font-family:var(--mz-font); font-size:.75rem; font-weight:400; letter-spacing:.14em; text-transform:uppercase; color:var(--mz-muted)}
+html[lang="ar"] body:has(#sitenav:not([hidden])) #sitenav-mob :is(.sn-mh,.sn-item,.sn-btn){letter-spacing:0; text-transform:none; font-size:.875rem}
+body:has(#sitenav:not([hidden])) #sitenav-mob .sn-mh{font-weight:600; color:var(--mz-fg)}
+body:has(#sitenav:not([hidden])) #sitenav-mob :is(.sn-item,.sn-btn){min-height:0; padding:.5rem .75rem; border-radius:.5rem; background:none; border:0}
+body:has(#sitenav:not([hidden])) #sitenav-mob :is(.sn-item,.sn-btn):hover{color:var(--mz-fg); background:color-mix(in srgb,var(--mz-fg) 7%,transparent)}
+body:has(#sitenav:not([hidden])) #sitenav-mob .sn-mrow{border-top-color:var(--mz-border)}
+/* narrow screens: the tabs (Contact us included) are in the menu; the pill shows from where the tabs show */
+@media (max-width:1099px){ body:not(.pkd-on):has(#sitenav:not([hidden])) .sn-cta{display:none} }
+@media (max-width:1279px){ body.pkd-on:has(#sitenav:not([hidden])) .sn-cta{display:none} }
+@media (max-width:640px){ body:has(#sitenav:not([hidden])){--bar-h:4.75rem} body:has(#sitenav:not([hidden])) .sn-logo i{height:2.6rem}
+  body:has(#sitenav:not([hidden])) .toolset{gap:.75rem} }
 @media (max-width:1099px){ .sn-links{display:none} }
 @media (max-width:1279px){ body.pkd-on .sn-links{display:none} }
 @media (min-width:1100px){ body:not(.pkd-on) #btn-nav{display:none} }
@@ -1970,19 +2049,61 @@ html[dir="rtl"] .mpd-hero{background:
    dots just above the title, each sized so the pill in the top corner stays clear of the head; Athletes and Men
    lean a few pixels away from the pill's corner (Arabic: the right; English: the left) */
 .mp-pk-fig .chr-art{transform:translate(calc(-50% + var(--sx, 0px)), -50%)}
-.mp-pk[data-id="athletes"] .mp-pk-fig .chr-art{height:92%; top:56.8%}
-.mp-pk[data-id="men"] .mp-pk-fig .chr-art{height:100.81%; top:49.9%}
-.mp-pk[data-id="women"] .mp-pk-fig .chr-art{height:100.81%; top:52.42%}
+.mp-pk[data-id="athletes"] .mp-pk-fig .chr-art{height:92%; top:62.8%}   /* 10 Nov: ~15px lower (was top:56.8%), more room under the badge */
+.mp-pk[data-id="men"] .mp-pk-fig .chr-art{height:102%; top:57.2%; --sx:4px}   /* meeting 6: ~7% larger, closer to Women's visual size; head ~19px, the lowest dumbbell ~262px (title at 270) (was height:95%; top:58.4%) */   /* meeting 5: lowered (~16px) and a touch smaller - his head level with the others (~33px), his torso ending ~230px, the lowest dumbbell above the title (was height:101.31%; top:55%) */   /* 9 Nov 2026: ~12px lower, in line with the others */
+.mp-pk[data-id="men"] .mp-pk-fig{z-index:2}   /* meeting 6: his figure above the text wash at the foot of the figure area, so the hand and dumbbell do not fade out at the bottom of the curl (the dumbbell still ends above the title) */
+/* (was top:50.15%) */   /* the pose tile is his artwork plus room for the dumbbell (1005 x 585 of 1000 x 550): same figure size and place as before */
+.mp-pk[data-id="women"] .mp-pk-fig .chr-art{height:92%; top:56.9%}   /* meeting 5: lowered (~13px) - her head level with the others (~35px), her lowest dots on the Athletes' and Children's baseline (~243px) (was height:95%; top:53.1%) */   /* meeting 4: her new glowing wave on the same baseline as the Athletes' ground line and the Children's feet (~242px); a touch smaller so her head stays where it was (was height:100.81%; top:56.4%) */
 /* Children: a little smaller and lower than the others, so the rope's full arc above her head (her headroom, drawn above the box)
    stays inside the illustration area; her feet keep their place above the title */
 .mp-pk[data-id="children"] .mp-pk-fig .chr-art{height:90%; top:56.5%}
 html[dir="rtl"] .mp-pk[data-id="athletes"] .mp-pk-fig .chr-art{--sx:-12px}
 html:not([dir="rtl"]) .mp-pk[data-id="athletes"] .mp-pk-fig .chr-art{--sx:12px}
-html[dir="rtl"] .mp-pk[data-id="men"] .mp-pk-fig .chr-art{--sx:-12px}
+html[dir="rtl"] .mp-pk[data-id="men"] .mp-pk-fig .chr-art{--sx:-8px}
 html[dir="rtl"] .mp-pk[data-id="children"] .mp-pk-fig .chr-art{--sx:-6px}
 html:not([dir="rtl"]) .mp-pk[data-id="women"] .mp-pk-fig .chr-art{--sx:8px}
 html:not([dir="rtl"]) .mp-pk[data-id="children"] .mp-pk-fig .chr-art{--sx:8px}
 /* the Enterprise card's pill, in the top start corner of each package card (over the figure's empty side) */
+/* 10 Nov 2026 - the Athletes card only: the package name in the top badge, the title below hidden (kept for screen readers), the
+   text right under the figure, and a smaller "Learn more" button under it at the inline end (the left in Arabic) */
+.mp-vh{position:absolute!important; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0}
+.mp-track .mp-pk .mp-pk-body{flex:1; margin-top:-2.1rem; padding-top:2.85rem; padding-bottom:1.96rem}
+.mp-track .mp-pk .mp-pk-desc{flex:1}   /* the buttons line up at the foot of the four equal cards */
+/* 10 Nov 2026 - all four package cards on the Athletes layout: the big title below the figure hidden (kept for screen readers - the card is
+   labelled by it), the package name in the top badge, the text right under the figure, the small glass "Learn more" under it */
+/* (10 Nov, stakeholder) every card shows its title (باقة ...) under the figure, as the Athletes card does */
+@media (min-width:641px) and (max-width:1099px){ .mp-track{grid-auto-rows:1fr} }
+/* 10 Nov 2026 (stakeholder): a lighter, cleaner "Learn more" on the Athletes card - a glass pill like the badge (white text, thin light rim,
+   a mint arrow), filled white on hover / focus; the whole card stays the click target */
+.mp-track .mp-pk .mp-pk-cta{color:#fff; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.34); box-shadow:none}
+.mp-track .mp-pk .mp-pk-cta i{background:rgba(220,253,237,.2)}
+.mp-track .mp-pk .mp-pk-cta svg{stroke:#DCFDED}
+.mp-track .mp-pk:hover .mp-pk-cta,.mp-track .mp-pk:focus-visible .mp-pk-cta{color:#0B3B45; background:#fff; border-color:#fff}
+.mp-track .mp-pk:hover .mp-pk-cta svg,.mp-track .mp-pk:focus-visible .mp-pk-cta svg{stroke:#0B3B45}
+/* 10 Nov 2026 - "Learn more" LAYOUT OPTIONS for the Athletes card, PREVIEW ONLY (nothing chosen; without the parameter the page is unchanged):
+   ?athcta=a - a smaller, elongated button, centred;  ?athcta=b - the same button in the card's lower corner (the left in Arabic, the
+   end of the reading line). Same colours, same click / keyboard / hover behaviour (the whole card opens the package) */
+html[data-athcta] .mp-pk[data-id="athletes"] .mp-pk-cta{min-height:1.8rem; gap:1.1rem; font-size:.77rem; letter-spacing:.01em; padding:.22rem .26rem .22rem 2rem}
+html[dir="rtl"][data-athcta] .mp-pk[data-id="athletes"] .mp-pk-cta{padding:.22rem 2rem .22rem .26rem}
+html[data-athcta] .mp-pk[data-id="athletes"] .mp-pk-cta i{width:1.25rem; height:1.25rem}
+html[data-athcta] .mp-pk[data-id="athletes"] .mp-pk-cta svg{width:.8rem; height:.8rem}
+html[data-athcta="a"] .mp-pk[data-id="athletes"] .mp-pk-cta{align-self:center; margin-top:-.5rem}
+html[data-athcta="b"] .mp-pk[data-id="athletes"] .mp-pk-cta{align-self:flex-end; margin-top:-.5rem}
+.mp-track .mp-pk .mp-pk-cta{margin-top:-.71rem; width:auto; align-self:flex-end; min-height:2.2rem; gap:.4rem; font-size:.8rem; padding:.28rem .3rem .28rem .8rem}
+html[dir="rtl"] .mp-track .mp-pk .mp-pk-cta{padding:.28rem .8rem .28rem .3rem}
+.mp-track .mp-pk .mp-pk-cta i{width:1.5rem; height:1.5rem}
+.mp-track .mp-pk .mp-pk-cta svg{width:.9rem; height:.9rem}
+/* (10 Nov, stakeholder) the Enterprise card's "Learn more" the same as the package cards' button: the small glass pill, filled white on hover / focus
+   ("Contact us" next to it unchanged) */
+html .mp-ent-cta:not(.alt){align-self:center; min-height:2.2rem; gap:.4rem; font-size:.8rem; padding:.28rem .3rem .28rem .8rem; color:#fff; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.34); box-shadow:none}
+html[dir="rtl"] .mp-ent-cta:not(.alt){padding:.28rem .8rem .28rem .3rem}
+/* (10 Nov, stakeholder) "Contact us" the same size as "Learn more" next to it (its own outline look kept) */
+html .mp-ent-cta.alt{align-self:center; min-height:2.2rem; font-size:.8rem; padding:.28rem .8rem}
+@media (max-width:640px){ html .mp-ent-acts{flex-direction:row; align-items:center} }   /* phones: the two small buttons side by side, as on desktop */   /* phones (the buttons stacked): its own width, at the start */
+html .mp-ent-cta:not(.alt) i{width:1.5rem; height:1.5rem; background:rgba(220,253,237,.2)}
+html .mp-ent-cta:not(.alt) svg{width:.9rem; height:.9rem; stroke:#DCFDED}
+html .mp-ent-cta:not(.alt):hover,html .mp-ent-cta:not(.alt):focus-visible{color:#0B3B45; background:#fff; border-color:#fff; box-shadow:none}
+html .mp-ent-cta:not(.alt):hover svg,html .mp-ent-cta:not(.alt):focus-visible svg{stroke:#0B3B45}
 .mp-pk .mp-pk-pill{position:absolute; z-index:2; top:.75rem; inset-inline-start:.75rem; pointer-events:none;
   color:#fff; background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.3)}
 /* the still image (before the particles, and for reduced motion) in the card's package colour, as the particles are */
@@ -2160,6 +2281,65 @@ html[dir="rtl"] .mpd-disc li::after{transform-origin:right}
   background:radial-gradient(70% 60% at 85% 10%, color-mix(in srgb,var(--a2) 24%,transparent), transparent 70%), linear-gradient(155deg,var(--bg1),var(--bg2))}
 .mpo-card.wide .mpo-vis{order:2; flex:1.1 1 0; aspect-ratio:auto; min-height:19rem; border-radius:0; border-start-end-radius:22px; border-end-end-radius:22px}
 .mpo-vis .scn{position:absolute; inset:0; transition:transform .8s var(--ease), opacity .5s}
+/* the Athletes package's original artworks (ATH_OFFER_ART): whole, centred, on their own background colour */
+.mpo-vis .ath-art{position:absolute; inset:0; background:var(--abg)}
+/* 10 Nov 2026 - the focus points on the Athletes meal illustration (prototype): a box with the image's own proportions, centred like the
+   contained image, so each point sits on its place in the picture at every size */
+.ofh{position:absolute; inset:0; z-index:2; container-type:size; pointer-events:none}
+.ofh-box{position:absolute; left:50%; top:50%; width:min(100cqw, 100cqh*var(--iar)); aspect-ratio:var(--iar); transform:translate(-50%,-50%)}
+.ofh-pt{position:absolute; left:var(--x); top:var(--y); width:2.1rem; height:2.1rem; margin:-1.05rem 0 0 -1.05rem; padding:0; border:0; border-radius:50%;
+  background:none; cursor:pointer; pointer-events:auto; display:grid; place-items:center; -webkit-tap-highlight-color:transparent}
+.ofh-pt::before{content:""; width:.6rem; height:.6rem; border-radius:50%; background:#DCFDED; box-shadow:0 0 0 3px rgba(111,221,180,.32), 0 0 12px 2px rgba(111,221,180,.5);
+  transition:transform .25s var(--ease), background .25s ease}
+.ofh-pt::after{content:""; position:absolute; inset:.4rem; border-radius:50%; border:1px solid rgba(147,216,200,.55); animation:ofhPulse 3s ease-out infinite; pointer-events:none}
+.ofh-pt:nth-child(2)::after{animation-delay:.75s} .ofh-pt:nth-child(3)::after{animation-delay:1.5s} .ofh-pt:nth-child(4)::after{animation-delay:2.25s}
+.ofh-pt:hover::before,.ofh-pt[aria-expanded="true"]::before{background:#6FDDB4; transform:scale(1.2)}
+.ofh-pt:focus-visible{outline:2px solid #DCFDED; outline-offset:1px}
+@keyframes ofhPulse{0%{transform:scale(.55); opacity:.85} 100%{transform:scale(1.45); opacity:0}}
+.ofh-tip{position:absolute; left:0; top:0; z-index:3; width:max-content; max-width:min(15rem, calc(100% - 1rem)); padding:.55rem .75rem .6rem; border-radius:12px;
+  color:#EAF8F4; background:rgba(3,26,30,.86); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); border:1px solid rgba(147,216,200,.32);
+  box-shadow:0 12px 28px -14px rgba(0,0,0,.6); font-size:.8rem; line-height:1.55; text-align:start; pointer-events:none;
+  opacity:0; visibility:hidden; transform:translateY(4px); transition:opacity .22s ease, transform .22s ease, visibility 0s .22s}
+.ofh-tip.on{opacity:1; visibility:visible; transform:none; transition:opacity .22s ease, transform .22s ease}
+.ofh-tip b{display:block; margin-bottom:.1rem; color:#93D8C8; font-size:.82rem; font-weight:700}
+@media (prefers-reduced-motion:reduce){ .ofh-pt::after{animation:none; opacity:0} .ofh-tip,.ofh-tip.on{transition:none} }
+.mpo-vis .ath-art img{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block; user-select:none; -webkit-user-drag:none}
+/* 10 Nov 2026 - the Athletes package's five APPROVED images (assets/athlete-offer/approved/, the supplied files - only the screenshot
+   frame cut off): each shown whole and sharp in a box of its own proportions (nothing cropped, stretched, blurred or filtered), on a plain
+   background of the image's own edge colour, and clipped to the card's rounded corners (clip-path: also in Safari, where overflow +
+   radius can fail to clip) */
+.mpo-vis .ath-art.ok{container-type:size; background:var(--abg); overflow:hidden; border-radius:inherit; clip-path:inset(0 round 25px)}
+@media (max-width:600px){ .mpo-vis .ath-art.ok{clip-path:inset(0 round 19px)} }
+.mpo-vis .ath-art.ok .ofh-box img{position:absolute; inset:0; width:100%; height:100%; object-fit:fill; display:block; user-select:none; -webkit-user-drag:none}
+/* (stakeholder, 10 Nov) each image FILLS the card (like object-fit: cover): its box is the image's own proportions, as large as needed to
+   cover the card, centred across and placed vertically by --py (0 = keep the top, 1 = keep the bottom), so its main subject stays in view.
+   The focus points use the same box, so they stay on their places */
+.mpo-vis .ath-art.ok .ofh-box,.ofh.v2 .ofh-box{width:max(100cqw, 100cqh*var(--iar)); top:calc((100cqh - max(100cqw / var(--iar), 100cqh)) * var(--py,.5)); transform:translateX(-50%)}
+/* the focus points: a small white centre in a thin mint ring with a soft glow, its short name beside it (a quiet glass pill); hover / focus
+   / tap lights it and opens its explanation */
+.ofh.v2{z-index:3}   /* an open explanation shows above the "Sample insight" tag */
+.ofh.v2 .ofh-pt{width:1.9rem; height:1.9rem; margin:-.95rem 0 0 -.95rem}
+.ofh.v2 .ofh-pt::before{width:.5rem; height:.5rem; background:#fff; box-shadow:0 0 0 2px rgba(111,221,180,.7), 0 0 0 5px rgba(111,221,180,.16), 0 0 14px 3px rgba(111,221,180,.38)}
+.ofh.v2 .ofh-pt::after{inset:.35rem; border-color:rgba(147,216,200,.4); animation-duration:3.6s}
+.ofh.v2 .ofh-pt:nth-child(5)::after{animation-delay:3s}
+.ofh.v2 .ofh-pt:hover::before,.ofh.v2 .ofh-pt[aria-expanded="true"]::before{background:#fff; transform:scale(1.25); box-shadow:0 0 0 2px #6FDDB4, 0 0 0 6px rgba(111,221,180,.24), 0 0 18px 4px rgba(111,221,180,.5)}
+.ofh-lab{position:absolute; left:50%; top:50%; white-space:nowrap; padding:.16rem .55rem .2rem; border-radius:999px; font-size:.7rem; font-weight:600; line-height:1.45;
+  color:#EFFFF8; background:rgba(2,30,33,.5); border:1px solid rgba(147,216,200,.3); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  transition:background .25s ease, color .25s ease, border-color .25s ease; pointer-events:auto}
+.ofh-lab[data-d="l"]{transform:translate(calc(-100% - .85rem),-50%)}
+.ofh-lab[data-d="r"]{transform:translate(.85rem,-50%)}
+.ofh-lab[data-d="tl"]{transform:translate(calc(-100% + .5rem),calc(-100% - .85rem))}
+.ofh-lab[data-d="tr"]{transform:translate(-.5rem,calc(-100% - .85rem))}
+.ofh-lab[data-d="bl"]{transform:translate(calc(-100% + .5rem),.85rem)}
+.ofh-lab[data-d="br"]{transform:translate(-.5rem,.85rem)}
+.ofh-pt:hover .ofh-lab,.ofh-pt[aria-expanded="true"] .ofh-lab{color:#05343A; background:#DCFDED; border-color:#DCFDED}
+@media (max-width:640px){ .ofh-lab{display:none} }   /* phones: the points only (no clutter); the explanation opens with its name on a tap */
+/* meeting 4: the background-comparison label (Athletes illustration cards only, while no option is chosen) */
+.ath-art .ofbg-tag{position:absolute; z-index:2; top:.75rem; inset-inline-end:.75rem; padding:.2rem .6rem; border-radius:999px; font-size:.72rem; font-weight:600; line-height:1.5;
+  color:#fff; background:rgba(0,0,0,.38); border:1px solid rgba(255,255,255,.28); pointer-events:none}
+.ath-art .ofbg-tag.lt{color:#0B3B40; background:rgba(255,255,255,.7); border-color:rgba(11,59,64,.25)}
+/* on the light green option the card's "sample" pill turns dark, so it stays readable */
+.mpo-vis:has(.ath-art.lt) .mpo-tag{color:#0B3B40; background:rgba(255,255,255,.72); border-color:rgba(11,59,64,.25)}
 .mpo-vis .scn svg{position:absolute; inset:0; width:100%; height:100%; display:block; overflow:visible}
 .mpo-vis .scn *{transform-box:fill-box; transform-origin:center}
 .mpo-vis .scn [style*="transform-origin"]{transform-box:view-box}
@@ -2981,47 +3161,45 @@ void main(){
   finish(C);
 }`;
 
-/* ---- sleep: a lit 3D crescent moon, drifting Zs, twinkling stars, two flowing waves */
+/* ---- sleep (Nov 2026, the approved Sleep & Recovery card): a large glowing crescent moon with a bright rim, three Zs rising diagonally
+   from its upper horn (all visible, bobbing gently in turn), small sparkle stars, and luminous particle dunes along the bottom */
 LIB_SCENES.sleep = LIB + `
 vec4 zGlyph(vec2 p,vec2 c,float s,float a){ if(a<=.001) return vec4(0.);
-  vec2 q=(p-c)/s; float r=.075;
-  vec2 A=vec2(-.32,.36),B=vec2(.32,.36),D=vec2(-.32,-.36),E=vec2(.32,-.36);
-  vec4 o=vec4(0.); o=over(o,tubeSeg(q,A,B,r,ICE,40.)); o=over(o,tubeSeg(q,B,D,r,ICE,40.)); o=over(o,tubeSeg(q,D,E,r,ICE,40.));
-  return o*a; }
-vec4 wave(vec2 P,float y0,float amp,float k,float spd,float r,vec3 col,float ph){
-  float y=y0+amp*sin(P.x*k-uT*spd+ph), dy=amp*k*cos(P.x*k-uT*spd+ph);
-  float d=(P.y-y)/sqrt(1.+dy*dy); float sd=abs(d)-r; if(sd>.06) return vec4(0.);
-  float t=clamp(d/r,-1.,1.); vec3 n=normalize(vec3(-dy*t*.6,t,sqrt(max(0.,1.-t*t))));
-  float head=exp(-pow(mod(P.x*.6-uT*.35+ph,1.)-.5,2.)/.01);
-  vec4 o=glowSD(sd,col,.03,.25+.35*head);
-  if(sd<PX){ vec4 s=solidN(n,col,sd,40.); s.rgb+=ICE*head*.4*s.a; o=over(o,s); }
-  float edge=smoothstep(1.47,1.25,abs(P.x)); return o*edge; }
+  vec2 q=(p-c)/s; float d=min(min(sdSeg(q,vec2(-.34,.36),vec2(.34,.36)),sdSeg(q,vec2(.34,.36),vec2(-.34,-.36))),sdSeg(q,vec2(-.34,-.36),vec2(.34,-.36)))*s;
+  float w=s*.055, core=aa(d-w), g=exp(-max(d-w,0.)/su(3.))*.5;
+  return vec4(ICE*(core+g*.6),core*.95+g*.35)*a; }
+/* a dune: crest height y(x); a bright crest line and a softer particle body below it, thinning downward */
+vec4 dune(vec2 P,float y0,float amp,float k,float ph,float spd,vec3 col,float body){
+  float y=y0+amp*sin(P.x*k+ph-uT*spd)+amp*.35*sin(P.x*k*2.1-ph*1.7+uT*spd*.7)+.09*P.x;   /* rising a little to the right */
+  float d=P.y-y; if(d>.08) return vec4(0.);
+  float crest=exp(-pow(d/su(2.),2.))*.95+exp(-abs(d)/su(7.))*.12;
+  float fill=d<0.?body*exp(d/su(34.))*(.35+.3*(.5+.5*sin(P.x*37.+P.y*83.+ph-uT*.6))):0.;
+  float a=clamp(crest+fill,0.,1.); return vec4(mix(col,ICE,crest*.6)*a,a*.9); }
 void main(){
   PX=pixelSize(); vec2 P=framePos(); float T=uT; vec4 C=vec4(0.);
-  vec2 M=sv(196.,140.)+vec2(0.,.025*sin(T*.9)); float R=su(74.);
-  vec2 K=M+vec2(.28,.1467); float r2=su(62.);
-  C=over(C,halo(P,M,.85,.2));
+  vec2 M=sv(190.,150.)+vec2(0.,.02*sin(T*.8)); float R=su(86.);
+  vec2 K=M+vec2(su(44.),su(34.)); float r2=su(76.);
+  C=over(C,halo(P,M+vec2(-.08,-.05),.6,.1+.02*sin(T*1.1)));
   float dm=length(P-M)-R, dk=length(P-K)-r2, cres=max(dm,-dk);
-  C=over(C,glowSD(cres,LITE,.07,.3+.08*sin(T*1.3)));
-  if(dm<PX){
+  C=over(C,glowSD(cres,LITE,.025,.3+.06*sin(T*1.3)));
+  if(cres<PX){
     vec3 n=sphN(P,M,R);
-    vec3 base=mix(TEAL,LITE,smoothstep(-.9,.7,n.y*.6-n.x*.7));
-    /* soft craters */
-    float cr=smoothstep(su(9.),su(6.),length(P-(M+vec2(-.2,.12))))*.12+smoothstep(su(7.),su(4.),length(P-(M+vec2(-.28,-.18))))*.1+smoothstep(su(5.),su(3.),length(P-(M+vec2(-.08,-.3))))*.1;
-    vec4 lit=solidN(n,base*(1.-cr),dm,30.);
-    float inC=1.-smoothstep(-PX,PX,-dk);                                   /* 1 on the lit crescent */
-    vec4 dark=glassN(n,DEEP,dm,.04)*.28;                                      /* faint earthshine */
-    C=over(C,mix(dark,lit,inC*aa(cres)+0.));
+    vec3 base=mix(TEAL*.55,TEAL*1.05,smoothstep(-.6,.8,-n.x*.8+n.y*.5));        /* a dimmer, grainy body: the rims carry the light */
+    float rimO=exp(dm/su(4.)), rimI=exp(-dk/su(3.))*1.;                     /* the bright outer rim and the softer inner edge */
+    float grain=.8+.2*sin(P.x*130.+sin(P.y*97.)*3.)*sin(P.y*120.);
+    vec3 col=mix(base*grain,ICE,clamp(rimO*.9+rimI*.6,0.,1.));
+    float a=aa(cres); C=over(C,vec4(col*a,a));
   }
-  /* Zs drift up and fade in turn */
-  for(int i=0;i<3;i++){ float fi=float(i); float ph=fract(T/3.+fi*.27);
-    vec2 base=i==0?sv(300.,160.):(i==1?sv(338.,128.):sv(366.,102.)); float s=i==0?su(34.):(i==1?su(24.):su(16.));
-    float a=smoothstep(0.,.35,ph)*smoothstep(1.,.6,ph);
-    C=over(C,zGlyph(P,base+vec2(ph*.06,ph*.09),s,a)); }
-  C=over(C,twinkle(P,sv(310.,60.),1.,0.)); C=over(C,twinkle(P,sv(350.,120.),.7,1.)); C=over(C,twinkle(P,sv(90.,60.),.7,2.));
-  C=over(C,twinkle(P,sv(120.,230.),.9,3.)); C=over(C,twinkle(P,sv(380.,210.),.8,4.)); C=over(C,twinkle(P,sv(300.,230.),.6,5.));
-  C=over(C,wave(P,sv(0.,262.).y,su(10.),4.2,1.2,su(2.6),MINT,0.));
-  C=over(C,wave(P,sv(0.,282.).y,su(7.),4.2,-1.,su(2.),TEAL,1.7));
+  /* sparkle stars */
+  C=over(C,twinkle(P,sv(42.,192.),1.,0.)); C=over(C,twinkle(P,sv(70.,96.),.7,1.3)); C=over(C,twinkle(P,sv(280.,44.),.8,2.1));
+  C=over(C,twinkle(P,sv(330.,74.),.6,.7)); C=over(C,twinkle(P,sv(410.,150.),.7,2.7)); C=over(C,twinkle(P,sv(150.,40.),.55,3.4));
+  /* three Zs rising up and to the right from the moon's upper horn, each bobbing and breathing a little, in turn */
+  for(int i=0;i<3;i++){ float fi=float(i), ph=T*1.2-fi*1.1;
+    vec2 base=i==0?sv(304.,174.):(i==1?sv(354.,136.):sv(398.,98.)); float sz=i==0?su(30.):(i==1?su(24.):su(19.));
+    C=over(C,zGlyph(P,base+vec2(0.,.012*sin(ph)),sz,.72+.28*(.5+.5*sin(ph)))); }
+  /* the dunes along the bottom: a far, fainter one and a near, brighter one */
+  C=over(C,dune(P,sv(0.,246.).y,su(16.),1.9,2.4,.3,TEAL,.4));
+  C=over(C,dune(P,sv(0.,266.).y,su(18.),1.5,.2,-.22,MINT,.6));
   finish(C);
 }`;
 
@@ -4980,7 +5158,7 @@ function initDNA(root, hero, list){
 function initCardFigure(card, id, track){
   const fig = card.querySelector(".mp-pk-fig");
   /* the supplied character, as particles (see CHR_ART); the drawn figure below stays only as a fallback if it is missing */
-  if (CHR_ART[id] && fig.querySelector(".chr-art")){ card._dots = initArtParticles(fig.querySelector(".chr-art"), {...chrArtLook(id, true), ...ART_CARD, ...DOT_CARD}); return; }
+  if (CHR_ART[id] && fig.querySelector(".chr-art")){ card._dots = initArtParticles(fig.querySelector(".chr-art"), {...chrArtLook(id, true), ...ART_CARD, ...DOT_CARD, ...(CHR_ART[id].cardDots || {}), glow:DOT_CARD.glow*(CHR_GLOW_K[id] ?? 1)}); return; }
   card._dots = initParticles(fig, fig.querySelector(".pdots"), id, {meta:{...PKG_DOTMETA[id], dot:cardDot(id)}, shimmer:.25, clip:track, edge:cardDotEdge(id),
     fitFn(w, h, s0){
       /* a wide scene (Enterprise's group) by width, a single figure by height; centred in the area */
@@ -5117,7 +5295,7 @@ const PKG_UI = {
   brand:   {en:"Mulhim", ar:"مُلهم"},
   orgs:    {en:"FOR ORGANIZATIONS", ar:"للمؤسسات والمنظمات"},
   /* the same pill on the four package cards */
-  forPkg:  {athletes:{en:"ATHLETES", ar:"للرياضيين"}, men:{en:"MEN", ar:"للرجال"}, women:{en:"WOMEN", ar:"للنساء"}, children:{en:"KIDS", ar:"للأطفال"}},
+  forPkg:  {athletes:{en:"ATHLETES", ar:"للرياضيين"},   /* 10 Nov: restored (stakeholder) - the badge "للرياضيين" and the title "باقة الرياضيين" back */ men:{en:"MEN", ar:"للرجال"}, women:{en:"WOMEN", ar:"للنساء"}, children:{en:"KIDS", ar:"للأطفال"}},
   details: {en:"View Details", ar:"اعرف التفاصيل"},
   order:   {en:"Order Package", ar:"اطلب الباقة"},
   save:    {en:"Save", ar:"وفّر"},
@@ -5152,8 +5330,7 @@ const HOME_TEXT = {
   /* Meeting 3: the section's new heading and paragraph (the bold line under the heading is unchanged) */
   whyTitle: {en:["Discover your genes, ", "for a journey made for you"], ar:["اكتشف جيناتك، ", "لرحلة تناسبك أنت"]},
   whySub:   {en:"Your health plan, designed just for you.", ar:"خطتك الصحية مصممة خصيصًا لك."},
-  whyText:  {en:"Choose from genetic testing packages designed for your needs, and discover your genetic markers linked to nutrition and fitness, with personalized recommendations and plans from Mulhim that help you reach your goals.",
-             ar:"اختر من باقات الفحص الجيني المصممة لاحتياجاتك، واكتشف مؤشراتك الوراثية المرتبطة بالتغذية واللياقة، مع توصيات وخطط شخصية من ملهم تساعدك على تحقيق أهدافك."},
+  /* 9 Nov 2026: the paragraph under the heading (whyText) was removed at the meeting */
   stepsTitle:{en:["How to start ", "with Mulhim"], ar:["كيف تبدأ ", "مع ملهم؟"]},
   ctaTitle: {en:"Turn your genetic data from random decisions into healthy daily decisions.", ar:"حوّل بياناتك الجينية من مجرد قرارات عشوائية إلى قرارات يومية صحية"},
   ctaSub:   {en:"Start your journey with Mulhim", ar:"ابدأ رحلتك مع ملهم"},
@@ -5217,7 +5394,7 @@ const headHTML = (t, sub) => `<header class="mh-head rv"><h2>${pt(t)[0]}<em>${pt
 function drawCompare(){
   const CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   const ar = S.lang === "ar";
-  /* the comparison always shows prices in Western digits (3,500), in Arabic too; each amount and its
+  /* the comparison always shows prices in Western digits (3,499), in Arabic too; each amount and its
      riyal sign are kept together left-to-right so they read the same in both directions */
   const en = money;
   /* the saving, worked out from the package's own prices: (original - final) / original x 100 */
@@ -5265,48 +5442,54 @@ function drawPartners(){
    its three link groups, the copyright line and the App Store badge, with its links (checked live).
    The live site is in English only; the Arabic labels are translations for this page. "Bioinformatics"
    is this site, so it leads to the top of this page. */
+/* ---- the footer (8 Nov 2026): the main Mulhim website's footer - its content as deployed on mulhimd.com (v0-mulhim
+   components/marketing/footer.tsx and the site's own Arabic texts, messages "footer" / "brand"): the brand block, its three link
+   groups in the site's order, the copyright line and the App Store badge, every link to its page on mulhimd.com.
+   "Bioinformatics" is this page itself: it returns to the top of the packages page (the link still names the site's page). */
 const FOOT = {
-  brand:"Mulhim Delta", home:"https://mulhimd.com/",
-  tagline:{en:"Saudi Arabia's sports technology company", ar:"شركة تقنية رياضية سعودية"},
+  brand:"Mulhim Delta", home:"https://mulhimd.com/", logoAlt:{en:"Mulhim logo", ar:"شعار ملهم"},
+  tagline:{en:"Saudi Arabia's sports technology company", ar:"شركة سعودية متخصصة في تقنية الرياضة"},
   social:[
-    {label:{en:"Mulhim on X", ar:"ملهم على إكس"}, href:"https://x.com/mulhimdelta", vb:"0 0 24 24", d:'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z'},
+    {label:{en:"Mulhim on X", ar:"ملهم على X"}, href:"https://x.com/mulhimdelta", vb:"0 0 24 24", d:'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z'},
     {label:{en:"Mulhim on Instagram", ar:"ملهم على إنستغرام"}, href:"https://www.instagram.com/mulhimdelta", vb:"0 0 24 24", d:'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069Zm0-2.163C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12s.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0Zm0 5.838A6.162 6.162 0 1 0 12 18.162 6.162 6.162 0 0 0 12 5.838Zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88Z'},
     {label:{en:"Mulhim on WhatsApp", ar:"ملهم على واتساب"}, href:"https://wa.me/966549718067", vb:"0 0 24 24", d:'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z'}],
   groups:[
     {title:{en:"Platform", ar:"المنصة"}, links:[
       {t:{en:"For Coaches", ar:"للمدربين"}, href:"https://mulhimd.com/coach"},
       {t:{en:"For Organizations", ar:"للمؤسسات"}, href:"https://mulhimd.com/organizations"},
-      {t:{en:"Bioinformatics", ar:"المعلوماتية الحيوية"}, home:true},
-      {t:{en:"Demo", ar:"عرض تجريبي"}, href:"https://mulhimd.com/demo/coach"}]},
+      {t:{en:"Sports Programs", ar:"البرامج الرياضية"}, href:"https://mulhimd.com/sports-programs"},
+      {t:{en:"Bioinformatics", ar:"المعلوماتية الحيوية"}, href:"https://mulhimd.com/bioinformatics", home:true},
+      {t:{en:"Demo", ar:"عرض تجريبي"}, href:"https://mulhimd.com/demo"}]},
     {title:{en:"Company", ar:"الشركة"}, links:[
       {t:{en:"About", ar:"من نحن"}, href:"https://mulhimd.com/about"},
       {t:{en:"Products", ar:"المنتجات"}, href:"https://mulhimd.com/products"},
       {t:{en:"Privacy", ar:"الخصوصية"}, href:"https://mulhimd.com/privacy"},
       {t:{en:"Terms", ar:"الشروط"}, href:"https://mulhimd.com/terms"},
-      {t:{en:"Refund Policy", ar:"سياسة الاسترداد"}, href:"https://mulhimd.com/refund"}]},
+      {t:{en:"Refund Policy", ar:"سياسة الاسترجاع"}, href:"https://mulhimd.com/refund"},
+      {t:{en:"Contact", ar:"تواصل معنا"}, href:"https://mulhimd.com/contact"}]},
     {title:{en:"Resources", ar:"الموارد"}, links:[
       {t:{en:"Docs", ar:"الوثائق"}, href:"https://mulhimd.com/docs"},
-      {t:{en:"Support", ar:"الدعم"}, href:"https://mulhimd.com/support"}]}],
-  copy:{en:"Mulhim Coach. All rights reserved.", ar:"Mulhim Coach. جميع الحقوق محفوظة."},
+      {t:{en:"Support", ar:"الدعم"}, href:"https://mulhimd.com/support"},
+      {t:{en:"FAQ", ar:"الأسئلة الشائعة"}, href:"https://mulhimd.com/faq"}]}],
+  rights:{en:"All rights reserved.", ar:"جميع الحقوق محفوظة."},
   store:{href:"https://apps.apple.com/sa/app/mulhim-%D9%85%D9%84%D9%87%D9%85/id6759181587?l=ar", vb:"0 0 384 512", d:'M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z',
-    label:{en:"Open Mulhim or download it on the App Store", ar:"افتح ملهم أو حمّله من App Store"}}
+    label:{en:"Open Mulhim or download it on the App Store", ar:"افتح ملهم أو حمّله من App Store"}, on:{en:"Download on the", ar:"تنزيل من"}}
 };
 function drawFooter(){
   const ext = 'target="_blank" rel="noopener noreferrer"';
   return `<footer class="mf" aria-label="${S.lang === "ar" ? "تذييل الموقع" : "Site footer"}">
-    <div class="mf-grid">
+    <div class="mf-in"><div class="mf-grid">
       <div class="mf-brand">
-        <a class="mf-logo" href="${FOOT.home}"><img src="assets/brand/mulhim-logo.png" alt="Mulhim Logo" width="799" height="520"><span>${FOOT.brand}</span></a>
+        <a class="mf-logo" href="${FOOT.home}"><img src="assets/brand/mulhim-logo.png" alt="${esc(pt(FOOT.logoAlt))}" width="799" height="520"><span>${FOOT.brand}</span></a>
         <p>${pt(FOOT.tagline)}</p>
         <div class="mf-social">${FOOT.social.map(x => `<a href="${x.href}" ${ext} aria-label="${esc(pt(x.label))}"><svg viewBox="${x.vb}" aria-hidden="true"><path d="${x.d}"/></svg></a>`).join("")}</div>
       </div>
-      ${FOOT.groups.map(g => `<div class="mf-col"><h4>${pt(g.title)}</h4><ul>${g.links.map(l => `<li>${l.home
-        ? `<a href="#" data-mf-home>${pt(l.t)}</a>` : `<a href="${l.href}">${pt(l.t)}</a>`}</li>`).join("")}</ul></div>`).join("")}
-    </div>
-    <div class="mf-bottom">
-      <p>© <bdi dir="ltr">${new Date().getFullYear()}</bdi> ${pt(FOOT.copy)}</p>
-      <a class="mf-store" href="${FOOT.store.href}" ${ext} aria-label="${esc(pt(FOOT.store.label))}" dir="ltr"><svg viewBox="${FOOT.store.vb}" aria-hidden="true"><path d="${FOOT.store.d}"/></svg><span><small>Download on the</small><b>App Store</b></span></a>
-    </div>
+      ${FOOT.groups.map(g => `<div class="mf-col"><h4>${pt(g.title)}</h4><ul>${g.links.map(l => `<li><a href="${l.href}"${l.home ? " data-mf-home" : ""}>${pt(l.t)}</a></li>`).join("")}</ul></div>`).join("")}
+    </div></div>
+    <div class="mf-bottom"><div class="mf-bottom-in">
+      <p><span dir="ltr">© ${new Date().getFullYear()} ${FOOT.brand}.</span> ${pt(FOOT.rights)}</p>
+      <a class="mf-store" href="${FOOT.store.href}" ${ext} aria-label="${esc(pt(FOOT.store.label))}"><svg viewBox="${FOOT.store.vb}" aria-hidden="true"><path d="${FOOT.store.d}"/></svg><span><small>${pt(FOOT.store.on)}</small><b lang="en">App Store</b></span></a>
+    </div></div>
   </footer>`;
 }
 /* the closing call to action: a solid brand band with one button back to the packages */
@@ -5351,7 +5534,7 @@ function pkgPrice(id){
   return {original:p.original, final:p.final, save:p.original - p.final,
           off:Math.round((1 - p.final / p.original) * 100)};
 }
-/* 3500 -> "3,500": every price, in both languages, is written in Western digits with a comma
+/* 3499 -> "3,499": every price, in both languages, is written in Western digits with a comma
    separator (agreed design rule) - this is the one place prices are formatted */
 const money = v => Number(v).toLocaleString("en-US");
 /* the Saudi riyal sign (U+20C1), as on mulhimd.com; screen readers hear the currency name */
@@ -5407,7 +5590,7 @@ function drawPackages(el){
       <section class="mp-list" id="mp-list">
         <div class="mp-list-head">
           <div class="mp-list-ttl"><h2 class="mp-h2">${pt(HOME_TEXT.whyTitle)[0]}<em>${pt(HOME_TEXT.whyTitle)[1]}</em></h2>
-            <p class="mp-list-sub">${pt(HOME_TEXT.whySub)}</p><p class="mp-list-lead">${pt(HOME_TEXT.whyText)}</p></div>
+            <p class="mp-list-sub">${pt(HOME_TEXT.whySub)}</p></div>
           <div class="mp-arrows">
             <button type="button" class="mp-arr" data-dir="-1" aria-label="${esc(pt(PKG_UI.prev))}"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
             <button type="button" class="mp-arr" data-dir="1" aria-label="${esc(pt(PKG_UI.next))}"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
@@ -5418,8 +5601,7 @@ function drawPackages(el){
             <div class="mp-pk-fig" aria-hidden="true">${chrArtHTML(p.id)}</div>
             ${PKG_UI.forPkg[p.id] ? `<span class="mp-pill mp-pk-pill">${pt(PKG_UI.forPkg[p.id])}</span>` : ""}
             <div class="mp-pk-body">
-              <h3 id="pk-t-${p.id}">${pt(PKG_CARD[p.id].name)}</h3>
-              <p class="mp-pk-for"><b>${pt(PKG_UI.forWhom)}</b> ${pt(PKG_CARD[p.id].for)}</p>
+              <h3 id="pk-t-${p.id}">${pt(PKG_CARD[p.id].name)}</h3>   <!-- 8 Nov 2026: the "Who it's for" row removed from the cards -->
               <p class="mp-pk-desc">${pt(p.summary)}</p>
               <button type="button" class="mp-pk-cta" data-pkg="${p.id}" tabindex="-1">${pt(PKG_UI.details)}<i>${ARROW_SVG}</i></button>
             </div>
@@ -6198,6 +6380,183 @@ const OFX_CARD = {
 OF_VIS.women.push(OF_VIS_POOL.women[0]); OF_SC.women.push(OFX_AR.women[4].sc); OF_3D.women.push(OFX_AR.women[4].d3);
 OF_VIS.children.push(OF_VIS_POOL.children[4]); OF_SC.children.push(OFX_AR.children[4].sc); OF_3D.children.push(OFX_AR.children[4].d3);
 
+/* THE ATHLETES PACKAGE'S OFFER ILLUSTRATIONS (8 Nov 2026): the five original Mulhim wellness artworks, extracted unchanged from the
+   supplied mulhim_wellness_original_dynamic.html (its full-size images) into assets/athlete-offer/ - shown in the illustration card of
+   each Athletes benefit instead of its drawn scene, by the scene key (so Arabic and English, whose item order differs, both match).
+   Sleep (8 Nov 2026): the moon image supplied in chat (1672 x 941) replaces the file's small framed moon (kept as moon-original-297.webp).
+   Shown whole (object-fit: contain) on each artwork's own edge colour, so nothing is cropped or stretched. The data card is unchanged */
+const OFFER_ART_BG = {meal:"#012428", moon:"#012524", man:"#012728", knee:"#012227", tracker:"#012323"};
+/* 8 Nov 2026: used in every package where the benefit's meaning matches - by package, language and position (the Arabic and English
+   lists differ in order, and one scene key can mean different topics in different packages). null: no matching artwork, the drawn
+   scene stays. meal = metabolism / nutrition / energy / hydration; moon = sleep / recovery / readiness; man = performance / strength /
+   fitness; knee = tendons / joints; tracker = tracking / progress / routine */
+const OFFER_ART = {
+  athletes:{ar:["meal","moon","man","knee","tracker"], en:["man","meal","moon","knee","tracker"]},
+  men:     {ar:["meal","moon","man","horm","aging"],   en:["meal","meal","moon","man","horm"]},   /* 10 Nov: the five approved Men images (horm, aging: only these) */
+  women:   {ar:["meal","moon","fit","skin","horm"],    en:["meal","meal","moon","skin","horm"]},   /* 10 Nov: the five approved Women images */
+  children:{ar:["meal","moon","growth","absorb","tracker"], en:["growth","meal","moon","growth","tracker"]}};   /* 10 Nov: the five approved Children images */
+const offerArtFor = (id, i) => ((OFFER_ART[id] || {})[S.lang === "ar" ? "ar" : "en"] || [])[i] || null;
+/* 9 Nov 2026: the food image in natural colours (meal-natural.webp, recoloured from meal.webp, which is kept) */
+/* 9 Nov 2026 (client notes): every illustration CLEANED of its scattered dots (stars, glitter, dust - only isolated small points
+   outside the subject; the waves and the subject's details stay) and in NATURAL colours like the food card: the moon an ivory
+   moonlight with a faint lunar surface, the man natural skin / dark shorts / metal bar, the knee X-ray bone ivory, the tracker's
+   leaf green, bottle clear, dumbbell metal (the UI keeps its Mulhim teal); the teal kept as a calmer accent in the waves and rim
+   light. Made by assets/athlete-offer/source/ (t_*.py); the earlier files (meal-natural, moon, man, knee, tracker) are kept */
+/* 9 Nov 2026 (meeting 4): every item in its own natural colour - food: clear water with a natural blue tint, a neutral glass plate, warmer
+   toast (meal-natural2); sleep: a real grey/silver moon with a quiet lunar surface, the wave lines across the top removed (moon-silver);
+   pull-up: no green on his body - natural skin throughout, neutral light round him (man-natural2); knee: bone ivory and the tendons
+   a soft tendon rose, the leg's outline teal (knee-tissue); tracker: blue water in the bottle, a neutral-grey dumbbell (tracker-natural2).
+   Scripts: assets/athlete-offer/source/t_meal2.py, t_moon2.py, t_man2.py, t_knee2.py, t_tracker2.py; every earlier file is kept */
+/* meeting 5 (9 Nov 2026): moon-silver2 (t_moon3.py - a clean grey crescent drawn from its circles, nothing above the waves), man-natural2
+   rebuilt (t_man2.py - his dark shading is his own colour, no teal patches; one continuous bar and posts), tracker-natural2 rebuilt
+   (t_tracker2.py - clean bottle, cap and water; a clean metal dumbbell without its glow ring) */
+const OFFER_ART_FILE = {meal:"meal-natural2", moon:"moon-silver2", man:"man-natural2", knee:"knee-tissue", tracker:"tracker-natural2"};
+/* (before meeting 4: {meal:"meal-clean", moon:"moon-natural", man:"man-natural", knee:"knee-natural", tracker:"tracker-natural"}) */
+/* 9 Nov 2026: background-colour TRIAL for the illustration cards, preview only, nothing is chosen yet.
+   The background is baked into each image, so each option is a separate image (assets/athlete-offer/bg-options/,
+   made by re-compositing the artwork onto the new colour); the live page keeps the original until one is picked.
+   Preview: add ?ofbg=a (dark green #123F49), ?ofbg=b (near-black #020E0E) or ?ofbg=c (light mint #DCFDED). */
+const OFFER_BG_TRIAL = {a:"#123F49", b:"#020E0E", c:"#DCFDED"};
+/* the Athletes "Learn more" option preview (?athcta=a|b) - see the CSS note */
+(k => { if (k === "a" || k === "b") document.documentElement.dataset.athcta = k; })(new URLSearchParams(location.search).get("athcta"));
+const ofbgTrial = (k => OFFER_BG_TRIAL[k] ? k : "")(new URLSearchParams(location.search).get("ofbg"));
+/* 9 Nov 2026 (meeting 4): the background COMPARISON in the Athletes package itself - its five illustration cards in turn on the dark
+   green (A), the black (B) and the light green (C), each card labelled with its option, so the three can be seen side by side; nothing
+   is chosen yet. ?ofbg=a|b|c still shows one option on every card; the other packages keep the original background */
+const OFBG_CMP = ["a", "b", "c", "a", "b"], OFBG_LABEL = {a:{ar:"خلفية A · الأخضر الغامق", en:"Background A · dark green"},
+  b:{ar:"خلفية B · الأسود", en:"Background B · black"}, c:{ar:"خلفية C · الأخضر الفاتح", en:"Background C · light green"}};
+const athOfferArt = (f, pid, i) => { const file = OFFER_ART_FILE[f] || f;
+  const M = offerImg(pid, f);
+  if (M) { const src = `assets/offer-approved/${M.f}.webp?v=${OFFER_IMG_V}`;
+    return `<div class="ath-art ok" style="--iar:${M.w/M.h};--py:${M.py};--abg:#0E4F52" aria-hidden="true"><div class="ofh-box"><img src="${src}" alt="" decoding="async" draggable="false" width="${M.w}" height="${M.h}"></div></div>${ofHotspots(pid, f, i)}`; }
+  const k = ofbgTrial || (pid === "athletes" ? OFBG_CMP[i % OFBG_CMP.length] : "");
+  const bg = k ? OFFER_BG_TRIAL[k] : OFFER_ART_BG[f];
+  const src = k ? `bg-options/${file}-${k}` : file;
+  const tag = k && !ofbgTrial ? `<span class="ofbg-tag${k === "c" ? " lt" : ""}">${OFBG_LABEL[k][S.lang === "ar" ? "ar" : "en"]}</span>` : "";
+  return `<div class="ath-art${k === "c" ? " lt" : ""}" style="--abg:${bg}" aria-hidden="true"><img src="assets/athlete-offer/${src}.webp?v=20261109m5" alt="" decoding="async" draggable="false">${tag}</div>`; };
+/* 10 Nov 2026 - the Athletes package's five APPROVED images (supplied zip mulhim_athletes_images_only.zip; prepared by
+   assets/athlete-offer/approved/prep.py - only the screenshot frame cut off) with their FOCUS POINTS (HTML buttons over the image, not in
+   the files). By scene key: meal = energy, metabolism & hydration; moon = sleep & readiness; man = muscle, strength & endurance;
+   knee = tendons & joints; tracker = performance tracking. x, y: % of the image; d: the side of its name (l, r, tl, tr, bl, br).
+   The tips are taken from each benefit's own copy. Other packages keep their illustrations. (The earlier meal prototype map is replaced.) */
+/* 10 Nov 2026 (final) - the 10 APPROVED images (mulhim_corrected_images_bundle.zip -> assets/offer-approved/, see its README): full
+   backgrounds, 1470 x 1070 - the card's own proportions, so each fills its card edge to edge (on narrower phones a thin strip is cut top and
+   bottom, kept centred by py). By package and scene key; the focus points (x, y: % of the image; d: the side of the name) are HTML over it */
+const OFFER_IMG_V = "20261110k1";
+const OFFER_NEW_IMG = {
+  athletes:{meal:"athletes-energy", moon:"athletes-sleep", man:"athletes-strength", knee:"athletes-joints", tracker:"athletes-tracking"},
+  men:{meal:"men-metabolism", moon:"men-sleep", man:"men-fitness", horm:"men-hormonal", aging:"men-aging"},
+  women:{meal:"women-metabolism", moon:"women-sleep", fit:"women-fitness", skin:"women-skin", horm:"women-hormonal"},
+  children:{meal:"children-metabolism", moon:"children-sleep", growth:"children-growth", absorb:"children-absorption", tracker:"children-tracking"}};
+const offerImg = (pid, f) => { const n = (OFFER_NEW_IMG[pid] || {})[f]; return n ? {f:n, w:1470, h:1070, py:.5} : null; };
+const _H = (x, y, d, ar, en, tar, ten) => ({x, y, d, lab:{ar, en}, tip:{ar:tar, en:ten}});
+const OFFER_HOTSPOTS = {
+ athletes:{
+  meal:[
+    _H(53, 17, "r", "التركيز", "Focus", "وقود ثابت لجسمك يحافظ على تركيزك في التمرين.", "Steady fuel for your body, so you stay focused in training."),
+    _H(37, 47, "l", "الطاقة", "Energy", "فهم إنتاج الطاقة في جسمك، لتزويده بالوقود المناسب لأفضل أداء.", "Understand your energy production, to fuel your body for your best performance."),
+    _H(42, 62, "l", "الأيض", "Metabolism", "فهم الأيض لديك ضمن التغذية الرياضية.", "Understand your metabolism, as part of your sports nutrition."),
+    _H(85, 62, "tl", "الترطيب", "Hydration", "احتياجات الترطيب قبل التمرين وأثناءه وبعده.", "Your hydration needs before, during and after training."),
+    _H(64, 76, "tl", "التغذية", "Nutrition", "خطة غذائية ترفع كفاءتك في التمارين.", "A nutrition plan that raises your efficiency in training.")],
+  moon:[
+    _H(85, 52, "tl", "التعافي الذهني", "Mental recovery", "تأثير إدارة التوتر على تعافيك وجاهزيتك.", "How managing stress shapes your recovery and readiness."),
+    _H(90, 67, "l", "جودة النوم", "Sleep quality", "تأثير النوم على تعافيك بعد الجهد البدني.", "How sleep affects your recovery after physical effort."),
+    _H(45, 52, "l", "التعافي البدني", "Physical recovery", "خطط جاهزية للمنافسات والتمارين الشاقة.", "Readiness plans for competitions and hard training.")],
+  man:[
+    _H(54, 32, "l", "القوة العضلية", "Muscle strength", "مؤشرات القوة وتكوين الألياف العضلية لديك.", "Your strength markers and muscle-fibre make-up."),
+    _H(72, 25, "tr", "التحمل", "Endurance", "مؤشرات التحمل، لرفع أدائك البدني.", "Your endurance markers, to raise your physical performance."),
+    _H(24, 64, "tr", "تمارين المقاومة", "Resistance training", "برنامج تدريب مخصص مبني على تكوينك العضلي.", "A training programme built on your muscle make-up.")],
+  knee:[
+    _H(79, 44, "l", "حماية الركبة", "Knee protection", "احمِ مفاصلك من الإصابات أثناء التدريب.", "Protect your joints from injury while you train."),
+    _H(72, 62, "l", "صحة الأوتار", "Tendon health", "العوامل الجينية لمرونة وصحة الأوتار والأربطة.", "The genetic factors behind the flexibility and health of your tendons and ligaments."),
+    _H(37, 60, "r", "دعم الحركة", "Movement support", "إرشادات للإحماء والوقاية.", "Warm-up and prevention guidance.")],
+  tracker:[
+    _H(59, 44, "tl", "مؤشرات الأداء", "Performance metrics", "متابعة مستمرة لمؤشرات أدائك.", "Ongoing tracking of your performance markers."),
+    _H(51, 58, "l", "تتبع التطور", "Progress tracking", "تطور لياقتك مع الوقت.", "How your fitness develops over time."),
+    _H(70, 57, "tr", "الالتزام بالتدريب", "Training consistency", "خطط تتحسن لتناسب تغير مستواك الرياضي.", "Plans that adjust as your level changes.")]},
+ men:{
+  meal:[
+    _H(61, 47, "l", "صحة القلب", "Heart health", "مؤشرات صحة القلب لديك.", "Your heart-health markers."),
+    _H(57, 63, "l", "الأيض", "Metabolism", "كيف يتعامل جسمك مع الكربوهيدرات والدهون، وكيف يحرق الدهون.", "How your body handles carbohydrates and fats, and burns fat."),
+    _H(62, 74, "tl", "خطة غذائية", "Nutrition plan", "خطة غذائية مخصصة لنمط حياتك.", "A nutrition plan tailored to your lifestyle.")],
+  moon:[
+    _H(75, 44, "tl", "التعامل مع التوتر", "Stress", "العوامل الجينية المرتبطة بالتعامل مع التوتر.", "The genetic factors linked to how you handle stress."),
+    _H(86, 60, "l", "جودة النوم", "Sleep quality", "العوامل الجينية المرتبطة بجودة نومك.", "The genetic factors linked to the quality of your sleep."),
+    _H(46, 48, "l", "الاستشفاء", "Recovery", "نصائح عملية لاستشفاء أسرع وجاهزية يومية.", "Practical tips for faster recovery and daily readiness.")],
+  man:[
+    _H(67, 25, "l", "القوة العضلية", "Muscle strength", "مؤشرات القوة العضلية لديك.", "Your muscle-strength markers."),
+    _H(78, 54, "l", "التحمل", "Endurance", "مؤشرات التحمل، لرفع أدائك وتفادي الإجهاد.", "Your endurance markers, to raise your performance and avoid overstrain."),
+    _H(25, 62, "tr", "التدريب", "Training", "توصيات تدريبية ولياقة موجهة لجيناتك.", "Training and fitness recommendations guided by your genes.")],
+  horm:[
+    _H(74, 8, "bl", "الصحة الهرمونية", "Hormonal health", "مستويات صحتك الهرمونية والإنجابية.", "Your hormonal and reproductive health levels."),
+    _H(56, 58, "r", "الطاقة", "Energy", "مستويات الطاقة لديك، لدعم نشاطك اليومي.", "Your energy levels, to support your daily activity."),
+    _H(45, 9, "l", "الحيوية", "Vitality", "إرشادات حصرية لدعم الحيوية والنشاط.", "Exclusive guidance to support your vitality and energy.")],
+  aging:[
+    _H(46, 5, "r", "عمر الخلايا", "Cell age", "المؤشرات الجينية المتعلقة بعمر الخلايا.", "The genetic markers linked to your cells' age."),
+    _H(57, 52, "r", "شباب الجسم", "A younger body", "حافظ على شباب جسمك ونشاطه.", "Keep your body young and active."),
+    _H(76, 39, "bl", "عادات تحميك", "Protective habits", "عادات تحمي جسمك على المدى الطويل.", "Habits that protect your body in the long term.")]},
+ women:{
+  meal:[
+    _H(55, 50, "r", "صحة القلب", "Heart health", "مؤشرات صحة القلب لديك.", "Your heart-health markers."),
+    _H(52, 65, "r", "الأيض", "Metabolism", "كيف يتعامل جسمك مع الدهون والكربوهيدرات.", "How your body handles fats and carbohydrates."),
+    _H(42, 76, "tl", "التوجيه الغذائي", "Nutrition guidance", "توجيهات غذائية مخصصة لجسدك.", "Nutrition guidance tailored to your body.")],
+  moon:[
+    _H(61, 40, "l", "جودة النوم", "Sleep quality", "جودة نومك، لنوم أعمق وطاقة متجددة.", "The quality of your sleep, for deeper sleep and renewed energy."),
+    _H(74, 26, "r", "الاستجابة للتوتر", "Stress response", "استجابة جسمك للتوتر.", "How your body responds to stress."),
+    _H(40, 62, "l", "الاستشفاء", "Recovery", "إرشادات يومية لتحسين الاستشفاء والراحة النفسية والجسدية.", "Daily guidance to improve your recovery and your mental and physical rest.")],
+  fit:[
+    _H(50, 16, "l", "القوة العضلية", "Muscle strength", "مؤشرات القوة العضلية لديك.", "Your muscle-strength markers."),
+    _H(47, 43, "l", "نوع التمرين", "Your best training", "مدى استجابتك لتمارين المقاومة أو الكارديو.", "How you respond to resistance or cardio training."),
+    _H(22, 72, "tr", "برنامج لياقة", "Fitness plan", "برنامج لياقة مخصص لأهدافك.", "A fitness plan tailored to your goals.")],
+  skin:[
+    _H(58, 30, "l", "صحة البشرة", "Skin health", "تحليلات جينية لصحة بشرتك.", "Genetic insights into the health of your skin."),
+    _H(76, 42, "r", "صحة الشعر", "Hair health", "تحليلات جينية لصحة شعرك.", "Genetic insights into the health of your hair."),
+    _H(51, 61, "l", "الكولاجين", "Collagen", "معدلات الكولاجين، مع توصيات للعناية والوقاية.", "Your collagen levels, with care and prevention recommendations.")],
+  horm:[
+    _H(49, 5, "r", "النضارة", "Radiance", "خطط تحافظ على نضارتك.", "Plans that preserve your radiance."),
+    _H(49, 30, "r", "التوازن الهرموني", "Hormonal balance", "فهم توازنك الهرموني الأنثوي.", "Understanding your female hormonal balance."),
+    _H(52, 52, "r", "الشيخوخة الصحية", "Healthy ageing", "مؤشرات الشيخوخة الصحية، لصحتك المستقبلية.", "Healthy-ageing markers, for your future health.")]},
+ children:{
+  meal:[
+    _H(60, 53, "r", "الأيض", "Metabolism", "استجابة جسم طفلك للدهون والكربوهيدرات.", "How your child's body responds to fats and carbohydrates."),
+    _H(92, 70, "l", "العناصر الغذائية", "Nutrients", "استجابة جسمه للعناصر الغذائية.", "How their body responds to nutrients."),
+    _H(48, 74, "r", "روتين الوجبات", "Meal routine", "إرشادات لروتين وجبات مريح للهضم.", "Guidance for a meal routine that is easy on digestion.")],
+  moon:[
+    _H(80, 21, "l", "الساعة البيولوجية", "Body clock", "طبيعة الساعة البيولوجية لطفلك.", "The nature of your child's body clock."),
+    _H(37, 56, "r", "الاستجابة للتوتر", "Stress response", "استجابة طفلك للتوتر.", "How your child responds to stress."),
+    _H(46, 77, "r", "روتين النوم", "Sleep routine", "توصيات لبناء روتين نوم هادئ ومستقر.", "Recommendations for a calm, steady sleep routine.")],
+  growth:[
+    _H(25, 9, "r", "النمو", "Growth", "مؤشرات نمو طفلك.", "Your child's growth markers."),
+    _H(26, 70, "l", "العظام والعضلات", "Bones & muscles", "مؤشرات نمو العظام والعضلات.", "Bone and muscle growth markers."),
+    _H(64, 76, "tl", "التطور الحركي", "Motor development", "التطور الحركي، مع توجيهات للعب والحركة الآمنة حسب عمره.", "Motor development, with guidance on safe play and movement for their age.")],
+  absorb:[
+    _H(60, 38, "r", "العناصر الغذائية", "Nutrients", "مدى قبول جسم طفلك لمكونات غذائية معينة.", "How well your child's body accepts certain food components."),
+    _H(53, 72, "r", "الامتصاص", "Absorption", "مدى امتصاص جسمه للعناصر الغذائية.", "How well their body absorbs nutrients."),
+    _H(33, 62, "l", "المناعة", "Immunity", "دعم مناعته ونموه السليم.", "Supporting their immunity and healthy growth.")],
+  tracker:[
+    _H(53, 23, "r", "التطور الذهني", "Mental development", "عادات تدعم نموه العقلي.", "Habits that support their mental growth."),
+    _H(56, 63, "r", "العادات اليومية", "Daily habits", "عادات يومية تناسب نموه الجسدي.", "Daily habits that suit their physical growth."),
+    _H(42, 76, "l", "متابعة التطور", "Progress tracking", "أدوات وإرشادات لمتابعة تطور طفلك اليومي.", "Tools and guidance to track your child's daily development.")]}};
+const ofHotspots = (pid, f, i) => { const P = (OFFER_HOTSPOTS[pid] || {})[f], M = offerImg(pid, f); if (!P || !M) return ""; const L = S.lang === "ar" ? "ar" : "en";
+  return `<div class="ofh v2" style="--iar:${M.w/M.h};--py:${M.py}"><div class="ofh-box">${P.map((h, j) => `<button type="button" class="ofh-pt" style="--x:${h.x}%;--y:${h.y}%" aria-label="${esc(h.lab[L])}" aria-expanded="false" aria-describedby="ofh-${pid}-${i}-${j}" data-t="ofh-${pid}-${i}-${j}"><span class="ofh-lab" data-d="${h.d}" aria-hidden="true">${h.lab[L]}</span></button>`).join("")}</div>${P.map((h, j) => `<div class="ofh-tip" id="ofh-${pid}-${i}-${j}" role="tooltip"><b>${h.lab[L]}</b>${h.tip[L]}</div>`).join("")}</div>`; };
+/* the focus points' behaviour (one delegated set of listeners): hover shows (mouse), click / tap pins or closes, keyboard focus shows,
+   Escape or a click elsewhere closes; one tooltip open per illustration, placed above its point (below if there is no room), kept inside
+   the illustration */
+(() => { const show = (b, pin) => { const o = b.closest(".ofh"); if (!o) return; o.querySelectorAll(".ofh-pt[aria-expanded=true]").forEach(x => x !== b && hide(x));
+    const t = document.getElementById(b.dataset.t); if (!t) return; b.setAttribute("aria-expanded", "true"); if (pin) b.dataset.pin = "1";
+    const R = o.getBoundingClientRect(), Q = b.getBoundingClientRect(), cx = Q.left + Q.width/2 - R.left, cy = Q.top + Q.height/2 - R.top;
+    t.style.left = "0px"; t.style.top = "0px"; const w = t.offsetWidth, h = t.offsetHeight, m = 8;
+    let x = Math.max(m, Math.min(R.width - w - m, cx - w/2)), y = cy - h - 16; if (y < m) y = Math.min(R.height - h - m, cy + 16);
+    t.style.left = x + "px"; t.style.top = y + "px"; t.classList.add("on"); };
+  const hide = b => { b.setAttribute("aria-expanded", "false"); delete b.dataset.pin; const t = document.getElementById(b.dataset.t); t && t.classList.remove("on"); };
+  document.addEventListener("pointerover", e => { const b = e.target.closest && e.target.closest(".ofh-pt"); if (b && e.pointerType === "mouse" && !b.dataset.pin) show(b, false); });
+  document.addEventListener("pointerout", e => { const b = e.target.closest && e.target.closest(".ofh-pt"); if (b && e.pointerType === "mouse" && !b.dataset.pin && !b.contains(e.relatedTarget)) hide(b); });
+  document.addEventListener("click", e => { const b = e.target.closest && e.target.closest(".ofh-pt");
+    document.querySelectorAll(".ofh-pt[aria-expanded=true]").forEach(x => x !== b && hide(x));
+    if (b){ e.stopPropagation(); b.dataset.pin ? hide(b) : show(b, true); } }, true);
+  document.addEventListener("focusin", e => { const b = e.target.closest && e.target.closest(".ofh-pt"); if (b && b.matches(":focus-visible")) show(b, false); });
+  document.addEventListener("focusout", e => { const b = e.target.closest && e.target.closest(".ofh-pt"); if (b && !b.dataset.pin) hide(b); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") document.querySelectorAll(".ofh-pt[aria-expanded=true]").forEach(hide); }); })();
 function ofScene(k){
   const M="#6FDDB4", T="#3FA0B0", W="#fff", A="#F2B84B", L="rgba(255,255,255,.14)";
   const defs=`<defs><linearGradient id="og1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9CF2D2"/><stop offset="1" stop-color="#2A9DA8"/></linearGradient><radialGradient id="og2"><stop offset="0" stop-color="#6FDDB4" stop-opacity=".55"/><stop offset="1" stop-color="#6FDDB4" stop-opacity="0"/></radialGradient><filter id="ogb" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter></defs>`;
@@ -6628,27 +6987,71 @@ const ENT_ART = {src:"assets/enterprise/saudi-people-landmarks-", bg:[0, 40, 51]
    rope's hands line; r = the ball's radius; piv2 = the kicking knee and the back leg's knee - fractions of the artwork) */
 const CHR_GLOW = [147, 216, 200];
 /* a version stamp on the characters' images and masks, so an updated artwork is never served from a stale cache */
-const CHR_V = "20261105t";
+const CHR_V = "20261110a7";
 const CHR_ART = {
   /* sideroom: the room to his right (on the card's empty side) where the kicked ball flies before it fades */
   /* Athletes (Nov 2026, the approved 30-frame storyboard): a side-view runner made from 30 key poses (assets/characters/athletes-run/,
      rebuilt from the storyboard by source/athletes-run/: cleaned of its labels, registered on one ground line and head position,
      re-toned) - see initArtParticles, o.poses. ar: width/height of a pose; img: the still (reduced motion); sideroom: where the
      kicked ball flies */
-  athletes:{ar:156/144, glow:CHR_GLOW, img:"athletes-run/still.webp", sideroom:.45,
-    poses:{dir:"assets/characters/athletes-run/", n:30, cols:6, tw:312, th:288, ch:144, T:2.4, ball:{r:14, contact:22, path:[[111.5,117.0],[108.0,117.0],[103.0,117.0],[109.0,117.0],[94.0,120.0],[107.3,116.5],[108.3,117.6],[83.8,117.6],[71.5,118.6],[98.1,118.6],[102.0,120.0],[104.0,121.0],[101.0,120.0],[98.0,120.0],[98.0,121.0],[99.2,121.5],[96.1,121.5],[83.7,120.5],[85.7,120.5],[110.5,120.5],[115.7,120.5],[116.7,117.4],[117.7,124.6],[162.1,96.8],[212.7,65.8]]}}},
+  /* Nov 2026, simplified to the kick only: the storyboard's frames 17-29 (assets/characters/athletes-kick/, source/athletes-run/kick.py) -
+     he stands ready by the ball (held), a small backswing, the kick, a short follow-through, back to the ready pose; the ball rests
+     where his foot meets it and flies off gently (fly: .4) */
+  /* 7 Nov 2026 (corrective round): CONTINUOUS - no hold on the ready pose (hold:.42 froze him for 1.3 s of every loop); the 13 poses
+     play one after another at an even pace, the last flowing into the first (their steps are all alike), so he never stops */
+  /* 9 Nov 2026 (meeting): add:true - the two poses' dots are ADDED while they exchange (as Men), so the figure no longer dims at every
+     exchange (measured on the hero: the light dipped ~25% mid-step), and a slightly shorter exchange (x .22 -> .18) so a fast leg or
+     arm shows less of a double image */
+  /* 9 Nov 2026 (athletes cleanup 3): athletes-kick-clean rebuilt (source/athletes-clean/clean.py) - one closed body per pose with a light
+     even dot fill (shoulder, chest and arm one connected shape), every dot outside it removed, the ground line frozen in the motion maps;
+     the ball: no trailing ghost copies (trail:false), the new ball fades in in place, the kicked ball fades out a little sooner */
+  /* (10 Nov 2026) RESTORED: the original running Athletes (30-pose dribble-and-kick run, commit 2f1dc51, Nov 5), verbatim. The kick-only
+     version it replaced: rollback/before-athletes-run-restore/ ; its config was:
+     athletes:{ar:156/144, glow:CHR_GLOW, img:"athletes-kick-clean/still.webp", sideroom:.45, poses:{dir:"assets/characters/athletes-kick-clean/", n:13, cols:5, tw:312, th:288, ch:144, T:2.4, hold:0, x:.18, add:true, w:[1.07, 1.13, 1.03, 0.88, 0.81, 0.85, 1.08, 1.24, 1.03, 0.89, 1.00, 1.02, 0.98], ball:{r:11.2, contact:6, fly:.4, fade:[.9, 1.7], gin:2.3, trail:false, path:[[114.2,124.3],[114.2,124.3],[114.2,124.3],[114.2,124.3],[114.2,124.3],[114.2,124.3],[114.9,127.4],[159.3,99.6],[209.9,68.6]]}}}, */
+  athletes:{ar:156/144, glow:CHR_GLOW, img:"athletes-run/still.webp", sideroom:.45,   /* (10 Nov) ball: the round ball, r 14 -> 11.6 and the path +1.25,+1.5 so it shows at the size/place of the old one (was r:14, path as in commit 2f1dc51) */
+    poses:{dir:"assets/characters/athletes-run/", n:30, cols:6, tw:312, th:288, ch:144, T:2.4, ball:{r:11.6, contact:22, path:[[112.75,118.50],[109.25,118.50],[104.25,118.50],[110.25,118.50],[95.25,121.50],[108.55,118.00],[109.55,119.10],[85.05,119.10],[72.75,120.10],[99.35,120.10],[103.25,121.50],[105.25,122.50],[102.25,121.50],[99.25,121.50],[99.25,122.50],[100.45,123.00],[97.35,123.00],[84.95,122.00],[86.95,122.00],[111.75,122.00],[116.95,122.00],[117.95,118.90],[118.95,126.10],[163.35,98.30],[213.95,67.30]]}}},
   /* Men: the image approved on 4 Nov (source/men-v3-supplied.webp), cut out of its blue backdrop (men-v3-cutout.py).
      All four figures are then drawn in the Enterprise artwork's dot language by source/stipple.py */
   /* still: Men is a still particle illustration (Nov 2026) - no motion of any kind, see initArtParticles o.still */
-  men:     {ar:550/1000, glow:CHR_GLOW, still:true, anim:{mode:4, piv:[0, 0]}},
+  /* Men (Nov 2026): his approved artwork, breathing only (mode 5, see initArtParticles) - no arm, head or pose changes. norig: his old
+     skeleton is not used. (The arm-storyboard build is kept in assets/characters/men-pose/ for the rollback) */
+  /* Men (7 Nov 2026, corrective round): back to his approved artwork and breathing (the dumbbell-curl build from the supplied
+     reference was rejected - it replaced his approved figure; it stays in assets/characters/men-curl/ for the record). The curl made
+     from his approved figure is kept isolated for review in _test-men-curl.html */
+  /* Men (8 Nov 2026): the APPROVED 4-FRAME DUMBBELL STORYBOARD (source/men-curl/storyboard-4-frames-approved.webp) on his approved
+     artwork (source/men-curl/build-storyboard.py): only his forearm, hand and dumbbell move - from frame 01 (forearm ~48 deg below
+     level, the lowest) through 02 and 03 to frame 04 (~2 deg, the highest - never higher) and back, on a smooth ease with no hold;
+     head, face, hair, shoulders, chest and upper arm are his approved dots, one still set (split). The breathing build stays in the
+     rollbacks. ar: one pose tile (his artwork with room for the dumbbell below and to the side) */
+  /* 8 Nov 2026, elbow joint + clean contour: men-curl-sb3 (source/men-curl/build-joint.py) - a still elbow cap at the pivot, the upper
+     arm still and the forearm turning about the same pivot, so the arm never parts at the elbow; earlier: men-curl-sb2 (source/men-curl/build-connected.py) - the elbow bends smoothly, the arm moves as one
+     limb with its particles, the forearm at the upper arm's density, the hand and dumbbell at his brightness (men-curl-sb kept) */
+  /* 9 Nov 2026 (meeting): men-curl-sb4 (source/men-curl/build-fuller.py) - the same curl and elbow joint, his lower torso and abdomen
+     filled with his own chest grain (shaded to the waist), the front line carried down to the waist, the forward spray low down
+     removed, the dark gap at the inner elbow filled; sb3 is kept for the rollback */
+  /* 9 Nov 2026 (meeting 4): men-curl-sb5 (source/men-clean/clean.py) - sb4 with a clean, clear contour like Women's: the spray outside
+     his silhouette removed and a fine dotted rim along his still body; the moving forearm, hand and dumbbell untouched (only lone
+     specks), so the elbow joint is exactly sb4's. Athletes: athletes-kick-clean (source/athletes-clean/clean.py) - the scattered dust
+     and the flickering ground smears removed, his strokes a little firmer, one steady ground line. Women: women-tone.webp with her
+     glowing wave and a fuller lower body (source/women-wave/wave.py; the previous map kept there) */
+  /* 9 Nov 2026: THE FINAL APPROVED MEN IMAGE (source/men-final/men-final-approved.webp) - its own stipple dots are his particles; pose 1 is
+     the approved image exactly (the top of the curl, never higher); only the forearm, hand and dumbbell turn about his elbow (a skinned bend,
+     46 deg of travel, cosine ease, no hold); the torso behind them continues with his own dot texture (source/men-final/build.py).
+     The previous build (men-curl-sb5) is kept: {ar:525/900, img:"men-curl-sb5/still.webp", poses:{dir:"assets/characters/men-curl-sb5/",
+     n:10, cols:5, tw:525, th:900, fw:175, fh:300, ch:300, T:3.4, x:.5, add:true, split:true}} */
+  men:     {ar:561/801, glow:CHR_GLOW, img:"men-final/still.webp", cardDots:{cell:1.35, dotSize:1.15, gain:1.45, dotLift:.42}, heroDots:{cell:2.2, dotSize:1.05},   /* (10 Nov 2026) gain 1.9 -> 1.45: softer, calmer light, fewer dots burnt to white; a finer dot grid, so his face and fine stipple read on the card */
+    poses:{dir:"assets/characters/men-final/", n:10, cols:5, tw:561, th:801, fw:187, fh:267, ch:267, T:3.4, x:.5, add:true, split:true}},
   /* Women: the supplied artwork (mulhim_women_animated_hair.html), cut out of its backdrop; its hair moves as in
      the supplied animation (mode 3). crop: where the cut-out sits in the supplied 1086 x 1448 image */
-  /* Women (Nov 2026, the approved 40-frame storyboard "Raise Hand & Hair Movement"): 40 key poses (assets/characters/women-pose/,
-     rebuilt from the storyboard by source/women-pose/ - cleaned, every frame registered on her torso, and her torso, waist and hips
-     LOCKED to one shared shape in all 40 (only the arm's sweep and the head and hair come from each frame), re-toned to her approved
-     dot finish), played slowly (5.6 s) with a soft exchange between poses (x: .14) */
-  women:   {ar:112/162, glow:CHR_GLOW, img:"women-pose/still.webp",
-    poses:{dir:"assets/characters/women-pose/", n:40, cols:8, tw:224, th:324, ch:162, T:5.6, x:.14, add:true}},
+  /* Women (Nov 2026, hair-only motion, the approved 20-frame hair storyboard): her approved artwork, completely still, except her hair -
+     lock-led, see initArtParticles mode 6; calm: her dots keep a constant light (no shared twinkle or light sweep). The earlier
+     pose-morph assets stay in assets/characters/women-pose/ for the rollbacks */
+  /* cardDots / heroDots (7 Nov 2026, corrective round): MORE particle detail from her approved artwork and tone map, unchanged -
+     a finer dot grid (smaller cells: about 1.6x the dots on the card, 1.7x in the hero), each dot a little smaller so they stay
+     separate round particles; same positions logic, same hair motion map.
+     8 Nov 2026: her lower body fuller - her tone map lifted from the waist down only (source/women-lower.py) */
+  /* meeting 5: sweep - the shared travelling light over her body (as Men and Children); the wave line under her (meeting 4) removed */
+  women:   {ar:568/1000, glow:CHR_GLOW, calm:true, sweep:true, cardDots:{cell:1.55, dotSize:1.22, gain:1.95}, heroDots:{cell:2.5, dotSize:1.05}, anim:{mode:6, weight:true, groups:"assets/characters/women-hairflow.png?v=20261106", piv:[0, 0]}},
   /* headroom: the room above her head that the rope sweeps through at the top of its turn */
   children:{ar:701/1000, glow:CHR_GLOW, headroom:.1, anim:{mode:1, groups:"assets/characters/children-groups.png?v=20261104", piv:[0, .49], grow:{1:4}}}
 };
@@ -6677,16 +7080,25 @@ const ropeAngle = u => { const n = ROPE_KEYS.length, x = u*n, i = Math.floor(x) 
    on (its sideways travel shortened to the card's width, falling a little), spinning, with a short trail, fading as it
    leaves the illustration; from frame 27 a new ball gathers from
    scattered dots at the start of the path, whole again as the loop begins. Returns its centre (pose units), spin, light, gathering */
+/* where in a key-pose sequence we are (0..n poses) at time t: o.poses.hold - the share of each loop held still on the first pose
+   (Athletes: he stands ready by the ball, then kicks), the rest played through the poses */
+/* o.poses.w (8 Nov 2026, Athletes): each step's share of the loop - in proportion to how far the limbs travel in it (softened), so
+   the body moves at an even pace instead of rushing through the big steps and crawling through the small ones */
+const posesF = (P, t) => { const u = t/P.T % 1, h = P.hold || 0, v = u < h ? 0 : (u - h)/(1 - h);
+  if (!P.w) return v*P.n;
+  const S = P._ws || (P._ws = P.w.reduce((a, b) => a + b, 0)); let acc = 0;
+  for (let i = 0; i < P.n; i++){ const d = P.w[i]/S; if (v < acc + d || i === P.n - 1) return i + Math.min(1, (v - acc)/d); acc += d; }
+  return 0; };
 const posesBall = (B, f, n) => { const P = B.path, C = B.contact, r = B.r;
   const cr = (i, t) => { const q = j => P[Math.max(0, Math.min(C, j))], p0 = q(i - 1), p1 = q(i), p2 = q(i + 1), p3 = q(i + 2);
     return [0, 1].map(c => .5*(2*p1[c] + (p2[c] - p0[c])*t + (2*p0[c] - 5*p1[c] + 4*p2[c] - p3[c])*t*t + (3*p1[c] - p0[c] - 3*p2[c] + p3[c])*t*t*t)); };
   let x, y, a = 1, g = 1;
   if (f <= C){ const i = Math.floor(f), t = f - i; [x, y] = cr(i, t); }
   else { const q = f - C, v1 = [P[C + 1][0] - P[C][0], P[C + 1][1] - P[C][1]], v2 = [P[C + 2][0] - P[C + 1][0], P[C + 2][1] - P[C + 1][1]];
-    x = P[C][0] + (v1[0]*q + (v2[0] - v1[0])*q*q*.5)*.6; y = P[C][1] + (v1[1]*q + (v2[1] - v1[1])*q*q*.5)*.8 + 3*q*q;
-    a = 1 - sm(1.3, 2.6, q); }
-  if (f >= n - 3.4){ g = sm(n - 3.4, n - .2, f); a = 1; [x, y] = P[0]; }
-  else if (f > C + 2.6){ a = 0; }
+    x = P[C][0] + (v1[0]*q + (v2[0] - v1[0])*q*q*.5)*(B.fly || .6); y = P[C][1] + (v1[1]*q + (v2[1] - v1[1])*q*q*.5)*.8*(B.fly || .6)/.6 + 3*q*q;
+    a = 1 - sm(B.fade ? B.fade[0] : 1.3, B.fade ? B.fade[1] : 2.6, q); }
+  if (f >= n - (B.gin || 3.4)){ g = sm(n - (B.gin || 3.4), n - .2, f); a = 1; [x, y] = P[0]; }   /* B.gin: how many steps before the loop the new ball starts to appear */
+  else if (f > C + (B.fade ? B.fade[1] : 2.6)){ a = 0; }
   return {x, y, a, g, spin:(x - P[0][0])/r}; };
 const CHR_RIG = {
   /* Men: a calm, confident presence - his weight shifts from one side to the other (the upper body sways on the waist,
@@ -6711,9 +7123,13 @@ const CHR_RIG = {
     {j:[.25,.37], e:[.08,.47], r:.06, z:.03, p:3},    /* 4 left forearm, hand and the rope's handle */
     {j:[.66,.26], e:[.74,.37], r:.05, z:.03, p:1},    /* 5 right upper arm */
     {j:[.74,.37], e:[.93,.49], r:.06, z:.03, p:5},    /* 6 right forearm, hand and the rope's handle */
-    {j:[.52,.56], e:[.5,.67], r:.1, z:.04, p:0},      /* 7 thighs */
-    {j:[.49,.67], e:[.42,.86], r:.11, z:.035, p:7},   /* 8 shins and feet */
-    {j:[.4,.09], e:[.2,.16], r:.1, z:.05, p:2}],      /* 9 the ponytail */
+    /* each leg has its own thigh, knee and shin (Nov 2026): her knees are at different heights, and one shared knee used to cut
+       the front leg across its shin whenever she tucked her legs */
+    {j:[.44,.53], e:[.465,.645], r:.07, z:.035, p:0}, /* 7 back thigh */
+    {j:[.465,.645], e:[.37,.8], r:.075, z:.03, p:7},  /* 8 back shin and foot */
+    {j:[.55,.53], e:[.6,.685], r:.075, z:.035, p:0},  /* 9 front thigh */
+    {j:[.6,.685], e:[.46,.85], r:.08, z:.03, p:9},    /* 10 front shin and foot */
+    {j:[.4,.09], e:[.2,.16], r:.1, z:.05, p:2}],      /* 11 the ponytail */
     /* the approved 12-frame reference: one turn every 1.85 s, the rope lingering low around her feet and sweeping quickly
        over the top (its angle: ropeAngle, keyed on the reference's frames) - under the feet at 0 s, rising behind (.31-.46 s), level
        with the hands (.62 s), over the head at the top of its turn (.92 s), down in front (1.08-1.23 s), at her knees (1.38 s)
@@ -6723,13 +7139,17 @@ const CHR_RIG = {
     pose(t){ const u = t/1.85 % 1, th = ropeAngle(u), c = Math.cos(th), sn = Math.sin(th);
       const air = Math.pow(.5 + .5*c, .6), land = 1 - air, pl = .5 - .5*Math.cos(th - .7);
       return {ty:.04 - .065*air, rope:c, a:[0, .04*land, .05*land, .1*sn, .14*Math.sin(th + .5), -.1*sn, -.14*Math.sin(th + .5),
-        .1*air - .12*land, .2*air - .4*land, .2*pl - .06]}; }}};
+        .1*air - .12*land, .2*air - .4*land, .1*air - .12*land, .2*air - .4*land, .2*pl - .06]}; }}};
 /* the same look as ENT_ART_LOOK; the faint glow trails around the figures are kept (a lower floor), no edge fade */
 const CHR_ART_LOOK = {alpha:true, dots:true, gain:1.5, glow:.3, minAlpha:.08, fade:2, idle:.12};
 /* one particle language for all five figures (the Enterprise artwork is the reference): the same brightness, glow,
    particle size, pointer response, drift, twinkle and travelling light. CHR_LEVEL evens out the light: Athletes and
    Children are drawn with denser, fuller strokes than the others, so they are dimmed to the same overall glow */
-const CHR_LEVEL = {athletes:1.2, men:1.2, women:1.15, children:.72};
+/* 9 Nov 2026 (meeting): measured on black, Women shone ~1.5x Men and had the widest halo, Children's rope glow read hot,
+   Athletes (thin line art) the dimmest: Women brought down to Men's level, Children's glow eased, Athletes lifted a little -
+   Men (the restrained reference) unchanged */
+const CHR_LEVEL = {athletes:1.32, men:.85, women:.9, children:.68};   /* men 1.2 -> .85 (10 Nov 2026): as calm as the women */
+const CHR_GLOW_K = {athletes:1, men:.7, women:.7, children:.8};   /* men .7 (10 Nov 2026): his card glow as soft as the women's */
 const ART_CARD = {cell:2.2, radius:48, push:1.9}, ART_HERO = {cell:2.7, radius:66, push:2.2};
 /* the characters' round dots sit a little further apart than the Enterprise patches, so each reads as a dot */
 const DOT_CARD = {cell:2, dotSize:1.15, dotLift:.62, glow:.42, gain:1.8}, DOT_HERO = {cell:3.3, dotSize:1, dotLift:.45, glow:.26, gain:1.3};
@@ -6740,7 +7160,7 @@ const CHR_CARD_TINT = {athletes:[[220, 253, 237], [147, 216, 200]], men:[[165, 2
    as the Enterprise dots do), and the glow around them carries the package colour itself */
 const chrLight = c => c.map(v => Math.round(v + (255 - v)*.3));
 const chrArtLook = (id, card) => ({...CHR_ART_LOOK, glowTint:card ? CHR_CARD_TINT[id][1] : CHR_ART[id].glow,
-  tint:card ? chrLight(CHR_CARD_TINT[id][0]) : null, anim:CHR_ART[id].anim, still:!!CHR_ART[id].still, rig:CHR_RIG[id], poses:CHR_ART[id].poses ? {...CHR_ART[id].poses, v:CHR_V} : null, headroom:CHR_ART[id].headroom || 0, sideroom:card ? CHR_ART[id].sideroom || 0 : 0,   /* the ball's flight room: on the card only (in the package hero it would cross the text) */
+  tint:card ? chrLight(CHR_CARD_TINT[id][0]) : null, calm:!!CHR_ART[id].calm, sweep:!!CHR_ART[id].sweep, anim:CHR_ART[id].anim, still:!!CHR_ART[id].still, rig:CHR_ART[id].poses || CHR_ART[id].norig ? null : CHR_RIG[id], poses:CHR_ART[id].poses ? {...CHR_ART[id].poses, v:CHR_V} : null, headroom:CHR_ART[id].headroom || 0, sideroom:card ? CHR_ART[id].sideroom || 0 : 0,   /* the ball's flight room: on the card only (in the package hero it would cross the text) */
   wave:.085, level:CHR_LEVEL[id], tone:CHR_ART[id].poses ? null : `assets/characters/${id}-tone.webp?v=${CHR_V}`});
 const chrArtHTML = id => `<div class="chr-art" data-chr="${id}" style="--ar:${CHR_ART[id].ar}">
   <img src="assets/characters/${CHR_ART[id].img || id + ".webp"}?v=${CHR_V}" width="${Math.round(CHR_ART[id].ar*1000)}" height="1000" alt="" decoding="async" draggable="false">
@@ -6757,13 +7177,15 @@ const chrArtHTML = id => `<div class="chr-art" data-chr="${id}" style="--ar:${CH
    in them become particles. Idle: each drifts and twinkles a little (on the GPU). One draw call, one
    loop per instance, only while on screen and the tab is visible; stopped for good (listeners,
    observers, the GL context) when the page changes. Reduced motion or no WebGL: the still artwork. */
+/* the page clock for the characters' shared decorative light (see u_lt) */
+const CHR_LIGHT_T0 = performance.now();
 function initArtParticles(wrap, o = {}){
   const img = wrap.querySelector("img"), cv = wrap.querySelector("canvas");
   if (!img || !cv || prefersReduced()) return null;
   const gl = cv.getContext("webgl", {alpha:true, premultipliedAlpha:true, antialias:false, depth:false, stencil:false});
   if (!gl) return null;
   const DOT_K = o.dotGain || 1.5;
-  const CELL = o.cell || 3, R = o.radius || 64, PUSH = o.push || 2.2, AMP = o.still ? 0 : o.idle ?? .2, FADE = o.fade ?? .62, MIN_A = o.minAlpha ?? .07, BG = ENT_ART.bg;
+  const CELL = o.cell || 3, R = o.radius || 64, PUSH = o.push || 2.2, AMP = o.still || o.calm ? 0 : o.idle ?? .2, FADE = o.fade ?? .62, MIN_A = o.minAlpha ?? .07, BG = ENT_ART.bg;
   /* o.tint (an [r,g,b]): the dots in one colour (each keeps its own brightness from the artwork), as the
      package figures' dots; o.gain: brighter dots; o.glow: a soft light around every dot (additive) */
   const TINT = o.tint || null, GAIN = o.gain || 1, GLOW = o.glow || 0;
@@ -6775,7 +7197,7 @@ function initArtParticles(wrap, o = {}){
   if (HR){ cv.style.top = -HR*100 + "%"; cv.style.height = (1 + HR)*100 + "%"; }
   /* o.sideroom: the same, to the right of the artwork (a fraction of its width) - where the kicked ball flies */
   if (RR){ cv.style.width = (1 + RR)*100 + "%"; cv.style.left = "0"; cv.style.right = "auto"; }   /* to the right in both directions of text */
-  const DOTS = !!o.dots, ALPHA = !!o.alpha, GTINT = o.glowTint || TINT || [255, 255, 255], ANIM = o.anim || null, WAVE = o.still ? 0 : o.wave || 0, RIG = o.still ? null : o.rig || null;
+  const DOTS = !!o.dots, ALPHA = !!o.alpha, GTINT = o.glowTint || TINT || [255, 255, 255], ANIM = o.anim || null, WAVE = o.still || o.calm ? 0 : o.wave || 0, RIG = o.still ? null : o.rig || null;
   /* o.still (Men, Nov 2026): a still particle illustration - the dots drawn once, exactly as the artwork (no skeleton, drift, twinkle,
      breath, sparkle or travelling light: the time is held at 0, where all of those rest), redrawn only when the size changes; the
      pointer does not scatter it */
@@ -6787,7 +7209,7 @@ function initArtParticles(wrap, o = {}){
      measured motion between the storyboard frames, 4 steps per pose-height unit around 128). Between two poses the outgoing dots
      travel along their motion toward the next pose and the incoming dots arrive along theirs, the two sets exchanging in a brief
      moment halfway (no long cross-fade, so no double limbs); the ball is a piece of its own, following the storyboard's path */
-  const POSE = o.poses || null; let pimg = null, fnimg = null, fpimg = null, bimg = null, KS = [], KC = [], NB0 = 0, NBALL = 0;
+  const POSE = o.poses || null; let NS = 0, pimg = null, fnimg = null, fpimg = null, bimg = null, KS = [], KC = [], NB0 = 0, NBALL = 0;
   const ld = u => { const m = new Image(); m.decoding = "async"; m.src = u; return m; };
   if (POSE){ const v = "?v=" + (POSE.v || ""); pimg = ld(POSE.dir + "poses.webp" + v); fnimg = ld(POSE.dir + "flow-next.png" + v);
     fpimg = ld(POSE.dir + "flow-prev.png" + v); if (POSE.ball) bimg = ld(POSE.dir + "ball.webp" + v); }
@@ -6802,7 +7224,9 @@ function initArtParticles(wrap, o = {}){
      beneath; mode 2 a shot: the shin winds back from the knee and strikes, the ball shoots forward spinning
      and rolls back, the back leg follows through (Meeting 3, round 3: all of it gentle - a small rope sway and
      bounce, a light tap of the ball). o.wave: a soft band of light travelling slowly up the figure */
-  const VS = `attribute vec2 a_base,a_off,a_uv; attribute vec3 a_misc,a_rig; attribute float a_grp; uniform vec4 u_bm[12],u_rp,u_rp0,u_bl,u_bl2; uniform vec2 u_bt[12],u_bc; uniform float u_bf,u_pm,u_ps,u_pa,u_bsp,u_bga; uniform vec2 u_bp,u_bc0; attribute vec2 a_fl; uniform float u_rig,u_rc,u_rtop,u_top,u_ch,u_cw; uniform vec2 u_res; uniform float u_t,u_dpr,u_amp,u_cell,u_size,u_mode,u_wave,u_dots,u_dsz; uniform vec3 u_piv; uniform vec4 u_piv2,u_crop; varying vec2 v_uv; varying float v_a,v_m,v_g,v_i;
+  const VS = `attribute vec2 a_base,a_off,a_uv; attribute vec3 a_misc,a_rig; attribute float a_grp; uniform vec4 u_bm[12],u_rp,u_rp0,u_bl,u_bl2; uniform vec2 u_bt[12],u_bc; uniform float u_lt; uniform float u_bf,u_pm,u_ps,u_pa,u_bsp,u_bga; uniform vec2 u_bp,u_bc0; attribute vec2 a_fl; uniform float u_rig,u_rc,u_rtop,u_top,u_ch,u_cw; uniform vec2 u_res; uniform float u_calm,u_t,u_dpr,u_amp,u_cell,u_size,u_mode,u_wave,u_dots,u_dsz; uniform vec3 u_piv; uniform vec4 u_piv2,u_crop; varying vec2 v_uv; varying float v_a,v_m,v_g,v_i;
+    float hh(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
+    float hn(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*(3.-2.*f); return mix(mix(hh(i),hh(i+vec2(1.,0.)),f.x),mix(hh(i+vec2(0.,1.)),hh(i+vec2(1.,1.)),f.x),f.y); }
     vec2 rot(vec2 p, vec2 c, float a){ vec2 d=p-c; float co=cos(a), sn=sin(a); return c+vec2(d.x*co-d.y*sn,d.x*sn+d.y*co); }
     bool part(float k){ return abs(a_grp-k)<.5; }
     vec2 xf(int i, vec2 p){ vec4 m=u_bm[i]; return vec2(m.x*p.x+m.z*p.y, m.y*p.x+m.w*p.y)+u_bt[i]; }
@@ -6847,22 +7271,54 @@ function initArtParticles(wrap, o = {}){
          of the ball, turned by its spin about its centre and carried to where the ball is (u_bp), gathering from scattered dots
          after the kick (u_bga) */
       if (u_pm>.5 && u_pm<1.5){ b=a_base+a_fl*u_ps; vis*=u_pa; }
-      else if (u_pm>1.5){ float ga=ph*41., gr=u_res.y*.12*(1.-u_bga)*(.35+.65*fract(ph*7.3));
+      else if (u_pm>1.5){ float ga=ph*41., gr=0.;   /* meeting 5: the new ball fades in almost in place (was .12: a wide cloud of scattered dots read as noise round the ball) */
         b=rot(a_base,u_bc0,u_bsp)-u_bc0+u_bp+vec2(cos(ga),sin(ga))*gr; vis*=u_pa*u_bga; }
+      /* mode 5 - Men, breathing only (Nov 2026): one smooth displacement field over the whole figure, so every dot moves with its
+         neighbours and nothing can crack or separate. As he inhales his chest rises and swells forward a little (strongest at the chest,
+         fading smoothly to nothing at the neck, the waist and down the arms), with the smallest lift of the shoulder; the head, neck,
+         waist and both arms stay where they are drawn. One breath every 3.6 s, eased in and out, no pause */
+      if (u_mode>4.5 && u_mode<5.5){ float br=.5-.5*cos(u_t*1.745);
+        float chest=smoothstep(.3,.4,pn.y)*smoothstep(.78,.55,pn.y)*smoothstep(.36,.55,pn.x);
+        float sh=smoothstep(.3,.38,pn.y)*smoothstep(.55,.42,pn.y);
+        b+=br*u_res*vec2(.012*chest*smoothstep(.5,.85,pn.x),-.006*chest-.0035*sh); }
+      /* mode 6 - Women, hair only (Nov 2026, the approved 20-frame hair storyboard; lock-led): every dot of her approved artwork stays the
+         same dot; only hair dots move (a_grp: the hair map - 0 at the roots and on everything that is not hair, rising to 1 at the curls).
+         The hair is treated as many locks, not one mass: a smooth noise field, stretched along the hair's fall (narrow across, long down),
+         gives each lock its own timing (phase), strength and curl - neighbouring dots inside a lock stay almost alike (no tearing), while
+         neighbouring locks drift out of step. Each lock carries a wave travelling from its root to its tip (the tip trails the mid-length),
+         with an elliptical sway at the ends (the curls roll, not just slide). Every term repeats exactly once or twice per 2.2 s loop, so
+         the loop is seamless. Roots barely move (weight^1.6), mid-lengths a little, curls the most */
+      if (u_mode>5.5 && u_mode<6.5){
+        float wg=a_grp*a_grp*(3.-2.*a_grp), wr=pow(wg,1.6), P=6.2832*u_t/2.2;
+        vec2 q=pn*vec2(11.,3.2);
+        float lk=hn(q), lk2=hn(q*1.9+vec2(5.3,1.7)), lk3=hn(pn*vec2(23.,6.)+9.1);
+        float phs=6.2832*(.55*lk+.3*lk2)+pn.y*4.5;                  /* each lock's own timing; lower = later (follow-through) */
+        float amp=.7+.55*lk2+.25*lk3;                                /* each lock's own strength */
+        /* the curls resting on her shoulder and arm (lower hair): one shared timing and strength with the hair above them, and less
+           reach where they lie on the shoulder - so they never swing out from the rest as a separate clump */
+        float low=smoothstep(.34,.46,pn.y);
+        phs=mix(phs,3.1416+pn.y*4.5,.85*low); amp=mix(amp,.85,low);
+        wr*=1.-.4*smoothstep(.44,.53,pn.y);
+        float s1=sin(P-phs), c1=cos(P-phs), s2=sin(2.*P-phs*1.7+lk3*4.*(1.-low));
+        vec2 d=vec2(.024*s1+.006*s2, -.007*(.5+.5*s1)+.009*c1*wg+.003*s2);   /* sway out and back, the curl rolling as it goes */
+        b+=wr*amp*u_res*d; }
       /* the package characters come alive (o.dots), all four alike - a slow breath, a soft organic sparkle and
          one travelling light: hl, a light passing through the dot (brighter, a touch larger) */
       float hl=0.;
-      if (u_dots>.5){
+      if (u_dots>.5 && u_calm<.5){
         vec2 bc=u_res*vec2(.5,.6); b=bc+(b-bc)*(1.+.0045*sin(u_t*.85));            /* breathing, ~7 s */
-        hl+=.7*pow(max(0.,sin(u_t*.45+ph*61.)),28.);                                 /* now and then a dot flares softly */
+        hl+=.7*pow(max(0.,sin(u_lt*.45+ph*61.)),28.);                                 /* now and then a dot flares softly */
         /* one light for all four: every 8 s a soft light sweeps diagonally across the figure, finding the face,
            the hair and the body's contours, then fades - the same for every package (one Mulhim spirit) */
-        { float sx=fract(u_t/8.)*1.8-.4, d=pn.x*.9+pn.y*.45-sx; hl+=.6*exp(-d*d/.0045); }
+        { float sx=fract(u_lt/8.)*1.8-.4, d=pn.x*.9+pn.y*.45-sx; hl+=.6*exp(-d*d/.0045); }
         vis*=1.+hl; }
+      /* meeting 5 (Women): her figure stays calm (no breathing, flares or twinkle), but the SAME travelling light as Men and Children
+         passes over her body - the same sweep, timing, brightness and softness, inside her own dots only (u_calm 2) */
+      else if (u_dots>.5 && u_calm>1.5){ float sx=fract(u_lt/8.)*1.8-.4, d=pn.x*.9+pn.y*.45-sx; hl+=.6*exp(-d*d/.0045); vis*=1.+hl; }
       vec2 p=b+a_off+idle; gl_Position=vec4(p.x/u_cw*2.-1.,1.-(p.y+u_top)/u_ch*2.,0.,1.);
       gl_PointSize=u_cell*u_dpr*u_size*(1.-min(length(a_off)*.006,.3))*(u_dots>.5 ? (.4+.8*sqrt(a_misc.z))*u_dsz*(1.+.2*min(hl,1.)) : 1.);
       float wv=1.+u_wave*sin((a_base.y+a_base.x*.5)/u_res.y*7.+u_t*1.3);
-      v_uv=a_uv; v_a=a_misc.y*(.88+.12*sin(u_t*1.6+ph*12.))*vis*wv; v_m=min(length(a_off)*.3,1.); v_g=a_misc.z*a_misc.y*vis*wv; v_i=a_misc.z*(.84+.32*fract(ph*7.31));}`;
+      v_uv=a_uv; v_a=a_misc.y*(u_calm>.5 ? .94 : .88+.12*sin(u_lt*1.6+ph*12.))*vis*wv; v_m=min(length(a_off)*.3,1.); v_g=a_misc.z*a_misc.y*vis*wv; v_i=a_misc.z*(.84+.32*fract(ph*7.31));}`;
   const FS = `precision highp float; uniform sampler2D u_tex; uniform vec2 u_cuv; uniform vec3 u_bg,u_tint,u_gtint; uniform float u_mono,u_gain,u_pass,u_glow,u_al,u_lvl,u_dots,u_dlift; varying vec2 v_uv; varying float v_a,v_m,v_g,v_i;
     void main(){
       /* the glow pass: a soft round light around the dot, in the dots' colour */
@@ -6891,8 +7347,8 @@ function initArtParticles(wrap, o = {}){
   gl.useProgram(prog);
   const loc = n => gl.getAttribLocation(prog, n), uni = n => gl.getUniformLocation(prog, n);
   const A = {base:loc("a_base"), off:loc("a_off"), uv:loc("a_uv"), misc:loc("a_misc"), grp:loc("a_grp"), rig:loc("a_rig"), fl:loc("a_fl")};
-  const U = {res:uni("u_res"), t:uni("u_t"), dpr:uni("u_dpr"), amp:uni("u_amp"), cell:uni("u_cell"), cuv:uni("u_cuv"), bg:uni("u_bg"), tex:uni("u_tex"),
-    tint:uni("u_tint"), gtint:uni("u_gtint"), al:uni("u_al"), mono:uni("u_mono"), gain:uni("u_gain"), lvl:uni("u_lvl"), dots:uni("u_dots"), dsz:uni("u_dsz"), dlift:uni("u_dlift"), pass:uni("u_pass"), glow:uni("u_glow"), size:uni("u_size"), mode:uni("u_mode"), wave:uni("u_wave"), piv:uni("u_piv"), piv2:uni("u_piv2"), crop:uni("u_crop"), bm:uni("u_bm[0]"), bt:uni("u_bt[0]"), bl:uni("u_bl"), bl2:uni("u_bl2"), bc:uni("u_bc"), bf:uni("u_bf"), rig:uni("u_rig"), rp:uni("u_rp"), rp0:uni("u_rp0"), pm:uni("u_pm"), ps:uni("u_ps"), pa:uni("u_pa"), bsp:uni("u_bsp"), bga:uni("u_bga"), bp:uni("u_bp"), bc0:uni("u_bc0"), rc:uni("u_rc"), rtop:uni("u_rtop"), top:uni("u_top"), ch:uni("u_ch"), cw:uni("u_cw")};
+  const U = {res:uni("u_res"), t:uni("u_t"), lt:uni("u_lt"), dpr:uni("u_dpr"), amp:uni("u_amp"), cell:uni("u_cell"), cuv:uni("u_cuv"), bg:uni("u_bg"), tex:uni("u_tex"),
+    tint:uni("u_tint"), gtint:uni("u_gtint"), al:uni("u_al"), mono:uni("u_mono"), gain:uni("u_gain"), lvl:uni("u_lvl"), dots:uni("u_dots"), dsz:uni("u_dsz"), dlift:uni("u_dlift"), pass:uni("u_pass"), glow:uni("u_glow"), size:uni("u_size"), mode:uni("u_mode"), wave:uni("u_wave"), piv:uni("u_piv"), piv2:uni("u_piv2"), crop:uni("u_crop"), bm:uni("u_bm[0]"), bt:uni("u_bt[0]"), bl:uni("u_bl"), bl2:uni("u_bl2"), bc:uni("u_bc"), bf:uni("u_bf"), rig:uni("u_rig"), rp:uni("u_rp"), rp0:uni("u_rp0"), pm:uni("u_pm"), ps:uni("u_ps"), pa:uni("u_pa"), bsp:uni("u_bsp"), bga:uni("u_bga"), bp:uni("u_bp"), bc0:uni("u_bc0"), rc:uni("u_rc"), rtop:uni("u_rtop"), calm:uni("u_calm"), top:uni("u_top"), ch:uni("u_ch"), cw:uni("u_cw")};
   const bufs = {base:gl.createBuffer(), off:gl.createBuffer(), uv:gl.createBuffer(), misc:gl.createBuffer(), grp:gl.createBuffer(), rig:gl.createBuffer(), fn:gl.createBuffer(), fp:gl.createBuffer()};
   gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); gl.clearColor(0, 0, 0, 0);
   let tex = null, N = 0, w = 0, h = 0, dpr = 1, cell = CELL, base, off, vel, rnd, act, actList = [], grid = null, gw = 0, gh = 0, dirty = false;
@@ -6937,13 +7393,23 @@ function initArtParticles(wrap, o = {}){
     if (POSE){ const tc = document.createElement("canvas"); tc.width = cols; tc.height = rows; const tx = tc.getContext("2d", {willReadFrequently:true});
       tx.imageSmoothingQuality = "high";
       const fc = document.createElement("canvas"); fc.width = cols; fc.height = rows; const fx = fc.getContext("2d", {willReadFrequently:true});
-      const fw = POSE.tw/2, fh = POSE.th/2, U2P = h/POSE.ch;                 /* the flow tiles: one px per pose unit */
+      const fw = POSE.fw || POSE.tw/2, fh = POSE.fh || POSE.th/2, U2P = h/POSE.ch;   /* fw, fh: the motion tiles' size (one px per pose unit) */                 /* the flow tiles: one px per pose unit */
       const tile = (im, k, tw, th, ctx) => { ctx.clearRect(0, 0, cols, rows); const c = k % POSE.cols, r = k/POSE.cols | 0;
         ctx.drawImage(im, c*tw, r*th, tw, th, 0, 0, w/cell, h/cell); return ctx.getImageData(0, 0, cols, rows).data; };
-      KS = []; KC = [];
+      KS = []; KC = []; NS = 0;
+      /* o.poses.split (Women, Nov 2026 - the flicker fix): the blue channel of flow-next says how much each place moves. Where it is
+         low (her locked torso, waist, hips and head) ONE permanent set of dots is kept (from pose 1) and drawn still, never exchanged;
+         only where it is high (the arm and the hair it touches) do the poses' own dots travel and exchange. The exchange of whole
+         dot sets every 0.1 s over the still body was what made her blink */
+      if (POSE.split){ const tp = tile(pimg, 0, POSE.tw, POSE.th, tx), fn = tile(fnimg, 0, fw, fh, fx);
+        for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++){ const q = (j*cols + i)*4, I = tp[q]/255; if (I < .07 || fn[q + 2] >= 128) continue;
+          const hs = k2 => { const v = Math.sin(i*127.1 + j*311.7 + k2*74.7)*43758.5453; return v - Math.floor(v); };
+          const cx = (i + .5)*cell, cy = (j + .5)*cell; B.push(cx + (hs(1) - .5)*.5*cell, cy + (hs(2) - .5)*.5*cell);
+          UV.push(cx/w, cy/h); M.push(hs(3), 1, I); G.push(0); FN.push(0, 0); FP.push(0, 0); }
+        NS = B.length/2; }
       for (let k = 0; k < POSE.n; k++){ const tp = tile(pimg, k, POSE.tw, POSE.th, tx), fn = tile(fnimg, k, fw, fh, fx), fp = tile(fpimg, k, fw, fh, fx);
         KS.push(B.length/2);
-        for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++){ const q = (j*cols + i)*4, I = tp[q]/255; if (I < .07) continue;
+        for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++){ const q = (j*cols + i)*4, I = tp[q]/255; if (I < .07 || (POSE.split && fn[q + 2] < 128)) continue;
           /* a dot's small offset and twinkle are fixed per grid cell, the same in every pose: where two poses are alike (Women's locked
              torso) their dots are the very same dots, so the exchange between poses is invisible there - nothing pops or blinks */
           const hs = k2 => { const v = Math.sin(i*127.1 + j*311.7 + k2*74.7)*43758.5453; return v - Math.floor(v); };
@@ -6954,9 +7420,14 @@ function initArtParticles(wrap, o = {}){
       /* the ball (Athletes only): its own dots, around its resting place (the first point of its path) */
       NB0 = B.length/2; if (POSE.ball){ const br = POSE.ball.r*U2P, bn = Math.max(4, Math.ceil(2*br/cell)), p0 = POSE.ball.path[0];
       const bc = document.createElement("canvas"); bc.width = bc.height = bn; const bx = bc.getContext("2d", {willReadFrequently:true});
-      bx.imageSmoothingQuality = "high"; bx.drawImage(bimg, 0, 0, bn, bn); const bp = bx.getImageData(0, 0, bn, bn).data;
-      for (let j = 0; j < bn; j++) for (let i = 0; i < bn; i++){ const I = bp[(j*bn + i)*4]/255; if (I < .07) continue;
-        B.push(p0[0]*U2P + (i + .5 - bn/2)*cell, p0[1]*U2P + (j + .5 - bn/2)*cell); UV.push(0, 0); M.push(Math.random(), 1, I); G.push(0); FN.push(0, 0); FP.push(0, 0); }
+      /* (9 Nov) the ball's dots lie on concentric rings, not a square grid: its outline is a true circle at every turn of its spin
+         (a square grid's corners showed as a squarish, oval-looking rim once it turned). The tone is read from ball.webp (an exact circle) */
+      const bs = bn*4; bc.width = bc.height = bs; bx.imageSmoothingQuality = "high"; bx.drawImage(bimg, 0, 0, bs, bs); const bp = bx.getImageData(0, 0, bs, bs).data;
+      for (let k = 0, nr = Math.max(1, Math.round(br/cell)); k < nr; k++){ const rr = (k + .5)*br/nr, nd = k ? Math.max(6, Math.round(2*Math.PI*rr/cell)) : 1;
+        for (let q = 0; q < nd; q++){ const an = (q + .5*(k & 1))/nd*2*Math.PI, ox = rr*Math.cos(an), oy = rr*Math.sin(an);
+          const sx = Math.min(bs - 1, Math.max(0, Math.floor((ox/br*.5 + .5)*bs))), sy = Math.min(bs - 1, Math.max(0, Math.floor((oy/br*.5 + .5)*bs)));
+          const I = bp[(sy*bs + sx)*4]/255; if (I < .07) continue;
+          B.push(p0[0]*U2P + ox, p0[1]*U2P + oy); UV.push(0, 0); M.push(Math.random(), 1, I); G.push(0); FN.push(0, 0); FP.push(0, 0); } }
       } NBALL = B.length/2 - NB0; }
     else for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++){
       /* a patch becomes a particle only if there is artwork in it */
@@ -6991,7 +7462,11 @@ function initArtParticles(wrap, o = {}){
           if (d < q.r && d < bd){ bd = d; best = k; bt = t; } }
         if (best < 0) continue;
         const q = RB[best]; if (q.p < 0){ RG[i*3] = RG[i*3 + 1] = best; continue; }
-        RG[i*3] = q.p; RG[i*3 + 1] = best; const e = Math.min(1, Math.max(0, (bt + q.z)/(2*q.z))); RG[i*3 + 2] = e*e*(3 - 2*e)*(q.hair ? Math.min(1, hw*1.6) : 1); } }
+        let e = Math.min(1, Math.max(0, (bt + q.z)/(2*q.z))); e = e*e*(3 - 2*e)*(q.hair ? Math.min(1, hw*1.6) : 1);
+        /* rig.soft (Men): near the side border with the parent bone the dot also blends, by how much nearer it is to its own bone */
+        if (RIG.soft){ const pq = RB[q.p]; if (pq.r){ const vx = pq.ex - pq.jx, vy = pq.ey - pq.jy, L = Math.hypot(vx, vy) || 1, tt = Math.max(0, Math.min(L, ((x - pq.jx)*vx + (y - pq.jy)*vy)/L));
+          const dp = Math.hypot(x - pq.jx - vx/L*tt, y - pq.jy - vy/L*tt), S = RIG.soft*h, l = Math.min(1, Math.max(0, .5 + (dp - bd)/(2*S))); e *= l*l*(3 - 2*l); } }
+        RG[i*3] = q.p; RG[i*3 + 1] = best; RG[i*3 + 2] = e; } }
     N = B.length/2; base = new Float32Array(B); off = new Float32Array(N*2); vel = new Float32Array(N*2);
     rnd = new Float32Array(N); for (let i = 0; i < N; i++) rnd[i] = Math.random(); act = new Uint8Array(N); actList = [];
     gw = Math.ceil(w/R) + 1; gh = Math.ceil(h/R) + 1; const cnt = new Uint32Array(gw*gh + 1), cellOf = new Uint32Array(N);
@@ -7063,8 +7538,11 @@ function initArtParticles(wrap, o = {}){
       }
       if (dirty){ gl.bindBuffer(gl.ARRAY_BUFFER, bufs.off); gl.bufferSubData(gl.ARRAY_BUFFER, 0, off); dirty = actList.length > 0; }
       gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.uniform1f(U.top, HR*h); gl.uniform1f(U.ch, h*(1 + HR)); gl.uniform1f(U.cw, w*(1 + RR));
-      gl.uniform2f(U.res, w, h); gl.uniform1f(U.t, STILL ? 0 : (now - t0)/1000); gl.uniform1f(U.dpr, dpr); gl.uniform1f(U.amp, AMP); gl.uniform1f(U.cell, cell);
+      gl.uniform1f(U.calm, o.calm ? (o.sweep ? 2 : 1) : 0); gl.uniform1f(U.top, HR*h); gl.uniform1f(U.ch, h*(1 + HR)); gl.uniform1f(U.cw, w*(1 + RR));
+      gl.uniform2f(U.res, w, h); gl.uniform1f(U.t, STILL ? 0 : (now - t0)/1000);
+      /* 9 Nov 2026: the decorative light (the sweep, the soft flares and the twinkle) runs on ONE page clock, so the four
+         figures' shared light passes at the same moment on every card; each figure's own motion keeps its own clock (u_t) */
+      gl.uniform1f(U.lt, STILL ? 0 : (now - CHR_LIGHT_T0)/1000); gl.uniform1f(U.dpr, dpr); gl.uniform1f(U.amp, AMP); gl.uniform1f(U.cell, cell);
       gl.uniform1f(U.mode, ANIM ? ANIM.mode : 0); gl.uniform1f(U.wave, WAVE);
       if (ANIM){ gl.uniform3f(U.piv, (ANIM.piv[0] || 0)*w, ANIM.piv[1]*h, (ANIM.r || 0)*h);
         const q = ANIM.piv2 || [0, 0, 0, 0]; gl.uniform4f(U.piv2, q[0]*w, q[1]*h, q[2]*w, q[3]*h);
@@ -7095,14 +7573,15 @@ function initArtParticles(wrap, o = {}){
       /* o.poses: the two key poses around this moment (a, b) and how far between them (s); the exchange of the two dot sets
          happens in the middle 16% of the step; then the ball's place, spin and light (posesBall) */
       let draws = [[0, N, null]];
-      if (POSE){ const tt = (now - t0)/1000, f = (tt/POSE.T % 1)*POSE.n, a = Math.floor(f) % POSE.n, bk = (a + 1) % POSE.n, st = f - Math.floor(f);
+      if (POSE){ const tt = (now - t0)/1000, f = posesF(POSE, tt), a = Math.floor(f) % POSE.n, bk = (a + 1) % POSE.n, st = f - Math.floor(f);
         const wB = sm(.5 - (POSE.x || .08), .5 + (POSE.x || .08), st), Bl = POSE.ball ? posesBall(POSE.ball, f, POSE.n) : {x:0, y:0, a:0, g:1, spin:0}, U2P = h/POSE.ch;
         if (POSE.ball){ gl.uniform2f(U.bp, Bl.x*U2P, Bl.y*U2P); gl.uniform2f(U.bc0, POSE.ball.path[0][0]*U2P, POSE.ball.path[0][1]*U2P); }
         gl.uniform1f(U.bsp, Bl.spin); gl.uniform1f(U.bga, Bl.g);
         draws = [[KS[a], KC[a], bufs.fn, 1, st, 1 - wB], [KS[bk], KC[bk], bufs.fp, 1, 1 - st, wB], [NB0, NBALL, bufs.fn, 2, 0, Bl.a, Bl]];
-        if (POSE.ball && f > POSE.ball.contact && Bl.a > .01) for (const [dl, k] of [[.3, .38], [.6, .16]]){ const T2 = posesBall(POSE.ball, Math.max(POSE.ball.contact, f - dl), POSE.n);
+        if (POSE.ball && POSE.ball.trail !== false && f > POSE.ball.contact && Bl.a > .01) for (const [dl, k] of [[.3, .38], [.6, .16]]){ const T2 = posesBall(POSE.ball, Math.max(POSE.ball.contact, f - dl), POSE.n);
           draws.push([NB0, NBALL, bufs.fn, 2, 0, T2.a*k, T2]); }
-        draws = draws.filter(d => d[1] && d[5] > .001); }
+        if (NS) draws.unshift([0, NS, null]);
+        draws = draws.filter(d => d[1] && (d[5] === undefined || d[5] > .001)); }
       const pass = (g) => { for (const d of draws){ if (d[6]){ const U2P = h/POSE.ch; gl.uniform2f(U.bp, d[6].x*U2P, d[6].y*U2P); gl.uniform1f(U.bsp, d[6].spin); }
         if (d[2]){ gl.bindBuffer(gl.ARRAY_BUFFER, d[2]); gl.vertexAttribPointer(A.fl, 2, gl.FLOAT, false, 0, 0);
           gl.uniform1f(U.pm, d[3]); gl.uniform1f(U.ps, d[4]); gl.uniform1f(U.pa, d[5]); } else gl.uniform1f(U.pm, 0);
@@ -7214,7 +7693,7 @@ function drawPackage(el){
             return `
             <div class="ofx-layer${i === 0 ? " on" : ""}" data-i="${i}">
               <div class="mpo-vis ofx-vis">
-                ${k ? `<div class="scn" aria-hidden="true">${ofScene(k)}</div>` : `<div class="ofx-icon" aria-hidden="true">${pkIcon(ENT_RCV_IC[i])}</div>`}
+                ${offerArtFor(p.id, i) ? athOfferArt(offerArtFor(p.id, i), p.id, i) : k ? `<div class="scn" aria-hidden="true">${ofScene(k)}</div>` : `<div class="ofx-icon" aria-hidden="true">${pkIcon(ENT_RCV_IC[i])}</div>`}
                 ${v ? `<span class="mpo-tag" aria-hidden="true">${pt(PKG_UI.sample)}</span>` : ""}
               </div>
               ${v ? `<div class="of-glass mpo-glass ofx-glass">
@@ -7260,7 +7739,7 @@ function drawPackage(el){
   /* the animated character: same engine as the cards, bigger, with dust and glowing links */
   const hero = el.querySelector(".mpd-hero");
   if (ent) initArtParticles(hero.querySelector(".ent-art-in"), {...ENT_ART_LOOK, ...ART_HERO});
-  else if (CHR_ART[p.id]) initArtParticles(hero.querySelector(".chr-art"), {...chrArtLook(p.id), ...ART_HERO, ...DOT_HERO});
+  else if (CHR_ART[p.id]) initArtParticles(hero.querySelector(".chr-art"), {...chrArtLook(p.id), ...ART_HERO, ...DOT_HERO, ...(CHR_ART[p.id].heroDots || {}), glow:DOT_HERO.glow*(CHR_GLOW_K[p.id] ?? 1)});
   else initParticles(hero, hero.querySelector(".mpd-cv"), p.id, {meta:brandMeta(p.id),
     fitEl:hero.querySelector(".mpd-fig"), fitW:ent ? .96 : .82, fitH:ent ? .78 : .9,
     density:ent ? 1.3 : 1.8, gMax:1.6, dust:70, links:ent ? 70 : 54, linkDist:ent ? 12 : 11, shimmer:.45, tap:true});
@@ -7308,7 +7787,7 @@ function drawPackage(el){
         if (sc && sc.isConnected) window.mountOf3D(sc, sc._k3, {hue});
         if (queue.length) qRaf = requestAnimationFrame(pump);
       };
-      scs.forEach((sc, i) => { sc._k3 = k3[i]; });
+      scs.forEach((sc, i) => { const L = sc.closest(".ofx-layer"); sc._k3 = k3[L ? +L.dataset.i : i]; });   /* by item: an item with an original artwork has no drawn scene */
       OF3D_IO = new IntersectionObserver(es => {
         if (!es.some(e => e.isIntersecting)) return;
         OF3D_IO.disconnect(); OF3D_IO = null;
@@ -7360,6 +7839,7 @@ function goCompare(){
 function drawSiteNav(type){
   const nav = $("#sitenav"), mob = $("#sitenav-mob"), btn = $("#btn-nav"), on = SITE_STEPS.includes(type);
   nav.hidden = !on; btn.classList.toggle("hidden", !on); mob.hidden = true; btn.setAttribute("aria-expanded", "false");
+  $("#sn-cta") && $("#sn-cta").remove();
   if (!on){ nav.innerHTML = mob.innerHTML = ""; return; }
   const CH = '<svg class="sn-ch" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
   const EXT = '<svg class="sn-ext" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
@@ -7373,6 +7853,12 @@ function drawSiteNav(type){
       <li><button type="button" class="sn-btn" data-sn-compare>${pt(NAV_TEXT.compare)}</button></li>
       <li><a class="sn-btn" ${SUPPORT_ATTRS}>${pt(NAV_TEXT.contact)}${EXT}</a></li>
     </ul>`;
+  /* the header's teal pill (7 Nov 2026): our "Contact us", placed last as on mulhimd.com (the same link as the tab it replaces) */
+  $("#btn-theme").insertAdjacentHTML("afterend", `<a class="sn-cta" id="sn-cta" ${SUPPORT_ATTRS}>${pt(NAV_TEXT.contact)}${EXT}</a>`);
+  /* on a package page the tabs sit beside the tools: their room is measured (the pill makes the tools wider) */
+  const toolRoom = () => { const t = $(".toolset"); if (!t) return; const r = t.getBoundingClientRect();
+    document.body.style.setProperty("--tool-w", ((document.documentElement.dir === "rtl" ? r.right : innerWidth - r.left) + 14) + "px"); };
+  requestAnimationFrame(toolRoom); if (!window._toolRoom){ window._toolRoom = 1; addEventListener("resize", () => requestAnimationFrame(toolRoom)); }
   btn.setAttribute("aria-label", pt(NAV_TEXT.menu));
   mob.innerHTML = `<nav aria-label="${esc(pt(NAV_TEXT.nav))}">
       <p class="sn-mh">${pt(NAV_TEXT.packages)}</p>

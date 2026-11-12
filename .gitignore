@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# build output
+dist/
+
+# local-only working copies (rollbacks, review screenshots, page backups)
+rollback/
+review-shots/
+*.backup-*.html
+*.backup*.js
